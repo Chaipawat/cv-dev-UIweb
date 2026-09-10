@@ -4,9 +4,9 @@ import Reveal from "@/components/shared/reveal";
 
 export default function ContactCta() {
   return (
-    <PageContainer className="pb-[140px]">
+    <PageContainer className="pb-20 md:pb-24 lg:pb-28">
       <Reveal>
-        <div className="flex flex-wrap items-end justify-between gap-12 border-t border-border pt-20">
+        <div className="flex flex-wrap items-end justify-between gap-12 border-t border-border pt-14 md:pt-16 lg:pt-20">
           <h2 className="m-0 max-w-[12ch] font-display text-[clamp(42px,6.4vw,92px)] font-normal leading-[0.98] tracking-[-0.04em]">
             Have a product worth building?
           </h2>

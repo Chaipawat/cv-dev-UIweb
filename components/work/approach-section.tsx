@@ -5,13 +5,13 @@ import { APPROACH } from "@/data/experience";
 
 export default function ApproachSection() {
   return (
-    <PageContainer className="pt-[130px]">
+    <PageContainer className="pt-16 md:pt-20 lg:pt-24">
       <SectionHeading title="Development approach" index="[ 05 ]" />
 
       <div className="mt-5 flex flex-wrap">
         {APPROACH.map((a) => (
           <Reveal key={a.n}>
-            <div className="min-w-[200px] flex-1 basis-[240px] border-t border-border py-9 pr-[30px]">
+            <div className="min-w-[200px] flex-1 basis-[240px] border-t border-border py-7 pr-[30px] md:py-8">
               <div className="font-mono text-xs tracking-[0.14em] text-foreground-faint">
                 {a.n}
               </div>

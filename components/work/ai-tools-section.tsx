@@ -3,9 +3,9 @@ import Reveal from "@/components/shared/reveal";
 
 export default function AiToolsSection() {
   return (
-    <PageContainer className="py-[130px]">
+    <PageContainer className="py-16 md:py-20 lg:py-24">
       <Reveal>
-        <div className="flex flex-wrap gap-14 border-t border-border pt-[60px]">
+        <div className="flex flex-wrap gap-10 border-t border-border pt-12 md:gap-14 md:pt-14">
           <div className="min-w-[280px] flex-1 basis-[460px]">
             <h2 className="m-0 max-w-[18ch] font-display text-[clamp(28px,3.4vw,46px)] font-normal leading-[1.08] tracking-[-0.035em]">
               AI as a development tool, not a replacement for engineering.

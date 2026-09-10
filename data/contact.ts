@@ -17,4 +17,10 @@ export const CONTACT_LINKS = [
     value: "linkedin.com/in/chaipawat-jatuphattaranun-151429434/",
     href: "https://www.linkedin.com/in/chaipawat-jatuphattaranun-151429434/",
   },
+  {
+    n: "04",
+    label: "Call me",
+    value: "097-940-5571",
+    href: "tel:+66979405571",
+  },
 ];

@@ -17,7 +17,7 @@ export default function ContactForm() {
   };
 
   return (
-    <PageContainer className="pb-[140px] pt-[110px]">
+    <PageContainer className="pb-20 pt-12 md:pb-24 md:pt-14 lg:pb-28 lg:pt-16">
       <div className="flex flex-wrap gap-14">
         <Reveal className="min-w-[260px] flex-1 basis-[300px]">
           <div className="font-mono text-xs uppercase tracking-[0.18em] text-foreground-subtle">

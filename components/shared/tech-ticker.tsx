@@ -4,7 +4,7 @@ export default function TechTicker() {
   const track = [...TICKER_ITEMS, ...TICKER_ITEMS];
 
   return (
-    <section className="overflow-hidden border-b border-border py-20">
+    <section className="overflow-hidden border-b border-border py-12 md:py-14 lg:py-16">
       <div className="animate-marquee flex w-max">
         {track.map((item, i) => (
           <span

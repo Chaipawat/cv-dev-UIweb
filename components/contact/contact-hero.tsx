@@ -3,7 +3,7 @@ import Reveal from "@/components/shared/reveal";
 
 export default function ContactHero() {
   return (
-    <PageContainer className="pt-20">
+    <PageContainer className="pt-14 md:pt-16 lg:pt-20">
       <Reveal>
         <div className="font-mono text-xs uppercase tracking-[0.2em] text-foreground-subtle">
           04 / Contact

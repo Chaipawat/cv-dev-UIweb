@@ -5,7 +5,7 @@ import { CHAPTERS } from "@/data/experience";
 
 export default function ExperienceChapters() {
   return (
-    <PageContainer className="pt-[90px]">
+    <PageContainer className="pt-12 md:pt-14 lg:pt-16">
       <Reveal>
         <div className="flex flex-wrap items-baseline justify-between gap-4 border-t border-foreground pt-[22px]">
           <div className="font-display text-[clamp(28px,3vw,40px)] tracking-[-0.03em]">
@@ -19,7 +19,7 @@ export default function ExperienceChapters() {
 
       {CHAPTERS.map((c) => (
         <Reveal key={c.n}>
-          <div className="flex flex-wrap gap-10 border-b border-border py-[46px]">
+          <div className="flex flex-wrap gap-10 border-b border-border py-8 md:py-9 lg:py-10">
             <div className="flex-none basis-[200px]">
               <div className="font-mono text-[11px] tracking-[0.18em] text-foreground-faint">
                 CHAPTER {c.n}

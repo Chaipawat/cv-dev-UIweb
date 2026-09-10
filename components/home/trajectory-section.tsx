@@ -6,7 +6,7 @@ import { TRAJECTORY } from "@/data/experience";
 
 export default function TrajectorySection() {
   return (
-    <PageContainer className="py-[120px]">
+    <PageContainer className="py-16 md:py-20 lg:py-24">
       <SectionHeading title="Trajectory" index="[ 03 ]" />
 
       <div className="mt-2.5 flex flex-wrap">

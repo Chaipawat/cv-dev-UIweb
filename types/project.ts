@@ -16,6 +16,8 @@ export interface Project {
   n: string;
   title: string;
   years: string;
+  /** Eyebrow label reused by the home page featured rows, e.g. "01 / 2024 — Present / Web" */
+  meta: string;
   desc: string;
   tech: string[];
   cat: string;

@@ -15,10 +15,10 @@ export default function CapabilityExplorer() {
   );
 
   return (
-    <PageContainer className="py-[140px]">
+    <PageContainer className="py-16 md:py-20 lg:py-24">
       <SectionHeading title="Explore by capability" index="[ 04 ]" />
 
-      <div className="mt-12 flex flex-wrap gap-14">
+      <div className="mt-10 flex flex-wrap gap-10 lg:gap-14">
         <div className="flex min-w-[280px] flex-1 basis-[340px] flex-wrap content-start gap-2.5">
           {CAPABILITIES.map((c) => (
             <button

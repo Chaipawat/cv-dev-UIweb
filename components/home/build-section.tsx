@@ -12,7 +12,7 @@ export default function BuildSection() {
   const [hoverRow, setHoverRow] = useState<number | null>(null);
 
   return (
-    <PageContainer className="pb-10 pt-[120px]">
+    <PageContainer className="pb-6 pt-16 md:pt-20 lg:pt-24">
       <SectionHeading title="What I build" index="[ 01 ]" />
 
       {BUILD_ROWS.map((row, i) => {

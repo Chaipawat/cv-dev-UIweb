@@ -19,14 +19,14 @@ export const CHAPTERS: Chapter[] = [
     n: "03",
     years: "2024 — 2025",
     title: "Zonepang Platform",
-    desc: "Expanded into modern frontend product development, building interfaces and connected workflows.",
+    desc: "Developed front-end pages and user workflows across a digital marketing platform and its connected services, including Broadpang and Chatbotpang.",
     tech: ["React", "Next.js", "REST API", "Figma"],
   },
   {
     n: "04",
     years: "2025 — Present",
-    title: "AI & Mobile Expansion",
-    desc: "Worked across AI-generation products, payment workflows, socket communication, React Native apps and cross-platform experiences.",
+    title: "AI Zonepang & Mobile Expansion",
+    desc: "Integrated AI-generation workflows, payments and real-time status updates, and helped extend services into React Native mobile applications.",
     tech: ["React", "Next.js", "React Native", "TypeScript", "Node.js", "REST API", "AI Integration"],
   },
 ];
@@ -51,4 +51,17 @@ export const INTERNSHIP = {
   role: "Assistant Software Professional · Cooperative Training",
   desc: "Worked on an automotive purchasing and sales management system for a major automotive brand under confidentiality requirements.",
   tech: ["Java", "Database", "Git"],
+  certification: "Certified Assistant Software Professional · Sep 2021",
 };
+
+export const EDUCATION = {
+  degree: "B.Sc. Software Engineering",
+  school: "Burapha University, Faculty of Informatics",
+  years: "2018 — 2022",
+  detail: "GPA 3.18 / 4.00",
+};
+
+export const LANGUAGES = [
+  { name: "Thai", level: "Native" },
+  { name: "English", level: "Intermediate" },
+];

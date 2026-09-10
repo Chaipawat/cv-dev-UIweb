@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import WorkHero from "@/components/work/work-hero";
 import ExperienceChapters from "@/components/work/experience-chapters";
 import InternshipCard from "@/components/work/internship-card";
+import EducationSection from "@/components/work/education-section";
 import ApproachSection from "@/components/work/approach-section";
 import AiToolsSection from "@/components/work/ai-tools-section";
 
@@ -16,6 +17,7 @@ export default function WorkPage() {
       <WorkHero />
       <ExperienceChapters />
       <InternshipCard />
+      <EducationSection />
       <ApproachSection />
       <AiToolsSection />
     </main>
