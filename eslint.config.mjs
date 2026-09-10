@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Claude Design canvas export — approved visual spec, not application code.
+    "app/Design/**",
   ]),
 ]);
 
