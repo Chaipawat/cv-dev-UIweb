@@ -1,3 +1,4 @@
+import Image from "next/image";
 import PageContainer from "@/components/layout/page-container";
 import Reveal from "@/components/shared/reveal";
 import { portfolioData } from "@/data/portfolio";
@@ -51,13 +52,14 @@ export default function ProfileSection() {
                 FIG. 02 — IDENTITY
               </span>
             </div>
-            <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface grayscale">
-              <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(255,255,255,0.045)_0px,rgba(255,255,255,0.045)_1px,transparent_1px,transparent_4px)]" />
-              <div className="absolute bottom-4 left-[18px] font-mono text-[11px] leading-[1.7] text-foreground-secondary">
-                personal visual
-                <br />
-                <span className="text-foreground-muted">drop image here — 4:5</span>
-              </div>
+            <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
+              <Image
+                src="/src/images/profile_page4.jpg"
+                alt="Portrait of Chaipawat Jatuphattaranun"
+                fill
+                sizes="(min-width: 1024px) 380px, 90vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

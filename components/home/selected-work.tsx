@@ -5,7 +5,7 @@ import ProjectPreview from "@/components/shared/project-preview";
 import Reveal from "@/components/shared/reveal";
 
 // Matches the approved design reference exactly (per product-owner decision).
-const webProject = { name: "Broadcast UI Extension", tech: "React · Next.js · TypeScript · REST API" };
+const webProject = { name: "Broadcast UI Web Extension", tech: "React · Next.js · TypeScript · REST API" };
 const mobileProject = { name: "Cross-platform Mobile App", tech: "React Native · Vision Camera · REST API" };
 
 export default function SelectedWork() {

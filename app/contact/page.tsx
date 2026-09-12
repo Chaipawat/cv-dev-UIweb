@@ -3,7 +3,7 @@ import PageContainer from "@/components/layout/page-container";
 import Reveal from "@/components/shared/reveal";
 import LetsConnect from "@/components/contact/lets-connect";
 import ContactDirect from "@/components/contact/contact-direct";
-import ContactForm from "@/components/contact/contact-form";
+import ContactQuote from "@/components/contact/contact-quote";
 
 export const metadata: Metadata = {
   title: "Contact — Chaipawat Jatuphattaranun",
@@ -16,9 +16,9 @@ export default function ContactPage() {
       <LetsConnect />
       <PageContainer className="pb-[120px]">
         <Reveal as="section">
-          <div className="grid grid-cols-1 items-start gap-[clamp(32px,6vw,80px)] pt-[72px] lg:grid-cols-2">
+          <div className="flex flex-col gap-6 pt-[72px]">
             <ContactDirect />
-            <ContactForm />
+            <ContactQuote />
           </div>
         </Reveal>
       </PageContainer>

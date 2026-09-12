@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MapPin, Clock, Smartphone } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
 import EditorialButton from "@/components/shared/editorial-button";
@@ -12,19 +13,19 @@ export default function HomeHero() {
       <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-muted">
         <span>{profile.title.toUpperCase()}</span>
         <span>
-          {profile.location.split(",")[0].toUpperCase()}, TH — {new Date().getFullYear()}
+          AVAILABLE FOR GOOD WORK — {new Date().getFullYear()}
         </span>
       </div>
 
       <Reveal>
         <h1 className="m-0 font-display font-extrabold uppercase text-foreground">
           <span className="m-0 mt-11 block text-[clamp(52px,10.4vw,154px)] leading-[0.88] tracking-[-0.05em]">
-            Frontend
+            SOFTWARE
           </span>
           <span className="mt-1 flex flex-wrap items-baseline gap-[clamp(16px,3vw,48px)]">
             <span className="text-[clamp(52px,10.4vw,154px)] leading-[0.88] tracking-[-0.05em]">Engineer</span>
-            <span className="font-serif text-[clamp(30px,5.2vw,76px)] italic normal-case leading-none tracking-[-0.02em] text-accent">
-              Ryu
+            <span className="text-[clamp(30px,5.2vw,76px)] normal-case leading-none tracking-[-0.02em] text-accent">
+             ( Ryu )
             </span>
           </span>
         </h1>
@@ -67,19 +68,20 @@ export default function HomeHero() {
               <span className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">
                 FIG. 01 — PORTRAIT
               </span>
-              <span className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">B/W</span>
             </div>
-            <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface grayscale">
-              <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(255,255,255,0.045)_0px,rgba(255,255,255,0.045)_1px,transparent_1px,transparent_4px)]" />
+            <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
+              <Image
+                src="/src/images/profile_page1.jpg"
+                alt="Portrait of Chaipawat Jatuphattaranun"
+                fill
+                priority
+                sizes="(min-width: 1024px) 420px, 90vw"
+                className="object-cover"
+              />
               <span className="corner-mark left-0 top-0 h-px w-3.5" />
               <span className="corner-mark left-0 top-0 h-3.5 w-px" />
               <span className="corner-mark bottom-0 right-0 h-px w-3.5" />
               <span className="corner-mark bottom-0 right-0 h-3.5 w-px" />
-              <div className="absolute bottom-4 left-[18px] font-mono text-[11px] leading-[1.7] text-foreground-secondary">
-                editorial portrait crop
-                <br />
-                <span className="text-foreground-muted">drop image here — 4:5</span>
-              </div>
             </div>
             {profile.availability.openToWork ? (
               <div className="flex items-center justify-between pt-3">

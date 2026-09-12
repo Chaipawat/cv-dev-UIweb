@@ -187,7 +187,7 @@ export const portfolioData = {
     {
       id: "broadcast-ui-extension",
 
-      name: "Broadcast UI Extension",
+      name: "Broadcast Web UI Extension",
 
       type: "Web App",
 
@@ -382,13 +382,11 @@ export const portfolioData = {
   ],
 
   contact: {
-    email: null,
-    phone: null,
-
-    phoneMode: "available-on-cv",
-
-    linkedin: null,
-    github: null,
+    email: "chaipawat22247@gmail.com",
+    phone: "0979405571",
+    phoneMode: "show-number",
+    linkedin: "https://www.linkedin.com/in/chaipawat-jatuphattaranun-151429434",
+    github: "https://github.com/Chaipawat",
     cvUrl: null,
 
     note:

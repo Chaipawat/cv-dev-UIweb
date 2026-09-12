@@ -51,7 +51,7 @@ export const TIMELINE: TimelineNode[] = [
     // Matches the approved design reference exactly (per product-owner decision).
     records: [
       { tag: "PROJECT RECORD", name: "Web & Mobile Applications", tech: "React · Next.js · React Native · TypeScript" },
-      { tag: "PROJECT RECORD", name: "Broadcast UI Extension", tech: "JavaScript · Socket · REST API" },
+      { tag: "PROJECT RECORD", name: "Broadcast Web UI Extension", tech: "JavaScript · Socket · REST API" },
       { tag: "PROJECT RECORD", name: "Trading Tools & Automation", tech: "TypeScript · API Integration · Automation" },
     ],
   },

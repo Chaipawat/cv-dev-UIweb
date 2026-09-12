@@ -20,7 +20,7 @@ export default function Navbar() {
           <span className="font-display text-[13px] font-medium tracking-[-0.005em] text-foreground">
             {profile.fullName}
           </span>
-          <span className="font-serif text-[15px] italic text-accent">{profile.nickname}</span>
+          <span className="text-[14px] text-accent">({profile.nickname})</span>
         </Link>
 
         <nav className="hidden items-center gap-0.5 md:flex" aria-label="Primary">
@@ -51,7 +51,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3.5">
           <span className="hidden font-mono text-[11px] tracking-[0.14em] text-foreground-muted lg:inline">
-            {profile.location.split(",")[0].toUpperCase()}, TH
+            TH
           </span>
           <MobileNav pathname={pathname} />
         </div>

@@ -10,9 +10,7 @@ import {
   useTransform,
 } from "framer-motion";
 import PageContainer from "@/components/layout/page-container";
-import EditorialButton from "@/components/shared/editorial-button";
 import { TIMELINE } from "@/data/timeline";
-import { CONTACT_CV_URL } from "@/data/contact";
 import { cn } from "@/lib/utils";
 
 export default function CareerTimeline() {
@@ -110,22 +108,6 @@ export default function CareerTimeline() {
               </div>
             </motion.div>
           ))}
-
-          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-[30px]">
-            <div>
-              <div className="font-display text-[17px] font-medium text-foreground">Full professional details</div>
-              <div className="mt-1.5 text-[13.5px] text-foreground-muted">
-                Responsibilities, references and dates live in the CV.
-              </div>
-            </div>
-            <EditorialButton
-              as="a"
-              href={CONTACT_CV_URL || "/contact"}
-              {...(CONTACT_CV_URL ? { target: "_blank", rel: "noreferrer" } : {})}
-            >
-              {CONTACT_CV_URL ? "View CV" : "Request CV"} <span aria-hidden="true">→</span>
-            </EditorialButton>
-          </div>
         </div>
       </div>
     </PageContainer>
