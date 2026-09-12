@@ -1,48 +1,54 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
-import CursorTag from "@/components/shared/cursor-tag";
+import MotionProvider from "@/components/shared/motion-provider";
 import "./globals.css";
 
-// TODO: Replace with the Adobe Fonts kit for Bricolage Grotesque / Schibsted
-// Grotesk / JetBrains Mono once credentials are available. These Google Fonts
-// match the approved design's typefaces and serve as the production fallback.
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["500", "600", "800"],
 });
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
-  title: "Chaipawat Jatuphattaranun — Software Developer",
+  title: "Chaipawat Jatuphattaranun (Ryu) — Frontend Engineer",
   description:
-    "Front-end / mobile-focused software developer based in Chonburi, Thailand. Building interfaces for real products.",
+    "Frontend Engineer / Software Developer based in Chonburi, Thailand. Building web and mobile interfaces, API-driven products, and thoughtful user experiences.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${schibsted.variable} ${jetbrainsMono.variable}`}
+      className={`${geist.variable} ${geistMono.variable} ${inter.variable} ${instrumentSerif.variable}`}
     >
       <body className="flex min-h-screen flex-col overflow-x-hidden bg-background font-body text-foreground antialiased">
-        <CursorTag />
-        <Navbar />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <MotionProvider>
+          <div className="dot-grid" />
+          <Navbar />
+          <div className="relative z-10 flex-1">{children}</div>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

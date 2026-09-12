@@ -3,22 +3,25 @@ import Reveal from "@/components/shared/reveal";
 
 export default function ShowcaseHero() {
   return (
-    <PageContainer className="pt-14 md:pt-16 lg:pt-20">
-      <Reveal>
-        <div className="font-mono text-xs uppercase tracking-[0.2em] text-foreground-subtle">
-          02 / Showcase
+    <PageContainer className="pt-[132px]">
+      <Reveal as="section">
+        <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-muted">
+          <span>PAGE 02 — SHOWCASE</span>
+          <span>SKILL → INTERACTION → EVIDENCE</span>
         </div>
-      </Reveal>
-      <Reveal delay={0.07}>
-        <h1 className="m-0 mt-[26px] font-display text-[clamp(44px,7vw,100px)] font-normal leading-[0.96] tracking-[-0.045em]">
-          Selected showcase
+
+        <h1 className="m-0 mt-12 font-display text-[clamp(50px,9.6vw,142px)] font-extrabold uppercase leading-[0.88] tracking-[-0.05em] text-foreground">
+          Showcase
         </h1>
-      </Reveal>
-      <Reveal delay={0.14}>
-        <p className="m-0 mt-6 max-w-[52ch] text-lg text-foreground-secondary">
-          Interfaces, mobile experiences and product workflows built across real-world
-          projects.
-        </p>
+
+        <div className="mt-9 grid max-w-[900px] grid-cols-1 gap-8 sm:grid-cols-2">
+          <p className="m-0 font-serif text-[26px] italic leading-[1.3] text-foreground">
+            Skills turned into real interfaces.
+          </p>
+          <p className="m-0 text-[15px] leading-[1.65] text-foreground-secondary">
+            Explore how I apply frontend, mobile, integration, and development tools.
+          </p>
+        </div>
       </Reveal>
     </PageContainer>
   );

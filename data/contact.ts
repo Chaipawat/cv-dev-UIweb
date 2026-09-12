@@ -1,26 +1,38 @@
+import { portfolioData } from "@/data/portfolio";
+
+const { contact } = portfolioData;
+
+export const CONTACT_EMAIL = contact.email;
+export const CONTACT_CV_URL = contact.cvUrl;
+
+const phoneValue =
+  contact.phoneMode === "available-on-cv" || !contact.phone ? "Available on CV" : contact.phone;
+const phoneHref = contact.phone && contact.phoneMode !== "available-on-cv" ? `tel:${contact.phone}` : undefined;
+
 export const CONTACT_LINKS = [
   {
-    n: "01",
-    label: "Email me",
-    value: "chaipawat22247@gmail.com",
-    href: "mailto:chaipawat22247@gmail.com",
+    key: "EMAIL",
+    icon: "mail" as const,
+    value: contact.email ?? "Add email",
+    href: contact.email ? `mailto:${contact.email}` : undefined,
+  },
+  { key: "PHONE", icon: "phone" as const, value: phoneValue, href: phoneHref },
+  {
+    key: "LINKEDIN",
+    icon: "link" as const,
+    value: contact.linkedin ?? "Add LinkedIn URL",
+    href: contact.linkedin ?? undefined,
   },
   {
-    n: "02",
-    label: "GitHub",
-    value: "github.com/Chaipawat",
-    href: "https://github.com/Chaipawat",
+    key: "GITHUB",
+    icon: "code" as const,
+    value: contact.github ?? "Add GitHub URL",
+    href: contact.github ?? undefined,
   },
   {
-    n: "03",
-    label: "LinkedIn",
-    value: "linkedin.com/in/chaipawat-jatuphattaranun-151429434/",
-    href: "https://www.linkedin.com/in/chaipawat-jatuphattaranun-151429434/",
-  },
-  {
-    n: "04",
-    label: "Call me",
-    value: "097-940-5571",
-    href: "tel:+66979405571",
+    key: "CV",
+    icon: "download" as const,
+    value: contact.cvUrl ? "Download CV" : "Add CV link",
+    href: contact.cvUrl ?? undefined,
   },
 ];

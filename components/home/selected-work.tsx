@@ -1,79 +1,78 @@
 import Link from "next/link";
 import PageContainer from "@/components/layout/page-container";
-import SectionHeading from "@/components/shared/section-heading";
-import ShotPlaceholder from "@/components/shared/shot-placeholder";
+import SectionLabel from "@/components/shared/section-label";
+import ProjectPreview from "@/components/shared/project-preview";
 import Reveal from "@/components/shared/reveal";
-import { PROJECTS } from "@/data/projects";
 
-const zonepang = PROJECTS.find((p) => p.id === "zonepang")!;
-const kumtone = PROJECTS.find((p) => p.id === "kumtone")!;
+// Matches the approved design reference exactly (per product-owner decision).
+const webProject = { name: "Broadcast UI Extension", tech: "React · Next.js · TypeScript · REST API" };
+const mobileProject = { name: "Cross-platform Mobile App", tech: "React Native · Vision Camera · REST API" };
 
 export default function SelectedWork() {
   return (
-    <PageContainer className="pt-16 md:pt-20 lg:pt-24">
-      <SectionHeading title="Selected work" index="[ 02 ]" />
-
-      <Reveal>
-        <div className="flex flex-wrap items-center gap-10 py-12 md:py-14 lg:py-16">
-          <div className="min-w-[280px] flex-1 basis-[380px]">
-            <div className="font-mono text-xs uppercase tracking-[0.18em] text-foreground-subtle">
-              {zonepang.meta}
-            </div>
-            <h3 className="mt-[18px] font-display text-[clamp(30px,3.4vw,46px)] font-normal tracking-[-0.03em]">
-              {zonepang.title}
-            </h3>
-            <p className="mt-4 max-w-[42ch] text-foreground-secondary">{zonepang.desc}</p>
-            <div className="mt-[22px] font-mono text-xs tracking-[0.06em] text-foreground-muted">
-              {zonepang.tech.join(" / ")}
-            </div>
-            <Link
-              href="/showcase"
-              className="group mt-[30px] inline-flex items-center gap-2.5 border-b border-accent-soft pb-[5px] text-[15px] font-medium text-accent transition-[gap,border-color] duration-[250ms] hover:gap-4 hover:border-accent"
+    <PageContainer className="pb-[110px]">
+      <SectionLabel
+        index="01"
+        label="SELECTED WORK"
+        trailing={
+          <Link href="/work" className="transition-colors duration-[180ms] hover:text-accent">
+            VIEW ALL WORK →
+          </Link>
+        }
+      />
+      <div className="mt-12 grid grid-cols-1 gap-[clamp(24px,4vw,56px)] md:grid-cols-2">
+        <Reveal>
+          <Link href="/work" className="group block">
+            <ProjectPreview
+              variant="panel"
+              className="aspect-[16/11] h-auto transition-colors duration-[320ms] group-hover:border-border-strong"
             >
-              <span>View Project</span>
-              <span>→</span>
-            </Link>
-          </div>
-          <div className="group min-w-[280px] flex-1 basis-[520px] overflow-hidden rounded-2xl border border-border">
-            <ShotPlaceholder
-              label={zonepang.shot}
-              className="h-[420px] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
-            />
-          </div>
-        </div>
-      </Reveal>
+              <span className="absolute left-4 top-4 rounded-full border border-border bg-background px-[9px] py-[5px] font-mono text-[10px] tracking-[0.16em] text-foreground-muted">
+                RECONSTRUCTED UI
+              </span>
+            </ProjectPreview>
+            <div className="mt-[22px] flex items-baseline justify-between gap-4 border-b border-border pb-3.5">
+              <span className="font-mono text-[11px] tracking-[0.2em] text-accent">WEB APP</span>
+              <span className="font-mono text-xs text-foreground-muted">01 / 02</span>
+            </div>
+            <div className="mt-4 flex items-center justify-between gap-4">
+              <h2 className="m-0 font-display text-[clamp(22px,2.4vw,30px)] font-medium tracking-[-0.03em] text-foreground">
+                {webProject.name}
+              </h2>
+              <span className="text-lg text-foreground-secondary" aria-hidden="true">
+                →
+              </span>
+            </div>
+            <div className="mt-2.5 font-mono text-xs text-foreground-muted">{webProject.tech}</div>
+          </Link>
+        </Reveal>
 
-      <Reveal>
-        <div className="flex flex-wrap-reverse items-center gap-10 border-t border-border py-12 md:py-14 lg:py-16">
-          <div className="group min-w-[280px] flex-1 basis-[520px] overflow-hidden rounded-2xl border border-border bg-surface">
-            <div className="flex h-[460px] items-center gap-5 p-7 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]">
-              <div className="h-full w-[190px] rounded-[26px] border border-border bg-background p-2">
-                <ShotPlaceholder label="Camera Screen" className="h-full rounded-[19px]" />
-              </div>
-              <ShotPlaceholder label="Film Selector Detail" className="h-[78%] flex-1 rounded-xl" />
-            </div>
-          </div>
-          <div className="min-w-[280px] flex-1 basis-[380px]">
-            <div className="font-mono text-xs uppercase tracking-[0.18em] text-foreground-subtle">
-              {kumtone.meta}
-            </div>
-            <h3 className="mt-[18px] font-display text-[clamp(30px,3.4vw,46px)] font-normal tracking-[-0.03em]">
-              {kumtone.title}
-            </h3>
-            <p className="mt-4 max-w-[42ch] text-foreground-secondary">{kumtone.desc}</p>
-            <div className="mt-[22px] font-mono text-xs tracking-[0.06em] text-foreground-muted">
-              {kumtone.tech.join(" / ")}
-            </div>
-            <Link
-              href="/showcase"
-              className="group mt-[30px] inline-flex items-center gap-2.5 border-b border-accent-soft pb-[5px] text-[15px] font-medium text-accent transition-[gap,border-color] duration-[250ms] hover:gap-4 hover:border-accent"
+        <Reveal delay={0.07}>
+          <Link href="/work" className="group block">
+            <ProjectPreview
+              variant="device"
+              className="aspect-[16/11] h-auto transition-colors duration-[320ms] group-hover:border-border-strong"
             >
-              <span>View Project</span>
-              <span>→</span>
-            </Link>
-          </div>
-        </div>
-      </Reveal>
+              <span className="absolute left-4 top-4 rounded-full border border-border bg-background px-[9px] py-[5px] font-mono text-[10px] tracking-[0.16em] text-foreground-muted">
+                DEVICE MOCKUP
+              </span>
+            </ProjectPreview>
+            <div className="mt-[22px] flex items-baseline justify-between gap-4 border-b border-border pb-3.5">
+              <span className="font-mono text-[11px] tracking-[0.2em] text-accent">MOBILE APP</span>
+              <span className="font-mono text-xs text-foreground-muted">02 / 02</span>
+            </div>
+            <div className="mt-4 flex items-center justify-between gap-4">
+              <h2 className="m-0 font-display text-[clamp(22px,2.4vw,30px)] font-medium tracking-[-0.03em] text-foreground">
+                {mobileProject.name}
+              </h2>
+              <span className="text-lg text-foreground-secondary" aria-hidden="true">
+                →
+              </span>
+            </div>
+            <div className="mt-2.5 font-mono text-xs text-foreground-muted">{mobileProject.tech}</div>
+          </Link>
+        </Reveal>
+      </div>
     </PageContainer>
   );
 }

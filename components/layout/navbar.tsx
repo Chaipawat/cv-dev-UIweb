@@ -2,76 +2,60 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import PageContainer from "@/components/layout/page-container";
 import MobileNav from "@/components/layout/mobile-nav";
 import { NAV_ITEMS } from "@/data/nav";
+import { portfolioData } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
+
+const { profile } = portfolioData;
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
-    <nav
-      className={cn(
-        "sticky top-0 z-[100] border-b border-transparent py-[22px] backdrop-blur-[14px] transition-[background,border-color,padding] duration-300",
-        scrolled && "border-border bg-background/85 py-3"
-      )}
-    >
-      <PageContainer className="flex items-center justify-between gap-6">
-        <Link
-          href="/"
-          className="flex items-center gap-px font-mono text-[15px] font-medium tracking-[0.02em]"
-        >
-          <span>C</span>
-          <span className="text-accent">[</span>
-          <span>J</span>
-          <span className="text-accent">]</span>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/86 backdrop-blur-[10px]">
+      <PageContainer className="flex h-[66px] items-center justify-between gap-6">
+        <Link href="/" className="flex items-baseline gap-[9px]">
+          <span className="font-display text-[13px] font-medium tracking-[-0.005em] text-foreground">
+            {profile.fullName}
+          </span>
+          <span className="font-serif text-[15px] italic text-accent">{profile.nickname}</span>
         </Link>
 
-        <div className="hidden items-center gap-1.5 md:flex">
+        <nav className="hidden items-center gap-0.5 md:flex" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
             const active = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={cn(
-                  "group relative px-3.5 py-2 text-[15px] transition-colors duration-300",
-                  active ? "font-medium text-foreground" : "font-normal text-foreground-muted"
+                  "inline-flex items-center px-[13px] py-2 font-display text-[13.5px] font-medium transition-colors duration-[180ms]",
+                  active ? "text-foreground" : "text-foreground-muted hover:text-foreground-secondary"
                 )}
               >
-                <span>{item.label}</span>
                 <span
+                  aria-hidden="true"
                   className={cn(
-                    "absolute bottom-0.5 left-3.5 right-3.5 h-[1.5px] origin-left scale-x-0 bg-accent transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                    active && "scale-x-100"
+                    "mr-2 inline-block h-1 w-1 rounded-full transition-colors duration-[180ms]",
+                    active ? "bg-accent" : "bg-transparent"
                   )}
                 />
+                {item.label}
               </Link>
             );
           })}
-        </div>
+        </nav>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href="/contact"
-            className="group hidden items-center gap-2 rounded-full bg-foreground px-5 py-[11px] text-sm font-medium text-cream transition-[background,gap] duration-[250ms] hover:gap-3 hover:bg-accent md:flex"
-          >
-            <span>Let&apos;s Talk</span>
-            <span className="text-[13px]">→</span>
-          </Link>
+        <div className="flex items-center gap-3.5">
+          <span className="hidden font-mono text-[11px] tracking-[0.14em] text-foreground-muted lg:inline">
+            {profile.location.split(",")[0].toUpperCase()}, TH
+          </span>
           <MobileNav pathname={pathname} />
         </div>
       </PageContainer>
-    </nav>
+    </header>
   );
 }
