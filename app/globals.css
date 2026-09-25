@@ -56,9 +56,9 @@
   --font-mono: var(--font-geist-mono), "Geist Mono", monospace;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* No global `scroll-behavior: smooth`: Lenis provides smooth wheel and anchor
+   scrolling when motion is allowed. A CSS smooth value would also get written
+   back inline by ScrollTrigger's refresh and throttle native/touch scrolling. */
 
 /* Layered as Tailwind "base" so utility classes (e.g. text-background on an
    <a>) still win over these — un-layered rules would otherwise beat every
@@ -126,9 +126,118 @@ html {
   animation: riseIn var(--duration-slow) var(--ease-editorial) both;
 }
 
+/* ---------- Lenis (rules from lenis/dist/lenis.css, not an exported path) ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis {
+  /* Lenis owns smoothing; native smooth scroll would fight it. */
+  scroll-behavior: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ---------- Kinetic motion pre-states ----------
+   `html.motion` is set by an inline script only when motion is allowed, and
+   removed again if the motion runtime never reports ready. Without it, every
+   element below renders in its final state. */
+
+/* Clipped line reveal. Insets extend past the box so tight leading never crops glyphs. */
+.motion [data-reveal="clip"]:not([data-revealed]) {
+  clip-path: inset(120% -6% -30% -6%);
+}
+
+.motion [data-reveal="fade"]:not([data-revealed]) {
+  opacity: 0;
+}
+
+.motion [data-reveal="wipe"]:not([data-revealed]) {
+  clip-path: inset(0 100% 0 0);
+}
+
+.motion [data-reveal="unmask"]:not([data-revealed]) {
+  clip-path: inset(100% 0 0 0);
+}
+
+/* Hero intro runs in CSS so it starts at first paint instead of after hydration. */
+@keyframes clip-up {
+  from {
+    clip-path: inset(120% -6% -30% -6%);
+    transform: translateY(38%);
+  }
+  to {
+    clip-path: inset(-30% -6% -30% -6%);
+    transform: none;
+  }
+}
+
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes rise-fade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.motion [data-intro="clip"] {
+  animation: clip-up 1s var(--ease-editorial) both;
+  animation-delay: calc(var(--i, 0) * 110ms + 80ms);
+}
+
+.motion [data-intro="wipe"] {
+  animation: wipe-in 1.2s var(--ease-editorial) 260ms both;
+}
+
+.motion [data-intro="rise"] {
+  animation: rise-fade 0.8s var(--ease-editorial) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 420ms);
+}
+
+/* Track holds two identical copies; shifting by -50% loops seamlessly. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee var(--marquee-duration, 48s) linear infinite;
+}
+
+.marquee-track[data-direction="reverse"] {
+  animation-direction: reverse;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .marquee-track {
+    animation: none !important;
   }
   * {
     animation-duration: 0.01ms !important;

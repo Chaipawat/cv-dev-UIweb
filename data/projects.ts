@@ -11,6 +11,17 @@ export function getProjectBySlug(slug: string): Project | undefined {
   return PROJECTS.find((p) => p.slug === slug);
 }
 
+/** Project index (1-based) in display order, e.g. for "01 / 08". */
+export function getProjectNumber(slug: string): number {
+  return PROJECTS.findIndex((p) => p.slug === slug) + 1;
+}
+
+/** Following project in display order, wrapping back to the first. */
+export function getNextProject(slug: string): Project {
+  const i = PROJECTS.findIndex((p) => p.slug === slug);
+  return PROJECTS[(i + 1) % PROJECTS.length];
+}
+
 /** Projects for one experience entry, oldest first to read as a progression. */
 export function getProjectsForExperience(experienceId: string): Project[] {
   return PROJECTS.filter((p) => p.experienceId === experienceId).sort(

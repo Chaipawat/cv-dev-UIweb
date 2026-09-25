@@ -5,6 +5,8 @@ export interface TimelineRecord {
   tag: string;
   name: string;
   tech: string;
+  /** Case-study route when the record is a portfolio project. */
+  href?: `/work/${string}`;
 }
 
 export interface TimelineNode {
@@ -38,6 +40,7 @@ const experienceNodes: TimelineNode[] = [...experience].reverse().map((e) => {
         tag: `PROJECT — ${formatProjectPeriod(p.period)}`,
         name: p.title,
         tech: formatStack(p.stack, 4),
+        href: `/work/${p.slug}` as const,
       }))
     : e.project
       ? [{ tag: "PROJECT", name: e.project.name, tech: formatStack(e.project.stack) }]

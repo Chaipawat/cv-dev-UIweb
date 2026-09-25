@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import {
   motion,
@@ -91,20 +92,38 @@ export default function CareerTimeline() {
               ) : null}
 
               <div className="mt-[34px] grid grid-cols-1 border-t border-border sm:grid-cols-2">
-                {node.records.map((r) => (
-                  <div
-                    key={r.name}
-                    className="border-b border-border py-5 pr-5 transition-colors duration-[180ms] hover:bg-surface"
-                  >
-                    <div className="mb-3 font-mono text-[10px] tracking-[0.18em] text-foreground-muted">
-                      {r.tag}
+                {node.records.map((r) => {
+                  const body = (
+                    <>
+                      <div className="mb-3 font-mono text-[10px] tracking-[0.18em] text-foreground-muted">
+                        {r.tag}
+                      </div>
+                      <div className="flex items-baseline justify-between gap-3 font-display text-base font-medium leading-[1.35] text-foreground">
+                        {r.name}
+                        {r.href ? (
+                          <span
+                            aria-hidden="true"
+                            className="text-foreground-muted transition-colors duration-[180ms] group-hover:text-accent"
+                          >
+                            →
+                          </span>
+                        ) : null}
+                      </div>
+                      <div className="mt-3 font-mono text-[11.5px] text-accent">{r.tech}</div>
+                    </>
+                  );
+                  const cellClass =
+                    "group block border-b border-border py-5 pr-5 transition-colors duration-[180ms] hover:bg-surface";
+                  return r.href ? (
+                    <Link key={r.name} href={r.href} className={cellClass}>
+                      {body}
+                    </Link>
+                  ) : (
+                    <div key={r.name} className={cellClass}>
+                      {body}
                     </div>
-                    <div className="font-display text-base font-medium leading-[1.35] text-foreground">
-                      {r.name}
-                    </div>
-                    <div className="mt-3 font-mono text-[11.5px] text-accent">{r.tech}</div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </motion.div>
           ))}

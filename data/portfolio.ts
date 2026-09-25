@@ -1,4 +1,4 @@
-import type { Education, Experience, Project, SkillGroup, SkillGroupKey } from "@/types/portfolio";
+import type { Education, Experience, ProgressionStep, Project, SkillGroup, SkillGroupKey } from "@/types/portfolio";
 
 /**
  * Canonical source of truth for every piece of portfolio content.
@@ -30,6 +30,18 @@ const profile = {
     "Frontend-focused Software Developer working across web, mobile, LINE LIFF, admin systems, booking flows, payments, and product interfaces.",
 
   focusAreas: ["Web", "Mobile", "Product Interfaces"],
+
+  /** Product surfaces named in the statement copy and marquee. */
+  domains: ["Web", "Mobile", "LINE LIFF", "Admin Systems", "Booking Flows", "Payments", "Product Interfaces"],
+
+  /** Footer marquee: what Ryu is available for. */
+  availableFor: ["Frontend", "Software Development", "Product Work"],
+
+  /** How Ryu works inside the usual 1 Frontend / 1 Backend / 1 Manager team. */
+  teamScope:
+    "I handled the front-end side of the product — discussing requirements, implementing UI and responsive layouts, integrating APIs, giving UI/UX feedback, handling application states, testing user flows and fixing bugs.",
+  backendBoundary:
+    "Backend services were built by the backend developer. Backend development is not my primary responsibility.",
 
   availability: {
     openToWork: true,
@@ -156,6 +168,7 @@ const projects: Project[] = [
     shortTitle: "Badminton",
     period: { start: 2025, end: 2026 },
     type: "LINE LIFF / Web Application / Admin",
+    shortType: "LINE LIFF",
     categories: ["liff", "web", "admin"],
     platforms: ["LINE LIFF", "Admin Web"],
     description:
@@ -163,6 +176,37 @@ const projects: Project[] = [
     role: "Frontend Developer",
     experienceId: "bty-marketing",
     team: { frontend: 1, backend: 1, manager: 1 },
+    focus: ["Booking", "Membership", "Payment", "Admin"],
+    contribution: ["UI Implementation", "Responsive Design", "API Integration", "UX Feedback", "Testing", "Bug Fixing"],
+    highlights: [
+      {
+        title: "LINE LIFF booking flow",
+        description:
+          "A mobile-first booking flow that runs inside LINE: pick a court, choose a time slot, confirm the booking.",
+        items: ["Court selection", "Time-slot selection", "Booking confirmation"],
+      },
+      {
+        title: "Membership & packages",
+        description: "Membership and package flows so players can buy and use packages as part of booking.",
+        items: ["Membership", "Package flow"],
+      },
+      {
+        title: "QR payment & status",
+        description:
+          "Payment-related UI with QR payment, plus clear booking and payment status states driven by the API.",
+        items: ["QR payment", "Booking status", "Payment status"],
+      },
+      {
+        title: "Booking history",
+        description: "A history view so customers can look back at past and upcoming bookings.",
+        items: ["Booking history"],
+      },
+      {
+        title: "Admin interface",
+        description: "The admin side of the same product, for staff working with bookings, members and payments.",
+        items: ["Dashboard", "Bookings", "Members", "Payments"],
+      },
+    ],
     responsibilities: [
       "Customer-facing LINE LIFF interface",
       "Admin interface",
@@ -214,6 +258,7 @@ const projects: Project[] = [
     shortTitle: "Zonepang",
     period: { start: 2024, end: 2026 },
     type: "Web Platform",
+    shortType: "Web Platform",
     categories: ["web"],
     platforms: ["Web"],
     description:
@@ -244,7 +289,7 @@ const projects: Project[] = [
       "Flow-based interfaces",
     ],
     stack: ["React", "Next.js", "JavaScript", "TypeScript", "REST API", "Postman", "Figma"],
-    backendFamiliarity: "Node.js",
+    backendFamiliarity: "Node.js code reading to understand API flow",
     featured: true,
     confidentiality: COMPANY_CONFIDENTIALITY,
     images: { gallery: [] },
@@ -254,6 +299,7 @@ const projects: Project[] = [
     title: "Zonepang Admin",
     period: { start: 2024, end: 2026 },
     type: "Admin / Back-office",
+    shortType: "Admin",
     categories: ["admin", "web"],
     platforms: ["Admin Web"],
     description:
@@ -278,6 +324,7 @@ const projects: Project[] = [
     title: "Kumtone",
     period: { start: 2025, end: 2026 },
     type: "Mobile Photography Application",
+    shortType: "Mobile App",
     categories: ["mobile"],
     platforms: ["Android", "iOS"],
     description:
@@ -320,6 +367,7 @@ const projects: Project[] = [
     title: "Broadpang Extension",
     period: { start: 2022, end: 2023 },
     type: "Chrome Extension",
+    shortType: "Extension",
     categories: ["extension"],
     platforms: ["Chrome Extension"],
     description:
@@ -348,6 +396,7 @@ const projects: Project[] = [
     shortTitle: "Mini Game",
     period: { start: 2025, end: 2026 },
     type: "Offline Mobile Application",
+    shortType: "Mobile App",
     categories: ["mobile"],
     description:
       "Offline React Native party-game app with card drawing, bottle spinning and randomized mechanics, monetized with AdMob.",
@@ -375,6 +424,7 @@ const projects: Project[] = [
     title: "Broadpang Web",
     period: { start: 2023, end: 2023 },
     type: "Web Application",
+    shortType: "Web App",
     categories: ["web"],
     platforms: ["Web"],
     description:
@@ -401,6 +451,7 @@ const projects: Project[] = [
     title: "DevPath",
     period: { start: 2026, end: null },
     type: "Personal Learning Web Application",
+    shortType: "Personal",
     categories: ["personal", "web"],
     platforms: ["Web"],
     description:
@@ -424,6 +475,20 @@ const projects: Project[] = [
   },
 ];
 
+/** Condensed growth in scope and technology, oldest first. */
+const progression: ProgressionStep[] = [
+  { year: "2022", title: "Broadpang Extension", shift: "Legacy extension", projectSlugs: ["broadpang-extension"] },
+  { year: "2023", title: "React Web", shift: "Component-based web", projectSlugs: ["broadpang-web"] },
+  { year: "2024", title: "Zonepang", shift: "Next.js platform + admin", projectSlugs: ["zonepang-platform", "zonepang-admin"] },
+  { year: "2025", title: "React Native", shift: "Mobile apps + in-app purchase", projectSlugs: ["kumtone", "mini-game"] },
+  {
+    year: "2025—2026",
+    title: "LINE LIFF / Product Systems",
+    shift: "Booking, membership, payment",
+    projectSlugs: ["badminton-booking"],
+  },
+];
+
 const contact = {
   email: "chaipawat22247@gmail.com",
   phone: "0979405571",
@@ -441,5 +506,6 @@ export const portfolio = {
   softSkills,
   workflow,
   projects,
+  progression,
   contact,
 };

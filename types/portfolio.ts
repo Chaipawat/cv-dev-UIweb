@@ -29,6 +29,12 @@ export interface ProjectMediaGroup {
   items: string[];
 }
 
+export interface ProjectHighlight {
+  title: string;
+  description: string;
+  items: string[];
+}
+
 export interface ProjectPeriod {
   start: number;
   /** null = ongoing. Equal to start for single-year projects. */
@@ -42,6 +48,8 @@ export interface Project {
 
   period: ProjectPeriod;
   type: string;
+  /** Compact type for index rows, e.g. "LINE LIFF" or "Mobile App". */
+  shortType: string;
   categories: ProjectCategory[];
   platforms?: string[];
 
@@ -58,8 +66,15 @@ export interface Project {
     manager?: number;
   };
 
+  /** Short product-focus tags for metadata, e.g. ["Booking", "Payment"]. */
+  focus?: string[];
+  /** Short contribution tags for metadata, e.g. ["UI Implementation", "Testing"]. */
+  contribution?: string[];
+
   responsibilities: string[];
   features?: string[];
+  /** Curated feature narratives for the case-study page. */
+  highlights?: ProjectHighlight[];
   notes?: string[];
 
   stack: string[];
@@ -101,6 +116,15 @@ export interface Education {
   university: string;
   faculty: string;
   graduationYear: number | null;
+}
+
+/** One step of the condensed career progression (Legacy Extension → … → LINE LIFF). */
+export interface ProgressionStep {
+  year: string;
+  title: string;
+  /** What changed at this step, e.g. "Legacy extension maintenance". */
+  shift: string;
+  projectSlugs: string[];
 }
 
 export type SkillGroupKey = "frontend" | "mobile" | "integration" | "workflow" | "backendFamiliarity";
