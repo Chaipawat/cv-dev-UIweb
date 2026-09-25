@@ -4,7 +4,7 @@ import { portfolio } from "@/data/portfolio";
 
 const { profile } = portfolio;
 
-const LINE = "block font-display font-extrabold uppercase leading-[0.86] tracking-[-0.055em] text-[clamp(36px,11vw,172px)]";
+const LINE = "block font-display uppercase leading-[0.86] tracking-[-0.01em] text-[clamp(36px,11vw,172px)]";
 
 /**
  * "I build interfaces for real products." Each line takes its own position
@@ -32,7 +32,7 @@ export default function KineticStatement() {
         </h2>
 
         <div className="mt-[clamp(40px,6vw,88px)] grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
-          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground-muted md:col-span-3">
+          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground-secondary md:col-span-3">
             WHAT I DO
           </span>
           <p data-reveal="fade" className="m-0 max-w-[560px] text-[clamp(17px,1.5vw,20px)] leading-[1.55] text-foreground-secondary md:col-span-6 md:col-start-7">

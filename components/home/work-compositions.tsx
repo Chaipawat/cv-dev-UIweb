@@ -22,12 +22,12 @@ function Kicker({ project, position, className, rule }: CompositionProps & { cla
   return (
     <div
       className={cn(
-        "relative flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 font-mono text-[11px] tracking-[0.2em] text-foreground-muted",
+        "relative flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 font-mono text-[11px] tracking-[0.2em] text-foreground-secondary",
         className
       )}
     >
       <span>
-        {position} <span className="text-accent">— {project.shortType.toUpperCase()}</span>
+        {position} <span className="text-accent-text">— {project.shortType.toUpperCase()}</span>
       </span>
       <span>{formatProjectPeriod(project.period)}</span>
       {rule ? <span data-m="rule" aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-border" /> : null}
@@ -39,7 +39,7 @@ function Title({ project, className }: { project: Project; className?: string })
   const words = project.title.split(" ");
   const last = words.pop();
   return (
-    <h3 data-reveal="clip" className={cn("m-0 font-display font-extrabold uppercase tracking-[-0.055em] text-foreground", className)}>
+    <h3 data-reveal="clip" className={cn("m-0 font-display uppercase tracking-[-0.01em] text-foreground", className)}>
       <Link href={href(project)} className="group inline transition-colors duration-[320ms] hover:text-accent">
         {words.length ? `${words.join(" ")} ` : null}
         {/* Last word and arrow never split across lines. */}
@@ -73,7 +73,7 @@ function Meta({ project, layout = "row", className }: { project: Project; layout
     >
       {rows.map((r) => (
         <div key={r.k} data-reveal="fade" className="border-t border-border py-3.5">
-          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">{r.k}</dt>
+          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">{r.k}</dt>
           <dd className="m-0 mt-1.5 text-[14px] leading-[1.5] text-foreground-secondary">{r.v}</dd>
         </div>
       ))}
@@ -97,7 +97,7 @@ export function FullWidthComposition({ project, position }: CompositionProps) {
   return (
     <article data-m="project" data-variant="full">
       <Kicker project={project} position={position} rule className="pb-4" />
-      <h3 className="m-0 mt-[clamp(20px,3vw,40px)] font-display text-[clamp(38px,11.5vw,176px)] font-extrabold uppercase leading-[0.84] tracking-[-0.055em] text-foreground">
+      <h3 className="m-0 mt-[clamp(20px,3vw,40px)] font-display text-[clamp(38px,11.5vw,176px)] uppercase leading-[0.84] tracking-[-0.01em] text-foreground">
         <Link href={href(project)} className="group block transition-colors duration-[320ms] hover:text-accent">
           <span data-reveal="clip" className="block origin-left">{first}</span>
           <span data-reveal="clip" className="block origin-left pl-[clamp(20px,14vw,260px)]">
@@ -140,7 +140,7 @@ export function AsymmetricComposition({ project, position }: CompositionProps) {
         // No screenshot yet: the feature inventory holds the left edge as a mono column.
         <ul className="order-last m-0 hidden list-none flex-col justify-end border-l border-border p-0 pl-5 lg:order-none lg:col-span-3 lg:flex">
           {project.features.map((f) => (
-            <li key={f} className="py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground-muted">
+            <li key={f} className="py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground-secondary">
               {f}
             </li>
           ))}
@@ -191,7 +191,7 @@ export function MobileComposition({ project, position }: CompositionProps) {
                 key={f}
                 data-reveal="fade" className="flex items-baseline gap-4 border-b border-border py-[clamp(10px,1.4vw,18px)] font-serif text-[clamp(26px,3.4vw,48px)] italic leading-[1.05] text-foreground"
               >
-                <span className="font-mono text-[10px] not-italic tracking-[0.2em] text-foreground-muted">
+                <span className="font-mono text-[10px] not-italic tracking-[0.2em] text-foreground-secondary">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {f}
@@ -229,7 +229,7 @@ export function ExtensionComposition({ project, position }: CompositionProps) {
       ) : null}
 
       <div className="mt-[clamp(28px,4vw,48px)] grid grid-cols-1 gap-8 lg:grid-cols-12">
-        <p data-reveal="clip" className="m-0 font-mono text-[clamp(20px,2.8vw,40px)] font-medium uppercase leading-[1.1] tracking-[-0.02em] text-accent lg:col-span-5">
+        <p data-reveal="clip" className="m-0 font-mono text-[clamp(20px,2.8vw,40px)] font-medium uppercase leading-[1.1] tracking-[-0.02em] text-accent-text lg:col-span-5">
           {project.stack.join(" / ")}
         </p>
         <div className="lg:col-span-6 lg:col-start-7">

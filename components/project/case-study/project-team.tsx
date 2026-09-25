@@ -25,15 +25,15 @@ export default function ProjectTeam({ project }: { project: Project }) {
           <div key={seat.label} className={cn("pt-5", i > 0 && "border-l border-border pl-[clamp(12px,2vw,24px)]")}>
             <div
               className={cn(
-                "font-display text-[clamp(64px,11vw,156px)] font-extrabold leading-[0.8] tracking-[-0.06em]",
+                "font-display text-[clamp(64px,11vw,156px)] leading-[0.8] tracking-[-0.01em]",
                 seat.me ? "text-accent" : "text-foreground-muted"
               )}
             >
               {seat.n}
             </div>
-            <div className="mt-4 font-mono text-[10px] tracking-[0.2em] text-foreground-muted">
+            <div className="mt-4 font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">
               {seat.label}
-              {seat.me ? <span className="text-accent"> — ME</span> : null}
+              {seat.me ? <span className="text-accent-text"> — ME</span> : null}
             </div>
           </div>
         ))}

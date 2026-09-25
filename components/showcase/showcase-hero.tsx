@@ -18,12 +18,12 @@ export default function ShowcaseHero() {
   return (
     <PageContainer className="pt-[132px]">
       <Reveal as="section">
-        <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-muted">
+        <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
           <span>PAGE 02 — SHOWCASE</span>
           <span>SELECTED PROJECTS {RANGE}</span>
         </div>
 
-        <h1 className="m-0 mt-12 font-display text-[clamp(50px,9.6vw,142px)] font-extrabold uppercase leading-[0.88] tracking-[-0.05em] text-foreground">
+        <h1 className="m-0 mt-12 font-display text-[clamp(50px,9.6vw,142px)] uppercase leading-[0.88] tracking-[-0.01em] text-foreground">
           Showcase
         </h1>
 
@@ -39,7 +39,7 @@ export default function ShowcaseHero() {
             <dl className="m-0 mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-border pt-4 sm:grid-cols-3">
               {facts.map((f) => (
                 <div key={f.k} className="last:col-span-2 sm:last:col-span-1">
-                  <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">{f.k}</dt>
+                  <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">{f.k}</dt>
                   <dd className="m-0 mt-1.5 text-[14px] leading-snug text-foreground">{f.v}</dd>
                 </div>
               ))}

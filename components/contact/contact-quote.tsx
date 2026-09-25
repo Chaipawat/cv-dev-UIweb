@@ -9,7 +9,7 @@ export default function ContactQuote() {
           Need a developer? Let&apos;s talk before happy hour.
         </div>
       </div>
-      <div className="font-mono text-[12px] tracking-[0.2em] text-foreground-muted">
+      <div className="font-mono text-[12px] tracking-[0.2em] text-foreground-secondary">
         Good code. Bad jokes. Cold beer.
       </div>
     </div>

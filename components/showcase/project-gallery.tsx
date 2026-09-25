@@ -62,13 +62,13 @@ export default function ProjectGallery({ items, filters }: ProjectGalleryProps) 
               )}
             >
               {o.label}
-              <span className={active ? "text-background/60" : "text-foreground-muted"}>{pad(o.count)}</span>
+              <span className={active ? "text-background/60" : "text-foreground-secondary"}>{pad(o.count)}</span>
             </button>
           );
         })}
       </div>
 
-      <p aria-live="polite" className="m-0 mt-4 font-mono text-[10.5px] tracking-[0.2em] text-foreground-muted">
+      <p aria-live="polite" className="m-0 mt-4 font-mono text-[10.5px] tracking-[0.2em] text-foreground-secondary">
         SHOWING {pad(visible.length)} / {pad(items.length)}
       </p>
 

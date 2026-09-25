@@ -32,7 +32,7 @@ export default function CroppedProjectImage({
   const focus = image.focus ?? "50% 50%";
   return (
     <figure className={cn("m-0 min-w-0", className)}>
-      <div className="relative overflow-hidden border border-border bg-surface" style={{ aspectRatio: aspect }}>
+      <div className="ink-duotone relative overflow-hidden border border-border bg-surface" style={{ aspectRatio: aspect }}>
         <Image
           src={image.src}
           alt={image.alt}

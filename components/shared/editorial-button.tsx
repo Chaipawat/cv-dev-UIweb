@@ -22,10 +22,11 @@ export default function EditorialButton<T extends ElementType = "button">({
   return (
     <Component
       className={cn(
-        "inline-flex items-center gap-3 rounded-md px-[22px] py-[14px] font-display text-sm font-medium transition-colors duration-[180ms]",
+        "inline-flex items-center gap-3 rounded-[2px] px-[22px] py-[14px] font-body text-sm font-medium transition-colors duration-[180ms]",
+        // Vermilion hover uses --accent-text: washi on it is 4.5:1, on --accent only 3.3:1.
         variant === "primary"
-          ? "bg-foreground text-background hover:bg-accent"
-          : "border border-border text-foreground hover:border-accent hover:text-accent",
+          ? "bg-foreground text-background hover:bg-accent-text"
+          : "border border-border-strong text-foreground hover:border-accent hover:text-accent-text",
         className
       )}
       {...rest}

@@ -20,7 +20,7 @@ export default function MediaCaption({ index, label, caption, className }: Media
       )}
     >
       {index || label ? (
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-muted">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-secondary">
           {index ? `FIG. ${index}` : null}
           {index && label ? " — " : null}
           {label}

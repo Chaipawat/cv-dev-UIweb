@@ -50,8 +50,8 @@ export default function ExperienceProgression() {
                     style={{ "--t": t } as CSSProperties}
                   >
                     <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 font-mono text-[11px] tracking-[0.2em]">
-                      <span className="text-accent">{step.year}</span>
-                      <span className="text-foreground-muted">{step.shift.toUpperCase()}</span>
+                      <span className="text-accent-text">{step.year}</span>
+                      <span className="text-foreground-secondary">{step.shift.toUpperCase()}</span>
                       {i < steps - 1 ? (
                         <span className="text-foreground-muted" aria-hidden="true">
                           →
@@ -59,7 +59,7 @@ export default function ExperienceProgression() {
                       ) : null}
                     </div>
                     <div
-                      className="mt-2 break-words font-display font-extrabold uppercase leading-[0.9] tracking-[-0.05em] text-foreground transition-colors duration-[550ms] group-data-[active]/step:text-accent"
+                      className="mt-2 break-words font-display uppercase leading-[0.9] tracking-[-0.01em] text-foreground transition-colors duration-[550ms] group-data-[active]/step:text-accent"
                       style={{ fontSize: `clamp(${30 + t * 10}px, ${4.6 + t * 3.4}vw, ${64 + t * 64}px)` }}
                     >
                       {titleProject ? (
@@ -76,7 +76,7 @@ export default function ExperienceProgression() {
                           <Link
                             key={p.slug}
                             href={`/work/${p.slug}`}
-                            className="text-foreground-secondary underline decoration-border-strong underline-offset-4 transition-colors duration-[180ms] hover:text-accent hover:decoration-accent"
+                            className="text-foreground-secondary underline decoration-border-strong underline-offset-4 transition-colors duration-[180ms] hover:text-accent-text hover:decoration-accent"
                           >
                             {p.title}
                           </Link>
@@ -95,13 +95,13 @@ export default function ExperienceProgression() {
                   <span data-m="step-rail" className="absolute inset-0 block bg-accent" />
                 </div>
                 <div className="min-w-0 py-1">
-                  <div data-m="step-count" className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">
+                  <div data-m="step-count" className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">
                     01 / {String(steps).padStart(2, "0")}
                   </div>
                   <div className="overflow-hidden">
                     <div
                       data-m="step-year"
-                      className="mt-3 font-display text-[clamp(40px,4vw,64px)] font-extrabold leading-[0.9] tracking-[-0.05em] text-foreground"
+                      className="mt-3 font-display text-[clamp(40px,4vw,64px)] leading-[0.9] tracking-[-0.01em] text-foreground"
                     >
                       {first.year}
                     </div>

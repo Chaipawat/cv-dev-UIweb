@@ -19,13 +19,13 @@ export default function HowIWork() {
         {FLOW.map((f) => (
           <div key={f.n} className="border-b border-border py-7 pr-6 transition-colors duration-[180ms] hover:bg-surface">
             <div className="mb-6 flex items-center gap-3">
-              <span className="font-mono text-[11px] tracking-[0.18em] text-accent">{f.n}</span>
+              <span className="font-mono text-[11px] tracking-[0.18em] text-accent-text">{f.n}</span>
               <span className="block h-px flex-1 bg-border" aria-hidden="true" />
-              <span className="text-[13px] text-foreground-muted" aria-hidden="true">
+              <span className="text-[13px] text-foreground-secondary" aria-hidden="true">
                 {f.arrow}
               </span>
             </div>
-            <h2 className="m-0 font-display text-[clamp(20px,2.2vw,26px)] font-medium tracking-[-0.03em] text-foreground">
+            <h2 className="m-0 font-body text-[clamp(20px,2.2vw,26px)] font-medium tracking-[-0.03em] text-foreground">
               {f.k}
             </h2>
             <p className="m-0 mt-3 max-w-[240px] text-[13.5px] leading-[1.6] text-foreground-secondary">{f.v}</p>
@@ -37,7 +37,7 @@ export default function HowIWork() {
         <div className="flex max-w-[440px] items-start gap-3.5">
           <Sparkles size={17} strokeWidth={1.6} className="mt-0.5 flex-none text-accent" aria-hidden="true" />
           <div>
-            <div className="mb-2 font-mono text-[10px] tracking-[0.2em] text-foreground-muted">AI IN THE LOOP</div>
+            <div className="mb-2 font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">AI IN THE LOOP</div>
             <div className="text-[15px] leading-[1.6] text-foreground-secondary">
               AI for research, implementation support, debugging, and iteration.
             </div>

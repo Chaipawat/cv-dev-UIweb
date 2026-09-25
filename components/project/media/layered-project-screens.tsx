@@ -57,7 +57,7 @@ export default function LayeredProjectScreens({
                 priority={priority}
                 sizes="(min-width: 768px) 18vw, 45vw"
                 className={cn(
-                  "w-[44%] md:w-1/2 md:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.9)]",
+                  "w-[44%] md:w-1/2 md:shadow-[0_24px_60px_-18px_rgba(28,27,24,0.32)]",
                   LAYER_OFFSETS[i]
                 )}
               />

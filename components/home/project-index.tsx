@@ -32,7 +32,7 @@ export default function ProjectIndex() {
 
         <div
           aria-hidden="true"
-          className="hidden grid-cols-[56px_1fr_180px_120px_32px] gap-6 pt-6 pb-3 font-mono text-[10px] tracking-[0.2em] text-foreground-muted md:grid"
+          className="hidden grid-cols-[56px_1fr_180px_120px_32px] gap-6 pt-6 pb-3 font-mono text-[10px] tracking-[0.2em] text-foreground-secondary md:grid"
         >
           <span>NO.</span>
           <span>PROJECT</span>
@@ -50,21 +50,21 @@ export default function ProjectIndex() {
                 href={`/work/${p.slug}`}
                 className="group grid grid-cols-[36px_1fr_auto] items-baseline gap-x-4 gap-y-1 py-[clamp(14px,1.8vw,22px)] md:grid-cols-[56px_1fr_180px_120px_32px] md:gap-6"
               >
-                <span className="font-mono text-[11px] tracking-[0.18em] text-foreground-muted transition-colors duration-[180ms] group-hover:text-accent">
+                <span className="font-mono text-[11px] tracking-[0.18em] text-foreground-secondary transition-colors duration-[180ms] group-hover:text-accent-text">
                   {pad(i + 1)}
                 </span>
-                <span className="col-span-2 min-w-0 font-display text-[clamp(22px,3.2vw,44px)] md:col-span-1 font-semibold uppercase leading-[1] tracking-[-0.04em] text-foreground transition-[color,transform] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-3 group-hover:text-accent">
+                <span className="col-span-2 min-w-0 font-display text-[clamp(22px,3.2vw,44px)] md:col-span-1 uppercase leading-[1] tracking-[-0.005em] text-foreground transition-[color,transform] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-3 group-hover:text-accent-text">
                   {p.title}
                 </span>
                 <span className="col-start-2 row-start-2 font-mono text-[11px] uppercase md:row-start-auto tracking-[0.16em] text-foreground-secondary md:col-start-auto">
                   {p.shortType}
                 </span>
-                <span className="col-start-3 row-start-2 text-right font-mono text-[11px] tracking-[0.12em] text-foreground-muted md:col-start-auto md:row-start-auto md:text-left">
+                <span className="col-start-3 row-start-2 text-right font-mono text-[11px] tracking-[0.12em] text-foreground-secondary md:col-start-auto md:row-start-auto md:text-left">
                   {formatProjectPeriod(p.period)}
                 </span>
                 <span
                   aria-hidden="true"
-                  className="hidden text-right text-lg text-foreground-muted transition-[color,transform] duration-[320ms] group-hover:translate-x-1 group-hover:text-accent md:block"
+                  className="hidden text-right text-lg text-foreground-muted transition-[color,transform] duration-[320ms] group-hover:translate-x-1 group-hover:text-accent-text md:block"
                 >
                   →
                 </span>

@@ -8,7 +8,8 @@ import { getVelocity } from "@/lib/motion/velocity";
  * stays in Server Components.
  *
  * Every section moves differently on purpose:
- *   hero          → scroll pulls the two title lines apart and squashes/stretches them
+ *   hero          → scroll pulls the two title lines apart and squashes/stretches them;
+ *                   scroll velocity widens + compresses the letters (inner layer)
  *   statement     → lines react to scroll velocity (stretch, skew, blur on desktop)
  *   work          → per-project clip reveals + fade-out handover to the next project
  *   index         → batched row cascade
@@ -114,8 +115,39 @@ const hero: Effect = (root, c) => {
   // Lines separate and change weight-feel: top squashes down, bottom stretches.
   if (top) tl.to(top, { xPercent: c.desktop ? -9 : -5, scaleY: 0.72, transformOrigin: "0% 100%" }, 0);
   if (bottom) tl.to(bottom, { xPercent: c.desktop ? 7 : 4, scaleY: 1.2, transformOrigin: "0% 0%" }, 0);
-  if (portrait) tl.to(portrait, { yPercent: -14 }, 0);
+  // Gentle lift only — more would slide the photo back under the title.
+  if (portrait) tl.to(portrait, { yPercent: -6 }, 0);
   if (img) tl.to(img, { scale: 1.14 }, 0);
+
+  // Velocity response on the inner layer (the scrub owns the outer one):
+  // fast scrolling widens the condensed letters while compressing their
+  // height, with a faint motion blur on desktop. Eases back to rest.
+  const stretch = $$(root, '[data-m="hero-stretch"]');
+  const setters = stretch.map((el, i) => ({
+    scaleX: gsap.quickSetter(el, "scaleX"),
+    scaleY: gsap.quickSetter(el, "scaleY"),
+    blur: c.desktop ? gsap.quickSetter(el, "filter") : null,
+    gain: i === 0 ? 1 : 1.35,
+  }));
+  let current = 0;
+  const tick = () => {
+    current += (gsap.utils.clamp(-60, 60, getVelocity()) - current) * 0.1;
+    const mag = Math.abs(current);
+    setters.forEach((s) => {
+      const k = Math.min(mag * 0.004 * s.gain, 0.2);
+      s.scaleX(1 + k);
+      s.scaleY(1 - k * 0.35);
+      if (s.blur) {
+        const px = Math.min(mag * 0.03, 1.6);
+        s.blur(px > 0.15 ? `blur(${px.toFixed(2)}px)` : "none");
+      }
+    });
+  };
+  const reset = () => {
+    current = 0;
+    gsap.to(stretch, { scaleX: 1, scaleY: 1, filter: "none", duration: 0.4, ease: EASE });
+  };
+  return whileVisible(root, tick, reset);
 };
 
 const statement: Effect = (root, c) => {

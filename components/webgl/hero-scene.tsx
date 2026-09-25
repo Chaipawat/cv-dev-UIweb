@@ -1,10 +1,26 @@
 "use client";
 
 import { Canvas, useThree } from "@react-three/fiber";
-import { useEffect, useRef, type RefObject } from "react";
-import { NoToneMapping } from "three";
+import { useEffect, useRef, useState, type RefObject } from "react";
+import { NoToneMapping, getConsoleFunction, setConsoleFunction } from "three";
 import DistortedImage, { type PointerInput } from "@/components/webgl/distorted-image";
 import { MOTION_QUERIES } from "@/lib/motion/gsap";
+
+// R3F 9.x (latest stable) still builds `new THREE.Clock()` in every Canvas
+// store, which three r183+ flags as deprecated. Our frame loop uses its own
+// THREE.Timer, so drop exactly that one message and pass everything else
+// through. Remove once R3F ships with Timer (v10).
+const CLOCK_DEPRECATION = "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.";
+if (typeof window !== "undefined") {
+  const previous = getConsoleFunction();
+  setConsoleFunction((type: "log" | "warn" | "error", message: string, ...params: unknown[]) => {
+    if (type === "warn" && message === CLOCK_DEPRECATION) return;
+    if (previous) return previous(type, message, ...params);
+    const trace = params[0] as { isStackTrace?: boolean; getError?: (m: string) => Error } | undefined;
+    if (trace?.isStackTrace && trace.getError) console[type](trace.getError(message));
+    else console[type](message, ...params);
+  });
+}
 
 export interface HeroSceneProps {
   source: HTMLImageElement;
@@ -74,6 +90,9 @@ function Drivers({ frame, pointer }: { frame: HTMLElement; pointer: RefObject<Po
  */
 export default function HeroScene({ source, frame, focus, intensity, onReady, onFail }: HeroSceneProps) {
   const pointer = useRef<PointerInput>({ x: 0.5, y: 0.5, inside: false });
+  // Same condition as the CSS `.ink-duotone`: without hover there is no way
+  // to reveal colour, so touch devices get true colour at rest.
+  const [restColor] = useState(() => (window.matchMedia("(hover: hover)").matches ? 0 : 1));
 
   return (
     <Canvas
@@ -91,7 +110,7 @@ export default function HeroScene({ source, frame, focus, intensity, onReady, on
       }}
     >
       <Drivers frame={frame} pointer={pointer} />
-      <DistortedImage source={source} pointer={pointer} focus={focus} intensity={intensity} />
+      <DistortedImage source={source} pointer={pointer} focus={focus} intensity={intensity} restColor={restColor} />
     </Canvas>
   );
 }

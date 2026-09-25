@@ -36,22 +36,24 @@ export default function BrowserFrame({
             <span className="block h-[5px] w-[5px] bg-border-strong" />
             <span className="block h-[5px] w-[5px] bg-border-strong" />
           </span>
-          <span className="min-w-0 flex-1 truncate font-mono text-[10px] tracking-[0.08em] text-foreground-muted">
+          <span className="min-w-0 flex-1 truncate font-mono text-[10px] tracking-[0.08em] text-foreground-secondary">
             {image.urlLabel ?? image.caption ?? ""}
           </span>
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-foreground-muted">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-foreground-secondary">
             {image.category}
           </span>
         </div>
-        <Image
-          src={image.src}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
-          sizes={sizes}
-          priority={priority}
-          className="block h-auto w-full"
-        />
+        <div className="ink-duotone">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            sizes={sizes}
+            priority={priority}
+            className="block h-auto w-full"
+          />
+        </div>
       </div>
       {bare ? null : <MediaCaption index={index} label={label ?? image.category} caption={image.caption} />}
     </figure>

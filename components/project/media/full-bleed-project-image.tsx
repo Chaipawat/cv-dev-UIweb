@@ -27,7 +27,7 @@ export default function FullBleedProjectImage({
 }: FullBleedProjectImageProps) {
   return (
     <figure className={cn("m-0 w-full min-w-0", className)}>
-      <div className="relative overflow-hidden border-y border-border bg-surface" style={aspect ? { aspectRatio: aspect } : undefined}>
+      <div className="ink-duotone relative overflow-hidden border-y border-border bg-surface" style={aspect ? { aspectRatio: aspect } : undefined}>
         {aspect ? (
           <Image
             src={image.src}

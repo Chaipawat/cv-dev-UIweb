@@ -20,8 +20,8 @@ export default function ProjectHero({ project }: { project: Project }) {
   return (
     <header>
       <PageContainer className="pt-[132px]">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-b border-border pb-[22px] font-mono text-[11px] tracking-[0.2em] text-foreground-muted">
-          <Link href="/work" className="transition-colors duration-[180ms] hover:text-accent">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-b border-border pb-[22px] font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
+          <Link href="/work" className="transition-colors duration-[180ms] hover:text-accent-text">
             ← WORK
           </Link>
           <span>
@@ -30,7 +30,7 @@ export default function ProjectHero({ project }: { project: Project }) {
         </div>
 
         <MotionScope effect="caseHero">
-          <h1 className="m-0 mt-[clamp(36px,6vw,72px)] break-words font-display text-[clamp(44px,12.5vw,184px)] font-extrabold uppercase leading-[0.86] tracking-[-0.055em] text-foreground">
+          <h1 className="m-0 mt-[clamp(36px,6vw,72px)] break-words font-display text-[clamp(44px,12.5vw,184px)] uppercase leading-[0.86] tracking-[-0.01em] text-foreground">
             {words.map((word, i) => (
               <span key={`${word}-${i}`} data-m="case-line" className="block will-change-transform">
                 <span data-intro="clip" style={{ "--i": i } as CSSProperties} className={cn("block", LINE_INDENT[i % LINE_INDENT.length])}>
@@ -43,19 +43,19 @@ export default function ProjectHero({ project }: { project: Project }) {
 
         <Reveal delay={0.07}>
           <div className="mt-[clamp(32px,5vw,64px)] grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
-            <p className="m-0 font-mono text-[12px] uppercase leading-[1.7] tracking-[0.18em] text-accent md:col-span-5">
+            <p className="m-0 font-mono text-[12px] uppercase leading-[1.7] tracking-[0.18em] text-accent-text md:col-span-5">
               {project.type}
             </p>
             <dl className="m-0 grid grid-cols-2 gap-6 md:col-span-6 md:col-start-7 md:grid-cols-3">
               <div>
-                <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">YEAR</dt>
-                <dd className="m-0 mt-2 font-display text-[clamp(18px,1.8vw,24px)] font-medium tracking-[-0.02em] text-foreground">
+                <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">YEAR</dt>
+                <dd className="m-0 mt-2 font-body text-[clamp(18px,1.8vw,24px)] font-medium tracking-[-0.02em] text-foreground">
                   {years}
                 </dd>
               </div>
               <div className="md:col-span-2">
-                <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">ROLE</dt>
-                <dd className="m-0 mt-2 font-display text-[clamp(18px,1.8vw,24px)] font-medium tracking-[-0.02em] text-foreground">
+                <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">ROLE</dt>
+                <dd className="m-0 mt-2 font-body text-[clamp(18px,1.8vw,24px)] font-medium tracking-[-0.02em] text-foreground">
                   {project.role}
                 </dd>
               </div>

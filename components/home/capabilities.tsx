@@ -23,7 +23,7 @@ export default function Capabilities() {
           index="04"
           label="CAPABILITIES"
           trailing={
-            <Link href="/about" className="transition-colors duration-[180ms] hover:text-accent">
+            <Link href="/about" className="transition-colors duration-[180ms] hover:text-accent-text">
               HOW I WORK →
             </Link>
           }
@@ -46,7 +46,7 @@ export default function Capabilities() {
                 <h3
                   data-m="cap-label"
                   className={cn(
-                    "m-0 font-display text-[clamp(40px,7.2vw,112px)] font-extrabold uppercase leading-[0.86] tracking-[-0.055em] text-foreground md:col-span-7",
+                    "m-0 font-display text-[clamp(40px,7.2vw,112px)] uppercase leading-[0.86] tracking-[-0.01em] text-foreground md:col-span-7",
                     flip && "md:order-2 md:col-start-6 md:text-right"
                   )}
                 >
@@ -74,12 +74,12 @@ export default function Capabilities() {
           })}
 
           <div className="grid grid-cols-1 items-baseline gap-x-8 gap-y-3 py-[clamp(18px,2.4vw,32px)] md:grid-cols-12">
-            <h3 className="m-0 font-display text-[clamp(24px,3vw,40px)] font-semibold uppercase leading-[0.95] tracking-[-0.04em] text-foreground-muted md:col-span-5">
+            <h3 className="m-0 font-display text-[clamp(24px,3vw,40px)] uppercase leading-[0.95] tracking-[-0.005em] text-foreground-muted md:col-span-5">
               {skills.backendFamiliarity.label}
             </h3>
             <p className="m-0 font-mono text-[12px] leading-[1.8] tracking-[0.06em] text-foreground-secondary md:col-span-7">
               {skills.backendFamiliarity.items.join(" · ")}
-              <span className="block text-foreground-muted">
+              <span className="block text-foreground-secondary">
                 Reading backend code to understand API flow — backend is not my primary responsibility.
               </span>
             </p>

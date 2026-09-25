@@ -102,13 +102,13 @@ export default function ProjectVisualStory({ project, className }: { project: Pr
         return (
           <div key={group.id}>
             <header className="mb-[clamp(28px,4vw,56px)] grid grid-cols-1 items-end gap-6 border-b border-border pb-5 md:grid-cols-[1fr_auto]">
-              <h3 className="m-0 font-display text-[clamp(34px,6.4vw,96px)] font-extrabold uppercase leading-[0.9] tracking-[-0.05em] text-foreground">
-                <span className="mr-[0.3em] align-top font-mono text-[11px] font-normal tracking-[0.2em] text-accent">
+              <h3 className="m-0 font-display text-[clamp(34px,6.4vw,96px)] uppercase leading-[0.9] tracking-[-0.01em] text-foreground">
+                <span className="mr-[0.3em] align-top font-mono text-[11px] font-normal tracking-[0.2em] text-accent-text">
                   {pad(gi + 1)} —
                 </span>
                 {group.title}
               </h3>
-              <ul className="m-0 flex list-none flex-wrap gap-x-5 gap-y-1 p-0 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground-muted md:max-w-[280px] md:justify-end">
+              <ul className="m-0 flex list-none flex-wrap gap-x-5 gap-y-1 p-0 font-mono text-[11px] uppercase tracking-[0.16em] text-foreground-secondary md:max-w-[280px] md:justify-end">
                 {group.items.map((item) => (
                   <li key={item}>{item}</li>
                 ))}

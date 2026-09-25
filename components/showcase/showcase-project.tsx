@@ -24,7 +24,7 @@ function TypeCover({ project, number }: ShowcaseProjectProps) {
       />
       <span
         aria-hidden="true"
-        className="absolute -bottom-[0.2em] -right-[0.04em] font-display text-[clamp(140px,20vw,300px)] font-extrabold leading-none tracking-[-0.07em] text-accent/10 transition-colors duration-[550ms] group-hover:text-accent/20"
+        className="absolute -bottom-[0.2em] -right-[0.04em] font-display text-[clamp(140px,20vw,300px)] leading-none tracking-[-0.01em] text-accent/10 transition-colors duration-[550ms] group-hover:text-accent/20"
       >
         {number}
       </span>
@@ -41,11 +41,11 @@ function TypeCover({ project, number }: ShowcaseProjectProps) {
       </div>
 
       <div className="relative">
-        <p className="m-0 font-display text-[clamp(34px,5vw,76px)] font-extrabold uppercase leading-[0.86] tracking-[-0.05em] text-foreground transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2">
+        <p className="m-0 font-display text-[clamp(34px,5vw,76px)] uppercase leading-[0.86] tracking-[-0.01em] text-foreground transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2">
           {name}
         </p>
         {project.focus?.length ? (
-          <p className="m-0 mt-3 font-serif text-[clamp(18px,1.8vw,24px)] italic leading-tight text-accent">
+          <p className="m-0 mt-3 font-serif text-[clamp(18px,1.8vw,24px)] italic leading-tight text-accent-text">
             {project.focus.slice(0, 3).join(" / ")}
           </p>
         ) : null}
@@ -69,16 +69,16 @@ export default function ShowcaseProject({ project, number }: ShowcaseProjectProp
           {hasScreens ? <ProjectCover project={project} composition="layered" /> : <TypeCover project={project} number={number} />}
         </div>
 
-        <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-mono text-[10.5px] tracking-[0.2em] text-foreground-muted">
+        <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-mono text-[10.5px] tracking-[0.2em] text-foreground-secondary">
           <span>
-            <span className="text-accent">{number}</span> — {project.categories.map((c) => CATEGORY_LABELS[c]).join(" / ").toUpperCase()}
+            <span className="text-accent-text">{number}</span> — {project.categories.map((c) => CATEGORY_LABELS[c]).join(" / ").toUpperCase()}
           </span>
           <span>{formatProjectPeriod(project.period)}</span>
         </div>
 
         <h2
           id={`sp-${project.slug}`}
-          className="m-0 mt-3 font-display text-[clamp(24px,2.6vw,36px)] font-semibold leading-[1.05] tracking-[-0.035em] text-foreground transition-colors duration-[180ms] group-hover:text-accent"
+          className="m-0 mt-3 font-body text-[clamp(24px,2.6vw,36px)] font-semibold leading-[1.05] tracking-[-0.035em] text-foreground transition-colors duration-[180ms] group-hover:text-accent"
         >
           {project.title}
         </h2>
@@ -87,13 +87,13 @@ export default function ShowcaseProject({ project, number }: ShowcaseProjectProp
         </p>
 
         <dl className="m-0 mt-5 grid grid-cols-[88px_1fr] gap-x-4 gap-y-2 border-t border-border pt-4 text-[13.5px] leading-snug">
-          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">ROLE</dt>
+          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">ROLE</dt>
           <dd className="m-0 text-foreground">{project.role}</dd>
-          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">STACK</dt>
+          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">STACK</dt>
           <dd className="m-0 text-foreground-secondary">{formatStack(project.stack, 5)}</dd>
         </dl>
 
-        <span className="mt-5 inline-block border-b border-border-strong pb-1 font-mono text-[11px] tracking-[0.2em] text-foreground-secondary transition-colors duration-[180ms] group-hover:border-accent group-hover:text-accent">
+        <span className="mt-5 inline-block border-b border-border-strong pb-1 font-mono text-[11px] tracking-[0.2em] text-foreground-secondary transition-colors duration-[180ms] group-hover:border-accent group-hover:text-accent-text">
           VIEW CASE STUDY →
         </span>
       </Link>
