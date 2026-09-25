@@ -22,13 +22,14 @@ type Filter = ProjectCategory | "all";
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * Asymmetric two-column rhythm (wide / narrow, then narrow / wide), with the
- * narrow column dropped lower so rows never line up like a card grid.
+ * Asymmetric two-column rhythm (wide / narrow, then narrow / wide). Both
+ * cards in a row start level and share a cover height, so the widths vary
+ * while the row still reads as one balanced line.
  * Recomputed on the filtered list so the rhythm survives filtering.
  */
 function spanFor(i: number) {
   const wide = i % 4 === 0 || i % 4 === 3;
-  return cn(wide ? "md:col-span-7" : "md:col-span-5", !wide && "md:mt-[clamp(80px,10vw,160px)]");
+  return wide ? "md:col-span-7" : "md:col-span-5";
 }
 
 export default function ProjectGallery({ items, filters }: ProjectGalleryProps) {
@@ -62,13 +63,13 @@ export default function ProjectGallery({ items, filters }: ProjectGalleryProps) 
               )}
             >
               {o.label}
-              <span className={active ? "text-background/60" : "text-foreground-muted"}>{pad(o.count)}</span>
+              <span className={active ? "text-background/60" : "text-foreground-secondary"}>{pad(o.count)}</span>
             </button>
           );
         })}
       </div>
 
-      <p aria-live="polite" className="m-0 mt-4 font-mono text-[10.5px] tracking-[0.2em] text-foreground-muted">
+      <p aria-live="polite" className="m-0 mt-4 font-mono text-[10.5px] tracking-[0.2em] text-foreground-secondary">
         SHOWING {pad(visible.length)} / {pad(items.length)}
       </p>
 

@@ -12,7 +12,10 @@ const HeroScene = dynamic(() => import("@/components/webgl/hero-scene"), { ssr: 
 interface WebGLImageProps {
   /** object-position equivalent of the static image (0..1 from top-left). */
   focus?: [number, number];
-  /** Classes mirroring the static image's CSS grade (filters) so both match. */
+  /**
+   * Extra classes for the layer. The shader already renders the ink/paper
+   * duotone, so an `.ink-duotone` image needs none.
+   */
   className?: string;
 }
 

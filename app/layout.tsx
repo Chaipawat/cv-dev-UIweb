@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
+import {
+  Anton,
+  Geist,
+  IBM_Plex_Sans_Thai,
+  Instrument_Serif,
+  JetBrains_Mono,
+  Shippori_Mincho,
+} from "next/font/google";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import MotionProvider from "@/components/shared/motion-provider";
@@ -7,20 +14,39 @@ import SmoothScroll from "@/components/motion/smooth-scroll";
 import { portfolio } from "@/data/portfolio";
 import "./globals.css";
 
+// Display — condensed, kinetic. Single weight.
+const anton = Anton({
+  variable: "--font-anton",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+// UI / body. Variable font covers every weight in use.
 const geist = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
-  weight: ["500", "600", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Thai glyph fallback for the body stack; unicode-range keeps it off the
+// wire until Thai text renders, so it is not preloaded.
+const plexThai = IBM_Plex_Sans_Thai({
+  variable: "--font-plex-thai",
+  subsets: ["thai"],
+  weight: ["400", "500", "600"],
+  preload: false,
+});
+
+// Upright serif + kanji (the vertical 龍). Japanese ships as unicode-range
+// slices, so skip preload and let the browser fetch only what renders.
+const shippori = Shippori_Mincho({
+  variable: "--font-shippori",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "600"],
+  preload: false,
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
@@ -34,7 +60,16 @@ const instrumentSerif = Instrument_Serif({
 
 const { profile } = portfolio;
 
+// Absolute base for Open Graph image URLs. Set NEXT_PUBLIC_SITE_URL for a
+// custom domain; on Vercel the production domain is picked up automatically.
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: `${profile.displayName} — ${profile.positioning}`,
   description: `${profile.positioning} based in ${profile.location}. ${profile.statement}`,
 };
@@ -50,7 +85,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       // The boot script adds `motion` / Lenis adds `lenis` before hydration.
       suppressHydrationWarning
-      className={`${geist.variable} ${geistMono.variable} ${inter.variable} ${instrumentSerif.variable}`}
+      className={`${anton.variable} ${geist.variable} ${plexThai.variable} ${instrumentSerif.variable} ${shippori.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: MOTION_BOOT }} />
@@ -58,7 +93,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-screen flex-col overflow-x-hidden bg-background font-body text-foreground antialiased">
         <MotionProvider>
           <SmoothScroll>
-            <div className="dot-grid" />
             <Navbar />
             <div className="relative z-10 flex-1">{children}</div>
             <Footer />

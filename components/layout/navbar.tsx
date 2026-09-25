@@ -14,13 +14,15 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/86 backdrop-blur-[10px]">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/88 backdrop-blur-[10px]">
       <PageContainer className="flex h-[66px] items-center justify-between gap-6">
         <Link href="/" className="flex items-baseline gap-[9px]">
-          <span className="font-display text-[13px] font-medium tracking-[-0.005em] text-foreground">
+          <span className="font-body text-[13px] font-medium tracking-[-0.005em] text-foreground">
             {profile.fullName}
           </span>
-          <span className="text-[14px] text-accent">({profile.nickname})</span>
+          {/* Ink, not vermilion: the nav sits in every viewport, so it only
+              spends one accent moment (the active dot). */}
+          <span className="font-serif text-[16px] italic text-foreground-secondary">({profile.nickname})</span>
         </Link>
 
         <nav className="hidden items-center gap-0.5 md:flex" aria-label="Primary">
@@ -32,8 +34,8 @@ export default function Navbar() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "inline-flex items-center px-[13px] py-2 font-display text-[13.5px] font-medium transition-colors duration-[180ms]",
-                  active ? "text-foreground" : "text-foreground-muted hover:text-foreground-secondary"
+                  "inline-flex items-center px-[13px] py-2 font-body text-[13.5px] font-medium transition-colors duration-[180ms]",
+                  active ? "text-foreground" : "text-foreground-secondary hover:text-foreground"
                 )}
               >
                 <span
@@ -50,9 +52,13 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3.5">
-          <span className="hidden font-mono text-[11px] tracking-[0.14em] text-foreground-muted lg:inline">
-            TH
-          </span>
+          {profile.availability.openToWork ? (
+            <span className="hidden items-center gap-2 font-mono text-[11px] tracking-[0.06em] text-terminal lg:inline-flex">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-terminal" />
+              available
+            </span>
+          ) : null}
+          <span className="hidden font-mono text-[11px] tracking-[0.14em] text-foreground-secondary lg:inline">TH</span>
           <MobileNav pathname={pathname} />
         </div>
       </PageContainer>

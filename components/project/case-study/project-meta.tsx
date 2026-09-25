@@ -23,7 +23,7 @@ export default function ProjectMeta({ project }: { project: Project }) {
     <dl className="m-0 grid grid-cols-1 gap-x-6 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
       {rows.map((row) => (
         <div key={row.k} className="min-w-0 border-b border-border py-6 pr-4">
-          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">{row.k}</dt>
+          <dt className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">{row.k}</dt>
           <dd className="m-0 mt-3 flex flex-col gap-1">
             {row.v.map((line) => (
               <span key={line} className="text-[14.5px] leading-[1.45] text-foreground">

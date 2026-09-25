@@ -1,71 +1,88 @@
+import Image from "next/image";
 import BrowserFrame from "@/components/project/media/browser-frame";
 import PhoneFrame from "@/components/project/media/phone-frame";
-import MediaCaption from "@/components/project/media/media-caption";
 import type { ProjectImage } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 
 interface LayeredProjectScreensProps {
-  /** Large desktop/admin screen. */
   base: ProjectImage;
-  /** Phone screens floated over the base on desktop (max 2 used). */
+  /** Up to two phone screens staggered over the right edge of the base. */
   layers?: ProjectImage[];
-  index?: string;
-  label?: string;
-  caption?: string;
-  priority?: boolean;
+  /** Landscape evidence (e.g. an extension card) tucked under the base's corner. */
+  inset?: ProjectImage;
+  /** Preload the base as the page's LCP image. */
+  preload?: boolean;
   className?: string;
 }
 
-// Vertical offsets give the two phones an asymmetric, stepped rhythm.
-const LAYER_OFFSETS = ["md:translate-y-0", "md:-translate-y-[22%]"];
+function FigureLabel({ image }: { image: ProjectImage }) {
+  if (!image.caption) return null;
+  return (
+    <span className="fig-label mt-2 block font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-secondary">
+      {image.caption}
+    </span>
+  );
+}
 
 /**
- * Asymmetric composition: the desktop screen sits left-weighted and the
- * phone screens overlap its lower-right edge. On small screens the phones
- * drop below the base as a side-by-side pair, so nothing overflows.
+ * Editorial lead composition: an oversized desktop/admin view anchors the
+ * left while phone captures stagger over it at different scales and heights.
+ * Below lg this resolves to a readable stacked sequence.
  */
-export default function LayeredProjectScreens({
-  base,
-  layers = [],
-  index,
-  label,
-  caption,
-  priority,
-  className,
-}: LayeredProjectScreensProps) {
-  const phones = layers.slice(0, 2);
-  const captionText = caption ?? [base.caption, ...phones.map((p) => p.caption)].filter(Boolean).join(" / ");
+export default function LayeredProjectScreens({ base, layers = [], inset, preload, className }: LayeredProjectScreensProps) {
+  const [mobileOne, mobileTwo] = layers;
+
+  if (!mobileOne) {
+    return (
+      <figure className={cn("m-0 min-w-0", className)}>
+        <div className={inset ? "sm:w-[92%]" : undefined}>
+          <BrowserFrame image={base} bare preload={preload} />
+          <FigureLabel image={base} />
+        </div>
+        {inset ? (
+          <div className="relative z-10 ml-auto mt-6 w-[78%] max-w-[360px] sm:mt-4 sm:w-[38%] lg:-mt-12">
+            <div className="overflow-hidden rounded-[2px] border border-border-strong bg-background p-[3px]">
+              <Image
+                src={inset.src}
+                alt={inset.alt}
+                width={inset.width}
+                height={inset.height}
+                sizes="(min-width: 1024px) 360px, (min-width: 640px) 35vw, 78vw"
+                className="block h-auto w-full"
+              />
+            </div>
+            <FigureLabel image={inset} />
+          </div>
+        ) : null}
+      </figure>
+    );
+  }
 
   return (
     <figure className={cn("m-0 min-w-0", className)}>
-      <div className={cn("relative", phones.length ? "md:pb-[12%]" : undefined)}>
-        <BrowserFrame
-          image={base}
-          bare
-          priority={priority}
-          sizes="(min-width: 1340px) 1000px, (min-width: 768px) 78vw, 100vw"
-          className={phones.length ? "md:w-[80%]" : undefined}
-        />
+      <div className="relative flex flex-col gap-7 md:gap-9 lg:block lg:min-h-[clamp(520px,44vw,700px)]">
+        <div className="relative z-0 w-full lg:w-[69%]">
+          <BrowserFrame
+            image={base}
+            bare
+            preload={preload}
+            sizes="(min-width: 1340px) 940px, (min-width: 1024px) 69vw, 100vw"
+          />
+          <FigureLabel image={base} />
+        </div>
 
-        {phones.length ? (
-          <div className="mt-5 flex items-end justify-end gap-[clamp(10px,2vw,24px)] md:absolute md:bottom-0 md:right-0 md:mt-0 md:w-[38%]">
-            {phones.map((phone, i) => (
-              <PhoneFrame
-                key={phone.src}
-                image={phone}
-                bare
-                priority={priority}
-                sizes="(min-width: 768px) 18vw, 45vw"
-                className={cn(
-                  "w-[44%] md:w-1/2 md:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.9)]",
-                  LAYER_OFFSETS[i]
-                )}
-              />
-            ))}
+        <div className="relative z-10 w-[46%] self-end md:w-[30%] lg:absolute lg:right-[3%] lg:top-[3%] lg:w-[21%]">
+          <PhoneFrame image={mobileOne} bare sizes="(min-width: 1024px) 22vw, 38vw" />
+          <FigureLabel image={mobileOne} />
+        </div>
+
+        {mobileTwo ? (
+          <div className="relative z-20 w-[36%] self-center md:w-[23%] lg:absolute lg:bottom-[4%] lg:left-[58%] lg:w-[17%]">
+            <PhoneFrame image={mobileTwo} bare sizes="(min-width: 1024px) 18vw, 32vw" />
+            <FigureLabel image={mobileTwo} />
           </div>
         ) : null}
       </div>
-      <MediaCaption index={index} label={label} caption={captionText || undefined} />
     </figure>
   );
 }

@@ -10,7 +10,7 @@ export default function ProjectSummary({ project }: { project: Project }) {
 
   return (
     <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
-      <p className="m-0 font-display text-[clamp(24px,3.4vw,46px)] font-medium leading-[1.14] tracking-[-0.035em] text-foreground md:col-span-9">
+      <p className="m-0 font-body text-[clamp(24px,3.4vw,46px)] font-medium leading-[1.14] tracking-[-0.035em] text-foreground md:col-span-9">
         {project.description}
       </p>
       {notes.length ? (

@@ -9,8 +9,8 @@ export default function ProjectWorkList({ items }: { items: string[] }) {
           key={item}
           className="grid grid-cols-[44px_1fr] items-baseline gap-3 border-t border-border py-[clamp(14px,1.6vw,20px)]"
         >
-          <span className="font-mono text-[11px] tracking-[0.18em] text-foreground-muted">{pad(i + 1)}</span>
-          <span className="font-display text-[clamp(19px,2vw,26px)] font-medium leading-[1.2] tracking-[-0.025em] text-foreground">
+          <span className="font-mono text-[11px] tracking-[0.18em] text-foreground-secondary">{pad(i + 1)}</span>
+          <span className="font-body text-[clamp(19px,2vw,26px)] font-medium leading-[1.2] tracking-[-0.025em] text-foreground">
             {item}
           </span>
         </li>

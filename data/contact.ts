@@ -20,20 +20,17 @@ const githubValue = contact.github ? shortenUrl(contact.github) : "Add GitHub UR
 export const CONTACT_LINKS = [
   {
     key: "EMAIL",
-    icon: "mail" as const,
     value: contact.email ?? "Add email",
     href: contact.email ? `mailto:${contact.email}` : undefined,
   },
-  { key: "PHONE", icon: "phone" as const, value: phoneValue, href: phoneHref },
+  { key: "PHONE", value: phoneValue, href: phoneHref },
   {
     key: "LINKEDIN",
-    icon: "link" as const,
     value: linkedinValue,
     href: contact.linkedin ?? undefined,
   },
   {
     key: "GITHUB",
-    icon: "code" as const,
     value: githubValue,
     href: contact.github ?? undefined,
   },

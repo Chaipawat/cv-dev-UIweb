@@ -1,17 +1,16 @@
-import { MessageCircle } from "lucide-react";
-
+/** Closing line for the contact page: a serif aside rather than another call to action. */
 export default function ContactQuote() {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-lg border border-border p-8 text-center md:p-10">
-      <div className="flex items-center gap-4">
-        <MessageCircle size={24} strokeWidth={1.6} className="flex-none text-accent" aria-hidden="true" />
-        <div className="text-[clamp(24px,3.4vw,42px)] leading-[1.2] text-foreground">
-          Need a developer? Let&apos;s talk before happy hour.
-        </div>
+    <figure className="m-0 grid grid-cols-1 gap-6 border-t border-border pt-[clamp(32px,5vw,56px)] md:grid-cols-12 md:gap-8">
+      <span className="font-mono text-[11px] tracking-[0.2em] text-foreground-secondary md:col-span-3">P.S.</span>
+      <div className="md:col-span-9">
+        <blockquote className="m-0 font-serif text-[clamp(30px,4.4vw,64px)] italic leading-[1.05] tracking-[-0.015em] text-foreground">
+          Need a developer? Let&apos;s talk before <span className="text-accent">happy hour.</span>
+        </blockquote>
+        <figcaption className="mt-5 font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
+          GOOD CODE. BAD JOKES. COLD BEER.
+        </figcaption>
       </div>
-      <div className="font-mono text-[12px] tracking-[0.2em] text-foreground-muted">
-        Good code. Bad jokes. Cold beer.
-      </div>
-    </div>
+    </figure>
   );
 }

@@ -1,32 +1,22 @@
 export type ProjectCategory = "web" | "mobile" | "liff" | "admin" | "extension" | "personal";
 
-export type ProjectImageTreatment = "full" | "browser" | "phone" | "crop" | "layered";
-
 export interface ProjectImage {
   /** Path under /public, e.g. "/projects/badminton-booking/admin/dashboard.webp". */
   src: string;
   alt: string;
-  /** Intrinsic pixel size of the file — keeps the real aspect ratio and prevents layout shift. */
+  /**
+   * Intrinsic pixel size of the file — keeps the real aspect ratio, prevents
+   * layout shift, and decides the framing (see lib/project-media.ts).
+   */
   width: number;
   height: number;
+  /** "detail" and "extension" mark supporting evidence (store listing, extension card), never the lead screen. */
   category: "web" | "mobile" | "admin" | "extension" | "flow" | "detail";
   caption?: string;
-  /** How the screenshot should be framed when rendered. */
-  treatment?: ProjectImageTreatment;
-  /** ProjectMediaGroup id this screen belongs to. */
-  group?: string;
-  /** CSS object-position used by cropped treatments, e.g. "30% 20%". */
+  /** CSS object-position used when a browser frame crops to 2:1, e.g. "30% 20%". */
   focus?: string;
   /** Label shown in a browser frame's address bar (sanitized, never a real private URL). */
   urlLabel?: string;
-}
-
-/** Curated screenshot group for a project's visual story, e.g. "Booking Flow". */
-export interface ProjectMediaGroup {
-  id: string;
-  title: string;
-  /** Short list of screens/features the group covers. */
-  items: string[];
 }
 
 export interface ProjectHighlight {
@@ -90,7 +80,8 @@ export interface Project {
   images: {
     cover?: string;
     gallery: ProjectImage[];
-    groups?: ProjectMediaGroup[];
+    /** What the showcase card leads with when a project has both; defaults to the desktop screen. */
+    showcase?: "desktop" | "phones";
   };
 }
 

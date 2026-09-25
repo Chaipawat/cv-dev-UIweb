@@ -17,12 +17,12 @@ export default function ProfileSection() {
   return (
     <PageContainer className="pb-24 pt-[132px]">
       <Reveal as="section">
-        <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-muted">
+        <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
           <span>PAGE 04 — ABOUT</span>
           <span>PROFILE</span>
         </div>
 
-        <h1 className="m-0 mt-12 break-words font-display text-[clamp(32px,7.2vw,104px)] font-extrabold uppercase leading-[0.92] tracking-[-0.05em] text-foreground">
+        <h1 className="m-0 mt-12 break-words font-display text-[clamp(32px,7.2vw,104px)] uppercase leading-[0.92] tracking-[-0.01em] text-foreground">
           Chaipawat
           <br />
           Jatuphattaranun <span className="font-serif italic font-normal normal-case text-accent">Ryu</span>
@@ -39,7 +39,7 @@ export default function ProfileSection() {
                   key={p.k}
                   className="grid grid-cols-[130px_1fr] items-baseline gap-5 border-t border-border py-[18px] last:border-b"
                 >
-                  <span className="font-mono text-[10px] tracking-[0.18em] text-foreground-muted">{p.k}</span>
+                  <span className="font-mono text-[10px] tracking-[0.18em] text-foreground-secondary">{p.k}</span>
                   <span className="text-[15px] leading-[1.5] text-foreground">{p.v}</span>
                 </div>
               ))}
@@ -48,11 +48,11 @@ export default function ProfileSection() {
 
           <div className="border border-border p-3.5">
             <div className="flex items-center justify-between pb-3">
-              <span className="font-mono text-[10px] tracking-[0.2em] text-foreground-muted">
+              <span className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">
                 FIG. 02 — IDENTITY
               </span>
             </div>
-            <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
+            <div className="ink-duotone relative aspect-[4/5] overflow-hidden border border-border-strong bg-surface">
               <Image
                 src={profile.portraits.secondary.src}
                 alt={profile.portraits.secondary.alt}

@@ -1856,3 +1856,59 @@ After each major phase:
 Do not stop after producing a design plan.
 
 Implement the redesign progressively in the repository.
+
+==================================================
+REDESIGN DIRECTION (v2 — supersedes dark theme)
+==================================================
+
+Style: Japanese Minimal base + Kinetic Typography + Retro Terminal details
+Ratio: 60% Japanese minimal / 30% kinetic / 10% terminal
+
+Role of each style:
+- Japanese minimal: background, color, whitespace, pacing, thin rules,
+  optional vertical text (e.g. 龍) at page edges
+- Kinetic: giant condensed display type, stretch/compress on scroll
+  velocity, motion blur, marquee, clip-path reveals
+- Terminal: ONLY mono metadata as prompts (`~/work $ ls`), blinking
+  cursor, `● available` status, dither/scanline on image hover.
+  Never a full green CRT look.
+
+Theme: LIGHT ONLY. Do not use black or near-black page backgrounds.
+
+Tokens:
+  --bg            #EFEBE3  washi paper
+  --surface-1     #E4DED2
+  --surface-2     #DAD3C5
+  --border        #CFC8BA
+  --border-strong #B5AD9D
+  --text-1        #1C1B18  sumi ink
+  --text-2        #5E5A52
+  --text-3        #8A857A  (large labels only)
+  --accent        #E5482A  shu vermilion (large type, dots, lines, fills)
+  --accent-text   #C23A1E  small text / links (AA on --bg)
+  --terminal      #256B42  status, cursor, prompts only
+  --moss          #6B7A60  optional tags / duotone
+
+Accent budget: max 3–4 vermilion moments per viewport.
+
+Fonts:
+  Display   Anton (or Big Shoulders Display) — condensed, kinetic
+  Serif     Shippori Mincho + Instrument Serif Italic
+  UI/body   Geist + IBM Plex Sans Thai (TH locale)
+  Mono      JetBrains Mono (replaces Geist Mono)
+
+Texture: replace dot-grid with subtle paper grain (SVG noise ~4%).
+Images: ink/paper duotone or ordered dither at rest, true color on hover.
+WebGL: ink-bleed style deformation, not blue glitch.
+
+Keep unchanged:
+  Timing 180 / 320 / 550ms
+  Easing cubic-bezier(0.22, 1, 0.36, 1)
+  MotionProvider prefers-reduced-motion behavior
+
+Token name mapping (globals.css keeps the v1 names):
+  --bg → --color-background, --surface-1 → --color-surface,
+  --surface-2 → --color-surface-elevated, --text-1 → --color-foreground,
+  --text-2 → --color-foreground-secondary, --text-3 → --color-foreground-muted,
+  --accent-text → --color-accent-text, --terminal → --color-terminal
+  (--color-accent-2 aliases --color-terminal), --moss → --color-moss.

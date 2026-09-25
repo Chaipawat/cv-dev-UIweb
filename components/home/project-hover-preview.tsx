@@ -100,19 +100,19 @@ export default function ProjectHoverPreview({ items, children }: ProjectHoverPre
         {active ? (
           <div className="relative flex aspect-[4/3] flex-col justify-between overflow-hidden p-5">
             <span className="absolute inset-x-0 top-0 h-[3px] bg-accent" />
-            <span className="absolute -bottom-[0.18em] -right-[0.04em] font-display text-[150px] font-extrabold leading-none tracking-[-0.06em] text-accent/15">
+            <span className="absolute -bottom-[0.18em] -right-[0.04em] font-display text-[150px] leading-none tracking-[-0.01em] text-accent/15">
               {active.number}
             </span>
-            <div className="flex justify-between font-mono text-[10px] tracking-[0.2em] text-foreground-muted">
+            <div className="flex justify-between font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">
               <span>{active.type.toUpperCase()}</span>
               <span>{active.period}</span>
             </div>
             <div className="relative">
-              <p className="m-0 font-display text-[30px] font-bold uppercase leading-[0.92] tracking-[-0.04em] text-foreground">
+              <p className="m-0 font-display text-[30px] uppercase leading-[0.92] tracking-[-0.005em] text-foreground">
                 {active.title}
               </p>
               {active.focus.length ? (
-                <p className="m-0 mt-2 font-serif text-[18px] italic leading-tight text-accent">
+                <p className="m-0 mt-2 font-serif text-[18px] italic leading-tight text-foreground-secondary">
                   {active.focus.slice(0, 3).join(" / ")}
                 </p>
               ) : null}

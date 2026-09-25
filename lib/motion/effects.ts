@@ -1,5 +1,4 @@
 import { EASE, EASE_EDITORIAL, ScrollTrigger, gsap, type MotionConditions } from "@/lib/motion/gsap";
-import { getVelocity } from "@/lib/motion/velocity";
 
 /**
  * Section-specific kinetic effects. Each receives its scope root and the
@@ -8,8 +7,8 @@ import { getVelocity } from "@/lib/motion/velocity";
  * stays in Server Components.
  *
  * Every section moves differently on purpose:
- *   hero          → scroll pulls the two title lines apart and squashes/stretches them
- *   statement     → lines react to scroll velocity (stretch, skew, blur on desktop)
+ *   hero          → scroll pulls the two title lines apart
+ *   statement     → clipped line reveal
  *   work          → per-project clip reveals + fade-out handover to the next project
  *   index         → batched row cascade
  *   progression   → sticky year counter driven through the staircase
@@ -76,30 +75,6 @@ function wipeReveal(el: HTMLElement, trigger: Element) {
   tl.eventCallback("onComplete", () => markRevealed([el], "clipPath"));
 }
 
-/** Runs `tick` on the GSAP ticker only while `trigger` is on screen. */
-function whileVisible(trigger: Element, tick: () => void, onIdle?: () => void) {
-  let on = false;
-  const st = ScrollTrigger.create({
-    trigger,
-    start: "top bottom",
-    end: "bottom top",
-    onToggle: (self) => {
-      if (self.isActive && !on) {
-        gsap.ticker.add(tick);
-        on = true;
-      } else if (!self.isActive && on) {
-        gsap.ticker.remove(tick);
-        on = false;
-        onIdle?.();
-      }
-    },
-  });
-  return () => {
-    st.kill();
-    if (on) gsap.ticker.remove(tick);
-  };
-}
-
 /* ------------------------------------------------------------------ */
 
 const hero: Effect = (root, c) => {
@@ -111,50 +86,18 @@ const hero: Effect = (root, c) => {
     defaults: { ease: "none" },
     scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: 0.6 },
   });
-  // Lines separate and change weight-feel: top squashes down, bottom stretches.
-  if (top) tl.to(top, { xPercent: c.desktop ? -9 : -5, scaleY: 0.72, transformOrigin: "0% 100%" }, 0);
-  if (bottom) tl.to(bottom, { xPercent: c.desktop ? 7 : 4, scaleY: 1.2, transformOrigin: "0% 0%" }, 0);
-  if (portrait) tl.to(portrait, { yPercent: -14 }, 0);
+  // Lines drift apart horizontally; the letterforms keep their shape.
+  if (top) tl.to(top, { xPercent: c.desktop ? -9 : -5 }, 0);
+  if (bottom) tl.to(bottom, { xPercent: c.desktop ? 7 : 4 }, 0);
+  // Gentle lift only — more would slide the photo back under the title.
+  if (portrait) tl.to(portrait, { yPercent: -6 }, 0);
   if (img) tl.to(img, { scale: 1.14 }, 0);
 };
 
-const statement: Effect = (root, c) => {
+const statement: Effect = (root) => {
   const lines = $$(root, '[data-m="statement-line"]');
   clipReveal(lines, root, { start: "top 75%", stagger: 0.12 });
   fadeReveal($$(root, '[data-reveal="fade"]'), root, { start: "top 55%" });
-
-  // Velocity response. Each line has its own direction and gain so the
-  // block shears apart rather than moving as one slab.
-  const setters = lines.map((line, i) => ({
-    scaleX: gsap.quickSetter(line, "scaleX"),
-    skewX: gsap.quickSetter(line, "skewX", "deg"),
-    blur: c.desktop ? gsap.quickSetter(line, "filter") : null,
-    dir: i % 2 === 0 ? 1 : -1,
-    gain: 1 + (i % 3) * 0.35,
-  }));
-  lines.forEach((line) => {
-    gsap.set(line, { transformOrigin: line.dataset.origin === "right" ? "100% 50%" : "0% 50%" });
-  });
-
-  let current = 0;
-  const tick = () => {
-    const target = gsap.utils.clamp(-60, 60, getVelocity());
-    current += (target - current) * 0.12;
-    const mag = Math.abs(current);
-    setters.forEach((s) => {
-      s.scaleX(1 + Math.min(mag * 0.0045 * s.gain, 0.22));
-      s.skewX(gsap.utils.clamp(-9, 9, current * -0.14 * s.dir * s.gain));
-      if (s.blur) {
-        const px = Math.min(mag * 0.045, 2.4);
-        s.blur(px > 0.15 ? `blur(${px.toFixed(2)}px)` : "none");
-      }
-    });
-  };
-  const reset = () => {
-    current = 0;
-    gsap.to(lines, { scaleX: 1, skewX: 0, filter: "none", duration: 0.4, ease: EASE });
-  };
-  return whileVisible(root, tick, reset);
 };
 
 const work: Effect = (root, c) => {

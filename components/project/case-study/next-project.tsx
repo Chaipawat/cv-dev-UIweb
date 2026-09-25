@@ -15,14 +15,14 @@ export default function NextProject({ current }: { current: Project }) {
     <nav aria-label="Next project" className="border-t border-border">
       <Link href={`/work/${next.slug}`} className="group block py-[clamp(48px,8vw,112px)]">
         <PageContainer>
-          <div className="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11px] tracking-[0.2em] text-foreground-muted">
+          <div className="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
             <span>NEXT PROJECT</span>
             <span>
               {pad(getProjectNumber(next.slug))} / {pad(PROJECTS.length)}
             </span>
           </div>
           <div className="mt-[clamp(20px,3vw,36px)] flex items-end justify-between gap-6">
-            <span data-m="next-title" className="min-w-0 break-words font-display text-[clamp(40px,9vw,136px)] font-extrabold uppercase leading-[0.88] tracking-[-0.055em] text-foreground transition-colors duration-[320ms] group-hover:text-accent">
+            <span data-m="next-title" className="min-w-0 break-words font-display text-[clamp(40px,9vw,136px)] uppercase leading-[0.88] tracking-[-0.01em] text-foreground transition-colors duration-[320ms] group-hover:text-accent">
               {next.title}
             </span>
             <span
