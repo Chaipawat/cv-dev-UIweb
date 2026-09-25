@@ -2,13 +2,34 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type TouchEvent } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState, useSyncExternalStore, type FocusEvent, type KeyboardEvent, type TouchEvent } from "react";
 import type { ProjectImage } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const SLIDE_DURATION = 4500;
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+/**
+ * Hydration-safe reduced-motion flag: the server snapshot (false) is used
+ * while hydrating, then React re-renders with the real preference. Framer's
+ * useReducedMotion reads the media query on the first client render instead,
+ * so markup that depends on it (the pause button) mismatched the server HTML.
+ */
+function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION).matches,
+    () => false
+  );
+}
 
 export default function ZonepangSlider({ images }: { images: ProjectImage[] }) {
   const root = useRef<HTMLDivElement>(null);
@@ -20,7 +41,7 @@ export default function ZonepangSlider({ images }: { images: ProjectImage[] }) {
   const [playWhileFocused, setPlayWhileFocused] = useState(false);
   const [visible, setVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
-  const reducedMotion = useReducedMotion();
+  const reducedMotion = usePrefersReducedMotion();
   const current = images[active];
   const isPlaying = !reducedMotion && !manualPaused && !hovered && (!focused || playWhileFocused) && visible && pageVisible;
 
@@ -125,7 +146,7 @@ export default function ZonepangSlider({ images }: { images: ProjectImage[] }) {
         <div className="flex min-w-0 items-center gap-3 sm:gap-4" aria-live={isPlaying ? "off" : "polite"} aria-atomic="true">
           <span aria-hidden="true" className="font-display text-[48px] leading-none tracking-[-0.04em] sm:text-[64px]">{String(active + 1).padStart(2, "0")}<span className="text-accent">.</span></span>
           <div className="min-w-0">
-            <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.16em] text-foreground-secondary">FIG. {String(active + 3).padStart(2, "0")} / {String(images.length).padStart(2, "0")} SCREENS</p>
+            <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.16em] text-foreground-secondary">SCREEN {String(active + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}</p>
             <p className="m-0 truncate font-mono text-[10px] uppercase tracking-[0.06em] sm:text-xs">{current.caption}</p>
           </div>
         </div>

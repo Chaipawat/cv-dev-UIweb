@@ -1,50 +1,59 @@
-import type { ReactNode } from "react";
+import Image from "next/image";
 import BrowserFrame from "@/components/project/media/browser-frame";
 import PhoneFrame from "@/components/project/media/phone-frame";
-import MediaCaption from "@/components/project/media/media-caption";
 import type { ProjectImage } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 
 interface LayeredProjectScreensProps {
   base: ProjectImage;
+  /** Up to two phone screens staggered over the right edge of the base. */
   layers?: ProjectImage[];
-  index?: string;
-  label?: string;
-  caption?: string;
-  priority?: boolean;
+  /** Landscape evidence (e.g. an extension card) tucked under the base's corner. */
+  inset?: ProjectImage;
+  /** Preload the base as the page's LCP image. */
+  preload?: boolean;
   className?: string;
 }
 
-function FigureLabel({ children, className }: { children: ReactNode; className?: string }) {
+function FigureLabel({ image }: { image: ProjectImage }) {
+  if (!image.caption) return null;
   return (
-    <span className={cn("mt-2 block font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-secondary", className)}>
-      {children}
+    <span className="fig-label mt-2 block font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-secondary">
+      {image.caption}
     </span>
   );
 }
 
 /**
- * A three-image editorial layout: an oversized admin view anchors the left;
- * the two LIFF captures stagger at different scales and heights. On smaller
- * screens this deliberately resolves to a readable Admin → LIFF → flow stack.
+ * Editorial lead composition: an oversized desktop/admin view anchors the
+ * left while phone captures stagger over it at different scales and heights.
+ * Below lg this resolves to a readable stacked sequence.
  */
-export default function LayeredProjectScreens({
-  base,
-  layers = [],
-  index,
-  label,
-  caption,
-  priority,
-  className,
-}: LayeredProjectScreensProps) {
+export default function LayeredProjectScreens({ base, layers = [], inset, preload, className }: LayeredProjectScreensProps) {
   const [mobileOne, mobileTwo] = layers;
-  const captionText = caption ?? [base.caption, ...layers.map((phone) => phone.caption)].filter(Boolean).join(" / ");
 
   if (!mobileOne) {
     return (
       <figure className={cn("m-0 min-w-0", className)}>
-        <BrowserFrame image={base} bare priority={priority} />
-        <MediaCaption index={index} label={label} caption={captionText || undefined} />
+        <div className={inset ? "sm:w-[92%]" : undefined}>
+          <BrowserFrame image={base} bare preload={preload} />
+          <FigureLabel image={base} />
+        </div>
+        {inset ? (
+          <div className="relative z-10 ml-auto mt-6 w-[78%] max-w-[360px] sm:mt-4 sm:w-[38%] lg:-mt-12">
+            <div className="overflow-hidden rounded-[2px] border border-border-strong bg-background p-[3px]">
+              <Image
+                src={inset.src}
+                alt={inset.alt}
+                width={inset.width}
+                height={inset.height}
+                sizes="(min-width: 1024px) 360px, (min-width: 640px) 35vw, 78vw"
+                className="block h-auto w-full"
+              />
+            </div>
+            <FigureLabel image={inset} />
+          </div>
+        ) : null}
       </figure>
     );
   }
@@ -56,21 +65,21 @@ export default function LayeredProjectScreens({
           <BrowserFrame
             image={base}
             bare
-            priority={priority}
+            preload={preload}
             sizes="(min-width: 1340px) 940px, (min-width: 1024px) 69vw, 100vw"
           />
-          <FigureLabel>FIG. 01 — ADMIN DASHBOARD</FigureLabel>
+          <FigureLabel image={base} />
         </div>
 
         <div className="relative z-10 w-[46%] self-end md:w-[30%] lg:absolute lg:right-[3%] lg:top-[3%] lg:w-[21%]">
-          <PhoneFrame image={mobileOne} bare priority={priority} sizes="(min-width: 1024px) 22vw, 38vw" />
-          <FigureLabel>FIG. 02 — LINE LIFF</FigureLabel>
+          <PhoneFrame image={mobileOne} bare sizes="(min-width: 1024px) 22vw, 38vw" />
+          <FigureLabel image={mobileOne} />
         </div>
 
         {mobileTwo ? (
           <div className="relative z-20 w-[36%] self-center md:w-[23%] lg:absolute lg:bottom-[4%] lg:left-[58%] lg:w-[17%]">
-            <PhoneFrame image={mobileTwo} bare priority={priority} sizes="(min-width: 1024px) 18vw, 32vw" />
-            <FigureLabel>FIG. 03 — BOOKING FLOW</FigureLabel>
+            <PhoneFrame image={mobileTwo} bare sizes="(min-width: 1024px) 18vw, 32vw" />
+            <FigureLabel image={mobileTwo} />
           </div>
         ) : null}
       </div>

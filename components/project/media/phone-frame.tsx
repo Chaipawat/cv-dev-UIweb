@@ -5,10 +5,9 @@ import { cn } from "@/lib/utils";
 
 interface PhoneFrameProps {
   image: ProjectImage;
-  index?: string;
-  label?: string;
   bare?: boolean;
-  priority?: boolean;
+  /** Preload as the page's LCP image. */
+  preload?: boolean;
   sizes?: string;
   /** Width is set by the parent (e.g. "w-[44%] md:w-[220px]"); the frame fills it. */
   className?: string;
@@ -20,10 +19,8 @@ interface PhoneFrameProps {
  */
 export default function PhoneFrame({
   image,
-  index,
-  label,
   bare,
-  priority,
+  preload,
   sizes = "(min-width: 768px) 240px, 45vw",
   className,
 }: PhoneFrameProps) {
@@ -37,12 +34,12 @@ export default function PhoneFrame({
             width={image.width}
             height={image.height}
             sizes={sizes}
-            priority={priority}
+            preload={preload}
             className="block h-auto w-full"
           />
         </div>
       </div>
-      {bare ? null : <MediaCaption index={index} label={label} caption={image.caption} />}
+      {bare ? null : <MediaCaption label={image.caption} />}
     </figure>
   );
 }

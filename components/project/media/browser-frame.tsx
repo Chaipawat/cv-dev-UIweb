@@ -5,25 +5,23 @@ import { cn } from "@/lib/utils";
 
 interface BrowserFrameProps {
   image: ProjectImage;
-  index?: string;
-  label?: string;
   /** Hide the caption row (e.g. when the frame is a layer inside a composition). */
   bare?: boolean;
-  priority?: boolean;
+  /** Preload as the page's LCP image. */
+  preload?: boolean;
   sizes?: string;
   className?: string;
 }
 
 /**
  * Desktop/admin screenshot in a hairline browser chrome. The image keeps its
- * intrinsic ratio (width/height from the manifest) — nothing is cropped.
+ * intrinsic ratio (width/height from the manifest) unless `image.focus` asks
+ * for a 2:1 crop.
  */
 export default function BrowserFrame({
   image,
-  index,
-  label,
   bare,
-  priority,
+  preload,
   sizes = "(min-width: 1340px) 1100px, (min-width: 768px) 85vw, 100vw",
   className,
 }: BrowserFrameProps) {
@@ -50,13 +48,13 @@ export default function BrowserFrame({
             width={image.width}
             height={image.height}
             sizes={sizes}
-            priority={priority}
+            preload={preload}
             className={cn("block w-full", image.focus ? "absolute inset-0 h-full object-cover" : "h-auto")}
             style={image.focus ? { objectPosition: image.focus } : undefined}
           />
         </div>
       </div>
-      {bare ? null : <MediaCaption index={index} label={label ?? image.category} caption={image.caption} />}
+      {bare ? null : <MediaCaption label={image.caption} />}
     </figure>
   );
 }

@@ -1,7 +1,7 @@
 import BrowserFrame from "@/components/project/media/browser-frame";
 import LayeredProjectScreens from "@/components/project/media/layered-project-screens";
 import PhoneFrame from "@/components/project/media/phone-frame";
-import { getAvailableImages } from "@/lib/project-media";
+import { getAvailableImages, getProjectMedia } from "@/lib/project-media";
 import type { Project } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -21,18 +21,17 @@ interface ProjectCoverProps {
  * nothing when a project has no screenshots yet — never a mock.
  */
 export default function ProjectCover({ project, composition, phones = 3, className }: ProjectCoverProps) {
-  const images = getAvailableImages(project);
-  const desktop = images.find((i) => i.treatment === "browser" || i.treatment === "layered");
-  const mobile = images.filter((i) => i.treatment === "phone");
+  const media = getProjectMedia(project);
+  const [desktop] = media.desktops;
 
   if (composition === "layered" && desktop) {
-    return <LayeredProjectScreens base={desktop} layers={mobile.slice(0, 2)} label={project.shortType} className={className} />;
+    return <LayeredProjectScreens base={desktop} layers={media.phones.slice(0, 2)} className={className} />;
   }
 
-  if ((composition === "phones" || !desktop) && mobile.length) {
+  if ((composition === "phones" || !desktop) && media.phones.length) {
     return (
       <div className={cn("flex items-start gap-[clamp(10px,2vw,28px)]", className)}>
-        {mobile.slice(0, phones).map((img, i) => (
+        {media.phones.slice(0, phones).map((img, i) => (
           <PhoneFrame
             key={img.src}
             image={img}
@@ -46,7 +45,7 @@ export default function ProjectCover({ project, composition, phones = 3, classNa
   }
 
   if (desktop) {
-    return <BrowserFrame image={desktop} label={project.shortType} className={className} />;
+    return <BrowserFrame image={desktop} className={className} />;
   }
 
   return null;

@@ -14,8 +14,11 @@ import PageContainer from "@/components/layout/page-container";
 import { TIMELINE } from "@/data/timeline";
 import { cn } from "@/lib/utils";
 
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
 export default function CareerTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
@@ -27,11 +30,22 @@ export default function CareerTimeline() {
   // with a spring, so the rail never lags behind the user's own scrolling.
   const spring = useSpring(scrollYProgress, { stiffness: 220, damping: 40, mass: 0.4 });
   const progress = prefersReducedMotion ? scrollYProgress : spring;
-  const railWidth = useTransform(progress, (v) => `${Math.round(Math.max(0, Math.min(1, v)) * 100)}%`);
-  const lineHeight = useTransform(progress, (v) => `calc(${Math.round(Math.max(0, Math.min(1, v)) * 100)}% - 12px)`);
+  // Rails scale instead of resizing (no layout per frame); the percentage is
+  // a motion value rendered straight into the DOM, so scrolling never
+  // re-renders the timeline.
+  const railScale = useTransform(progress, clamp01);
+  const pctText = useTransform(progress, (v) => `${Math.round(clamp01(v) * 100)}%`);
 
-  const [pct, setPct] = useState(0);
-  useMotionValueEvent(progress, "change", (v) => setPct(Math.round(Math.max(0, Math.min(1, v)) * 100)));
+  // Active stage = the last node whose top has crossed the viewport centre.
+  // Derived from positions, so fast scrolls and jumps never leave it stale.
+  useMotionValueEvent(scrollYProgress, "change", () => {
+    const mid = window.innerHeight / 2;
+    let next = 0;
+    nodeRefs.current.forEach((el, i) => {
+      if (el && el.getBoundingClientRect().top < mid) next = i;
+    });
+    setActive(next);
+  });
 
   return (
     <PageContainer className="pb-[110px]">
@@ -43,23 +57,27 @@ export default function CareerTimeline() {
               {TIMELINE[Math.min(active, TIMELINE.length - 1)].stage}
             </div>
             <div className="mt-5 h-px overflow-hidden bg-border">
-              <motion.div className="h-px bg-accent" style={{ width: railWidth }} />
+              <motion.div className="h-px origin-left bg-accent" style={{ scaleX: railScale }} />
             </div>
             <div className="mt-3 font-mono text-[10px] tracking-[0.18em] text-foreground-secondary">
-              {pct}% — {active + 1} / {TIMELINE.length}
+              <motion.span>{pctText}</motion.span> — {active + 1} / {TIMELINE.length}
             </div>
           </div>
         </div>
 
         <div className="relative pl-[34px]">
           <div className="absolute bottom-1.5 left-[5px] top-1.5 w-px bg-border" />
-          <motion.div className="absolute left-[5px] top-1.5 w-px bg-accent" style={{ height: lineHeight }} />
+          <motion.div
+            className="absolute bottom-1.5 left-[5px] top-1.5 w-px origin-top bg-accent"
+            style={{ scaleY: railScale }}
+          />
 
           {TIMELINE.map((node, i) => (
             <motion.div
               key={node.title}
-              onViewportEnter={() => setActive(i)}
-              viewport={{ margin: "-45% 0px -45% 0px" }}
+              ref={(el) => {
+                nodeRefs.current[i] = el;
+              }}
               className="relative pb-[88px]"
               animate={{ opacity: i <= active ? 1 : 0.6, y: i <= active ? 0 : 12 }}
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}

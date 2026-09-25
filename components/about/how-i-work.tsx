@@ -2,6 +2,7 @@ import { Sparkles } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
 import SectionLabel from "@/components/shared/section-label";
 import { portfolio } from "@/data/portfolio";
+import { cn } from "@/lib/utils";
 
 const FLOW = portfolio.workflow.map((w, i) => ({
   n: String(i + 1).padStart(2, "0"),
@@ -14,24 +15,29 @@ export default function HowIWork() {
   return (
     <PageContainer className="pb-[120px]">
       <SectionLabel index="02" label="HOW I WORK" />
+      <h2 className="sr-only">How I work</h2>
 
-      <div className="mt-11 grid grid-cols-1 border-t border-border sm:grid-cols-2 lg:grid-cols-4">
-        {FLOW.map((f) => (
-          <div key={f.n} className="border-b border-border py-7 pr-6 transition-colors duration-[180ms] hover:bg-surface">
-            <div className="mb-6 flex items-center gap-3">
+      <ol className="m-0 mt-11 grid list-none grid-cols-1 border-t border-border p-0 sm:grid-cols-2 lg:grid-cols-4">
+        {FLOW.map((f, i) => (
+          <li
+            key={f.n}
+            className={cn("border-b border-border py-7 sm:pr-6", i % 2 === 1 && "sm:border-l sm:pl-6", i > 0 && "lg:border-l lg:pl-6")}
+          >
+            {/* Fixed height so the last step, which has no arrow, lines up with the rest. */}
+            <div className="mb-6 flex h-4 items-center gap-3">
               <span className="font-mono text-[11px] tracking-[0.18em] text-accent-text">{f.n}</span>
               <span className="block h-px flex-1 bg-border" aria-hidden="true" />
-              <span className="text-[13px] text-foreground-secondary" aria-hidden="true">
+              <span className="w-4 text-right text-[13px] text-foreground-secondary" aria-hidden="true">
                 {f.arrow}
               </span>
             </div>
-            <h2 className="m-0 font-body text-[clamp(20px,2.2vw,26px)] font-medium tracking-[-0.03em] text-foreground">
+            <h3 className="m-0 font-display text-[clamp(32px,3.4vw,48px)] uppercase leading-[0.92] tracking-[-0.005em] text-foreground">
               {f.k}
-            </h2>
-            <p className="m-0 mt-3 max-w-[240px] text-[13.5px] leading-[1.6] text-foreground-secondary">{f.v}</p>
-          </div>
+            </h3>
+            <p className="m-0 mt-4 max-w-[260px] text-[14px] leading-[1.6] text-foreground-secondary">{f.v}</p>
+          </li>
         ))}
-      </div>
+      </ol>
 
       <div className="flex flex-wrap items-center justify-between gap-6 border-b border-border py-7">
         <div className="flex max-w-[440px] items-start gap-3.5">
@@ -47,7 +53,7 @@ export default function HowIWork() {
           {portfolio.skills.aiTools.map((tool) => (
             <span
               key={tool}
-              className="rounded-md border border-border px-3.5 py-2.5 font-mono text-xs text-foreground"
+              className="rounded-[2px] border border-border-strong px-3.5 py-2.5 font-mono text-xs text-foreground"
             >
               {tool}
             </span>

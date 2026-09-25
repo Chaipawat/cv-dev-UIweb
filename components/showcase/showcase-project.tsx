@@ -1,8 +1,8 @@
 import Link from "next/link";
-import ProjectCover, { hasProjectCover } from "@/components/project/project-cover";
+import ShowcaseCover from "@/components/showcase/showcase-cover";
 import { CATEGORY_LABELS, formatProjectPeriod, formatStack } from "@/data/projects";
+import { getProjectMedia } from "@/lib/project-media";
 import type { Project } from "@/types/portfolio";
-import { cn } from "@/lib/utils";
 
 interface ShowcaseProjectProps {
   project: Project;
@@ -56,17 +56,13 @@ function TypeCover({ project, number }: ShowcaseProjectProps) {
 
 /** One project in the showcase: cover plate, metadata and a link to its case study. */
 export default function ShowcaseProject({ project, number }: ShowcaseProjectProps) {
-  const hasScreens = hasProjectCover(project);
+  const media = getProjectMedia(project);
+  const hasCover = media.desktops.length > 0 || media.phones.length > 0;
   return (
     <article aria-labelledby={`sp-${project.slug}`}>
       <Link href={`/work/${project.slug}`} className="group block">
-        <div
-          className={cn(
-            "relative aspect-[16/11] overflow-hidden border border-border bg-surface transition-colors duration-[320ms] group-hover:border-accent-border",
-            hasScreens && "flex items-center justify-center p-[6%]"
-          )}
-        >
-          {hasScreens ? <ProjectCover project={project} composition="layered" /> : <TypeCover project={project} number={number} />}
+        <div className="relative aspect-[16/11] overflow-hidden border border-border bg-surface transition-colors duration-[320ms] group-hover:border-accent-border">
+          {hasCover ? <ShowcaseCover media={media} /> : <TypeCover project={project} number={number} />}
         </div>
 
         <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-mono text-[10.5px] tracking-[0.2em] text-foreground-secondary">

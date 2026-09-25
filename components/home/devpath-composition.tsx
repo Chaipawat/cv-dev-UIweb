@@ -9,7 +9,7 @@ export default function DevPathComposition({ project }: { project: Project }) {
   if (images.length < 2) return null;
 
   return (
-    <div className="grid min-w-0 grid-cols-1 items-start gap-8 sm:grid-cols-[1.15fr_1fr] sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 lg:gap-y-12">
+    <div className="grid min-w-0 grid-cols-1 items-start gap-8 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 lg:gap-y-12">
       {images.map((image, index) => (
         <figure
           key={image.src}
@@ -30,8 +30,8 @@ export default function DevPathComposition({ project }: { project: Project }) {
               />
             </div>
           </div>
-          <figcaption className="mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.14em] text-foreground-secondary lg:text-[10px]">
-            FIG. {String(index + 13).padStart(2, "0")} — {image.caption}
+          <figcaption className="fig-label mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.14em] text-foreground-secondary lg:text-[10px]">
+            {image.caption}
           </figcaption>
         </figure>
       ))}

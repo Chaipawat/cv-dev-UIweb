@@ -103,7 +103,7 @@ export default function HomeHero() {
                   src={profile.portraits.primary.src}
                   alt={profile.portraits.primary.alt}
                   fill
-                  priority
+                  preload
                   sizes="(min-width: 768px) 25vw, (min-width: 640px) 44vw, 62vw"
                   className="object-cover"
                   style={{ objectPosition: "52% 45%" }}

@@ -34,8 +34,8 @@ export default function MiniGameComposition({ project }: { project: Project }) {
               />
             </div>
           </div>
-          <figcaption className="mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.12em] text-foreground-secondary lg:text-[10px]">
-            FIG. {String(index + 9).padStart(2, "0")} — {image.caption}
+          <figcaption className="fig-label mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.12em] text-foreground-secondary lg:text-[10px]">
+            {image.caption}
           </figcaption>
         </figure>
       ))}

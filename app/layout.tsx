@@ -60,7 +60,16 @@ const instrumentSerif = Instrument_Serif({
 
 const { profile } = portfolio;
 
+// Absolute base for Open Graph image URLs. Set NEXT_PUBLIC_SITE_URL for a
+// custom domain; on Vercel the production domain is picked up automatically.
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: `${profile.displayName} — ${profile.positioning}`,
   description: `${profile.positioning} based in ${profile.location}. ${profile.statement}`,
 };
@@ -84,7 +93,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-screen flex-col overflow-x-hidden bg-background font-body text-foreground antialiased">
         <MotionProvider>
           <SmoothScroll>
-            <div className="paper-grain" aria-hidden="true" />
             <Navbar />
             <div className="relative z-10 flex-1">{children}</div>
             <Footer />

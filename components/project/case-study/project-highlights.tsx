@@ -36,15 +36,22 @@ export default function ProjectHighlights({ project }: { project: Project }) {
     );
   }
 
-  if (!project.features?.length) return null;
+  const features = project.features;
+  if (!features?.length) return null;
+  // A wrapping list, not inline spans: each feature is its own line box, so
+  // the run breaks between features instead of overflowing the page.
   return (
-    <p className="m-0 font-body text-[clamp(26px,4vw,56px)] font-medium leading-[1.1] tracking-[-0.04em] text-foreground">
-      {project.features.map((f, i) => (
-        <span key={f}>
+    <ul className="m-0 flex list-none flex-wrap items-baseline gap-x-[0.3em] gap-y-1 p-0 font-body text-[clamp(26px,4vw,56px)] font-medium leading-[1.1] tracking-[-0.04em] text-foreground">
+      {features.map((f, i) => (
+        <li key={f} className="min-w-0 max-w-full [overflow-wrap:anywhere]">
           {f}
-          {i < project.features!.length - 1 ? <span className="px-[0.25em] text-foreground-muted">/</span> : null}
-        </span>
+          {i < features.length - 1 ? (
+            <span className="ml-[0.3em] text-foreground-muted" aria-hidden="true">
+              /
+            </span>
+          ) : null}
+        </li>
       ))}
-    </p>
+    </ul>
   );
 }

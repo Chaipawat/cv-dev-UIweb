@@ -1,32 +1,25 @@
 import { cn } from "@/lib/utils";
 
 interface MediaCaptionProps {
-  /** Figure index, e.g. "01". */
-  index?: string;
-  /** Short mono label, e.g. "LIFF" or "ADMIN". */
+  /** Short screen name, e.g. "Admin Dashboard"; set in mono caps after the figure number. */
   label?: string;
-  caption?: string;
   className?: string;
 }
 
-/** Editorial figure caption: "FIG. 01 — ADMIN" on a hairline, caption text beside it. */
-export default function MediaCaption({ index, label, caption, className }: MediaCaptionProps) {
-  if (!index && !label && !caption) return null;
+/**
+ * Editorial figure caption on a hairline: "FIG. 01 — ADMIN DASHBOARD". The
+ * number comes from the page-wide CSS counter (`.fig-label` in globals.css).
+ */
+export default function MediaCaption({ label, className }: MediaCaptionProps) {
+  if (!label) return null;
   return (
     <figcaption
       className={cn(
-        "mt-3 flex min-w-0 flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-border pt-2.5",
+        "fig-label mt-3 border-t border-border pt-2.5 font-mono text-[10px] uppercase leading-relaxed tracking-[0.2em] text-foreground-secondary",
         className
       )}
     >
-      {index || label ? (
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground-secondary">
-          {index ? `FIG. ${index}` : null}
-          {index && label ? " — " : null}
-          {label}
-        </span>
-      ) : null}
-      {caption ? <span className="min-w-0 text-[13px] leading-snug text-foreground-secondary">{caption}</span> : null}
+      {label}
     </figcaption>
   );
 }

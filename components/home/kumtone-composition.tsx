@@ -36,8 +36,8 @@ export default function KumtoneComposition({ project }: { project: Project }) {
               />
             </div>
           </div>
-          <figcaption className="mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.12em] text-foreground-secondary lg:text-[10px]">
-            FIG. {String(index + 7).padStart(2, "0")} — {image.caption}
+          <figcaption className="fig-label mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.12em] text-foreground-secondary lg:text-[10px]">
+            {image.caption}
           </figcaption>
         </figure>
       ))}
@@ -62,9 +62,8 @@ export function KumtoneStoreEvidence({ project }: { project: Project }) {
               className="block h-auto w-full"
             />
           </div>
-          <figcaption className="pt-1 font-mono text-[9px] uppercase leading-relaxed tracking-[0.12em] text-foreground-secondary">
-            <span className="block">FIG. 09</span>
-            <span className="mt-2 block">{storeImage.caption}</span>
+          <figcaption className="fig-label pt-1 font-mono text-[9px] uppercase leading-relaxed tracking-[0.12em] text-foreground-secondary lg:text-[10px]">
+            {storeImage.caption}
           </figcaption>
         </figure>
   );

@@ -23,8 +23,8 @@ export default function BroadpangExtensionComposition({ project }: { project: Pr
             />
           </div>
         </div>
-        <figcaption className="mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.14em] text-foreground-secondary lg:text-[10px]">
-          FIG. 11 — {system.caption}
+        <figcaption className="fig-label mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.14em] text-foreground-secondary lg:text-[10px]">
+          {system.caption}
         </figcaption>
       </figure>
       <figure data-reveal="fade" className="relative z-10 m-0 ml-auto mt-6 w-[78%] max-w-[360px] sm:mt-4 sm:w-[38%] lg:-mt-12">
@@ -39,7 +39,7 @@ export default function BroadpangExtensionComposition({ project }: { project: Pr
           />
         </div>
         <figcaption className="mt-3 font-mono text-[9px] uppercase leading-relaxed tracking-[0.14em] text-foreground-secondary lg:text-[10px]">
-          <span className="block">FIG. 12 — {extension.caption}</span>
+          <span className="fig-label block">{extension.caption}</span>
           <span className="mt-1 block">VERSION 3.0.8</span>
         </figcaption>
       </figure>

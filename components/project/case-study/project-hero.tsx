@@ -5,6 +5,7 @@ import ProjectMediaHero from "@/components/project/project-media-hero";
 import Reveal from "@/components/shared/reveal";
 import { PROJECTS, formatProjectPeriod, getProjectNumber } from "@/data/projects";
 import type { CSSProperties } from "react";
+import type { CaseStudyHero } from "@/lib/project-media";
 import type { Project } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +14,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 // Alternate lines step inward so the title reads as an asymmetric block, not a centered headline.
 const LINE_INDENT = ["", "pl-[clamp(20px,9vw,150px)]", "pl-[clamp(8px,3vw,48px)]", "pl-[clamp(28px,13vw,220px)]"];
 
-export default function ProjectHero({ project }: { project: Project }) {
+export default function ProjectHero({ project, media }: { project: Project; media: CaseStudyHero | null }) {
   const words = project.title.split(" ");
   const years = formatProjectPeriod(project.period);
 
@@ -64,9 +65,11 @@ export default function ProjectHero({ project }: { project: Project }) {
         </Reveal>
       </PageContainer>
 
-      <PageContainer className="mt-[clamp(36px,5vw,64px)]">
-        <ProjectMediaHero project={project} />
-      </PageContainer>
+      {media ? (
+        <PageContainer className="mt-[clamp(36px,5vw,64px)]">
+          <ProjectMediaHero hero={media} className="lg:ml-auto" />
+        </PageContainer>
+      ) : null}
     </header>
   );
 }
