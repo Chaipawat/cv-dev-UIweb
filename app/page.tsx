@@ -27,11 +27,11 @@ export default function HomePage() {
       <HomeHero />
       <KineticStatement />
       <SelectedWork />
-      <ProjectIndex />
-      <ExperienceProgression />
-      <Capabilities />
-      <AboutPreview />
-      <ContactCta />
+      {/* <ProjectIndex /> */}
+      {/* <ExperienceProgression /> */}
+      {/* <Capabilities /> */}
+      {/* <AboutPreview /> */}
+      {/* <ContactCta /> */}
     </main>
   );
 }

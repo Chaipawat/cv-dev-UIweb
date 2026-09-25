@@ -29,8 +29,8 @@ export default function PhoneFrame({
 }: PhoneFrameProps) {
   return (
     <figure className={cn("m-0 min-w-0", className)}>
-      <div className="rounded-[clamp(18px,2.4vw,30px)] border border-border-strong bg-background p-[clamp(4px,0.5vw,7px)]">
-        <div className="ink-duotone relative overflow-hidden rounded-[clamp(14px,2vw,24px)] bg-surface">
+      <div className="rounded-[clamp(8px,1vw,14px)] border border-border-strong bg-background p-[2px]">
+        <div className="project-ink relative overflow-hidden rounded-[clamp(6px,0.8vw,11px)] bg-surface">
           <Image
             src={image.src}
             alt={image.alt}

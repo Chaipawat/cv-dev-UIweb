@@ -158,7 +158,7 @@ const workflow = [
  * Broadpang Extension → Mini Game → DevPath); non-featured projects sit
  * between them without affecting that sequence.
  *
- * Image galleries are empty until sanitized screenshots are added under
+ * Company screenshots are listed only once an approved asset exists under
  * /public/projects/<slug>/ (see docs/context.md — IMAGE ASSET SYSTEM).
  */
 const projects: Project[] = [
@@ -234,17 +234,43 @@ const projects: Project[] = [
     featured: true,
     confidentiality: COMPANY_CONFIDENTIALITY,
     images: {
-      // Add sanitized screenshots here once they are copied into
-      // /public/projects/badminton-booking/{liff,admin,details}/. Entries whose
-      // file is missing are skipped at build time (lib/project-media.ts). Example:
-      // {
-      //   src: "/projects/badminton-booking/liff/court-selection.webp",
-      //   alt: "LINE LIFF court selection screen",
-      //   width: 1170, height: 2532,
-      //   category: "mobile", treatment: "phone", group: "booking",
-      //   caption: "Court selection",
-      // },
-      gallery: [],
+      // Exact approved source files supplied for this project. Intrinsic
+      // dimensions prevent layout shift when rendered through next/image.
+      cover: "/projects/badminton-booking/badminton-admin-dashboard.png",
+      gallery: [
+        {
+          src: "/projects/badminton-booking/badminton-admin-dashboard.png",
+          alt: "Badminton booking admin dashboard",
+          width: 1897,
+          height: 910,
+          category: "admin",
+          treatment: "browser",
+          group: "admin",
+          caption: "Admin dashboard",
+          urlLabel: "admin / dashboard",
+          focus: "53% 48%",
+        },
+        {
+          src: "/projects/badminton-booking/lineliff.jpg",
+          alt: "Badminton booking LINE LIFF home and booking interface",
+          width: 449,
+          height: 910,
+          category: "mobile",
+          treatment: "phone",
+          group: "booking",
+          caption: "LINE LIFF home / booking",
+        },
+        {
+          src: "/projects/badminton-booking/badminton-liff-booking.png",
+          alt: "Badminton booking LINE LIFF calendar and booking flow",
+          width: 870,
+          height: 1882,
+          category: "mobile",
+          treatment: "phone",
+          group: "membership",
+          caption: "LINE LIFF calendar / booking flow",
+        },
+      ],
       groups: [
         { id: "booking", title: "Booking Flow", items: ["Court Selection", "Time Slot", "Confirmation"] },
         { id: "membership", title: "Membership + Payment", items: ["Package", "Membership", "QR Payment", "Status"] },
@@ -292,7 +318,47 @@ const projects: Project[] = [
     backendFamiliarity: "Node.js code reading to understand API flow",
     featured: true,
     confidentiality: COMPANY_CONFIDENTIALITY,
-    images: { gallery: [] },
+    images: {
+      cover: "/projects/zonepang/zonepang-home.png",
+      gallery: [
+        {
+          src: "/projects/zonepang/zonepang-home.png",
+          alt: "Zonepang platform home showing its connected product modules",
+          width: 1905,
+          height: 914,
+          category: "web",
+          treatment: "browser",
+          caption: "Zonepang Home",
+        },
+        {
+          src: "/projects/zonepang/broadpang-platform.png",
+          alt: "Broadpang broadcast interface within the Zonepang platform",
+          width: 1718,
+          height: 912,
+          category: "web",
+          treatment: "full",
+          caption: "Broadpang",
+        },
+        {
+          src: "/projects/zonepang/pumpang-platform.png",
+          alt: "Pumpang service interface within the Zonepang platform",
+          width: 1919,
+          height: 912,
+          category: "web",
+          treatment: "full",
+          caption: "Pumpang",
+        },
+        {
+          src: "/projects/zonepang/ai-zonepang-platform.png",
+          alt: "AI Zonepang creation interface within the platform",
+          width: 1907,
+          height: 908,
+          category: "web",
+          treatment: "full",
+          caption: "AI Zonepang",
+        },
+      ],
+    },
   },
   {
     slug: "zonepang-admin",
@@ -360,7 +426,38 @@ const projects: Project[] = [
     ],
     featured: true,
     confidentiality: COMPANY_CONFIDENTIALITY,
-    images: { gallery: [] },
+    images: {
+      cover: "/projects/kumtone/kumtone-tones.jpg",
+      gallery: [
+        {
+          src: "/projects/kumtone/kumtone-tones.jpg",
+          alt: "Kumtone mobile tone library with favorite film filters and photographic tone previews",
+          width: 870,
+          height: 1882,
+          category: "mobile",
+          caption: "TONE LIBRARY",
+          treatment: "phone",
+        },
+        {
+          src: "/projects/kumtone/kumtone-camera-selection.jpg",
+          alt: "Kumtone mobile camera selection with favorite cameras and film-camera styles",
+          width: 870,
+          height: 1882,
+          category: "mobile",
+          caption: "CAMERA SELECTION",
+          treatment: "phone",
+        },
+        {
+          src: "/projects/kumtone/kumtone-app-store.jpg",
+          alt: "Kumtone listing on the Apple App Store with app icon and product previews",
+          width: 870,
+          height: 1882,
+          category: "detail",
+          caption: "APP STORE",
+          treatment: "full",
+        },
+      ],
+    },
   },
   {
     slug: "broadpang-extension",
@@ -388,7 +485,29 @@ const projects: Project[] = [
     stack: ["JavaScript", "HTML", "CSS", "Chrome Extension"],
     featured: true,
     confidentiality: COMPANY_CONFIDENTIALITY,
-    images: { gallery: [] },
+    images: {
+      cover: "/projects/broadpang-extension/broadpang-system.png",
+      gallery: [
+        {
+          src: "/projects/broadpang-extension/broadpang-system.png",
+          alt: "Legacy Broadpang working interface with broadcast editor and LINE message preview",
+          width: 1917,
+          height: 1033,
+          category: "web",
+          caption: "BROADPANG SYSTEM",
+          treatment: "browser",
+        },
+        {
+          src: "/projects/broadpang-extension/broadpang-chrome-extension.png",
+          alt: "Installed Broadpang Chrome Extension version 3.0.8 in Chrome extension management",
+          width: 417,
+          height: 233,
+          category: "extension",
+          caption: "CHROME EXTENSION",
+          treatment: "full",
+        },
+      ],
+    },
   },
   {
     slug: "mini-game",
@@ -417,7 +536,29 @@ const projects: Project[] = [
     stack: ["React Native", "TypeScript", "Android Studio", "AdMob"],
     featured: true,
     confidentiality: COMPANY_CONFIDENTIALITY,
-    images: { gallery: [] },
+    images: {
+      cover: "/projects/mini-game/minigame-home.jpg",
+      gallery: [
+        {
+          src: "/projects/mini-game/minigame-home.jpg",
+          alt: "PartyPlay offline game hub with party-game selection cards",
+          width: 720,
+          height: 1600,
+          category: "mobile",
+          caption: "GAME HUB",
+          treatment: "phone",
+        },
+        {
+          src: "/projects/mini-game/minigame-card.jpg",
+          alt: "PartyPlay Bottle Spin game with an interactive bottle and colorful game pieces",
+          width: 720,
+          height: 1600,
+          category: "mobile",
+          caption: "BOTTLE SPIN",
+          treatment: "phone",
+        },
+      ],
+    },
   },
   {
     slug: "broadpang-web",
@@ -471,7 +612,38 @@ const projects: Project[] = [
     stack: ["React", "Next.js", "JavaScript", "TypeScript", "AI-assisted development"],
     featured: true,
     confidentiality: { publicDetails: true },
-    images: { gallery: [] },
+    images: {
+      cover: "/projects/devpath/devpath-home.png",
+      gallery: [
+        {
+          src: "/projects/devpath/devpath-home.png",
+          alt: "DevPath learning platform homepage with Understand, not memorize headline and the 3D Latte coding scene",
+          width: 1911,
+          height: 910,
+          category: "web",
+          caption: "DEVPATH HOME",
+          treatment: "full",
+        },
+        {
+          src: "/projects/devpath/devpath-learning-paths.png",
+          alt: "DevPath structured learning paths for Foundation, Frontend, Backend, and Infrastructure and Delivery",
+          width: 1916,
+          height: 908,
+          category: "web",
+          caption: "LEARNING PATHS",
+          treatment: "full",
+        },
+        {
+          src: "/projects/devpath/devpath-content.png",
+          alt: "DevPath Software Engineering Big Picture chapter with topic sidebar and table of contents",
+          width: 1901,
+          height: 904,
+          category: "web",
+          caption: "CHAPTER & NAVIGATION",
+          treatment: "full",
+        },
+      ],
+    },
   },
 ];
 

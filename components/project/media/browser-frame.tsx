@@ -43,7 +43,7 @@ export default function BrowserFrame({
             {image.category}
           </span>
         </div>
-        <div className="ink-duotone">
+        <div className={cn("project-ink", image.focus && "relative aspect-[2/1] overflow-hidden")}>
           <Image
             src={image.src}
             alt={image.alt}
@@ -51,7 +51,8 @@ export default function BrowserFrame({
             height={image.height}
             sizes={sizes}
             priority={priority}
-            className="block h-auto w-full"
+            className={cn("block w-full", image.focus ? "absolute inset-0 h-full object-cover" : "h-auto")}
+            style={image.focus ? { objectPosition: image.focus } : undefined}
           />
         </div>
       </div>

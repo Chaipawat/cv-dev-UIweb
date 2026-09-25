@@ -147,6 +147,30 @@
    (distort.ts) reproduces these exact numbers — keep them in sync. */
 @layer components {
 @media (hover: hover) {
+  .project-ink img {
+    filter: saturate(0.78) contrast(1.02);
+    transform: scale(1);
+    transition: filter var(--duration-slow) var(--ease-editorial), transform var(--duration-slow) var(--ease-editorial);
+  }
+
+  .project-ink:hover img,
+  :is(.group:hover, .group:focus-within) .project-ink img {
+    filter: none;
+    transform: scale(1.012);
+  }
+
+  .ecosystem-ink img {
+    filter: saturate(0.84) contrast(0.97);
+    transition: filter var(--duration-slow) var(--ease-editorial), transform var(--duration-slow) var(--ease-editorial);
+  }
+
+  .ecosystem-ink:hover img {
+    filter: none;
+    transform: scale(1.012);
+  }
+}
+
+@media (hover: hover) {
   .ink-duotone {
     position: relative;
     isolation: isolate;

@@ -64,7 +64,7 @@ export default function ProjectHero({ project }: { project: Project }) {
         </Reveal>
       </PageContainer>
 
-      <PageContainer className="mt-[clamp(48px,7vw,96px)]">
+      <PageContainer className="mt-[clamp(36px,5vw,64px)]">
         <ProjectMediaHero project={project} />
       </PageContainer>
     </header>
