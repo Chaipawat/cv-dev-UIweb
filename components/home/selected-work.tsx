@@ -36,7 +36,7 @@ export default function SelectedWork() {
           index="01"
           label="SELECTED WORK"
           trailing={
-            <Link href="/work" className="transition-colors duration-[180ms] hover:text-accent">
+            <Link href="/showcase" className="transition-colors duration-[180ms] hover:text-accent">
               ALL WORK →
             </Link>
           }

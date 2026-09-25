@@ -217,27 +217,25 @@ html.lenis {
   animation-delay: calc(var(--i, 0) * 70ms + 420ms);
 }
 
-/* Track holds two identical copies; shifting by -50% loops seamlessly. */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
+/* WebGL image layer: fades in over the static image, which is only hidden
+   once the fade has finished so the pair never dips in brightness. */
+[data-webgl-layer] {
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-editorial);
 }
 
-.marquee-track {
-  animation: marquee var(--marquee-duration, 48s) linear infinite;
+[data-webgl-layer="on"] {
+  opacity: 1;
 }
 
-.marquee-track[data-direction="reverse"] {
-  animation-direction: reverse;
+:has(> [data-webgl-layer="on"]) > img {
+  visibility: hidden;
+  transition: visibility 0s linear 0.7s;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .marquee-track {
-    animation: none !important;
   }
   * {
     animation-duration: 0.01ms !important;

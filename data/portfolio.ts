@@ -2,7 +2,7 @@ import type { Education, Experience, ProgressionStep, Project, SkillGroup, Skill
 
 /**
  * Canonical source of truth for every piece of portfolio content.
- * Other data files (timeline, contact, showcase, projects) and components
+ * Other data files (timeline, contact, projects) and components
  * must derive from this object instead of re-declaring names or stacks.
  */
 
@@ -31,10 +31,10 @@ const profile = {
 
   focusAreas: ["Web", "Mobile", "Product Interfaces"],
 
-  /** Product surfaces named in the statement copy and marquee. */
+  /** Product surfaces named in the statement copy. */
   domains: ["Web", "Mobile", "LINE LIFF", "Admin Systems", "Booking Flows", "Payments", "Product Interfaces"],
 
-  /** Footer marquee: what Ryu is available for. */
+  /** What Ryu is available for. */
   availableFor: ["Frontend", "Software Development", "Product Work"],
 
   /** How Ryu works inside the usual 1 Frontend / 1 Backend / 1 Manager team. */

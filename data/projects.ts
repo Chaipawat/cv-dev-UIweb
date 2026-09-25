@@ -44,3 +44,12 @@ export function formatProjectPeriod({ start, end }: ProjectPeriod): string {
 export function formatStack(stack: string[], limit?: number): string {
   return (limit ? stack.slice(0, limit) : stack).join(" · ");
 }
+
+export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
+  web: "Web",
+  mobile: "Mobile",
+  liff: "LINE LIFF",
+  admin: "Admin",
+  extension: "Extension",
+  personal: "Personal",
+};

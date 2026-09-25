@@ -1,6 +1,5 @@
 import PageContainer from "@/components/layout/page-container";
 import MotionScope from "@/components/motion/motion-scope";
-import Marquee from "@/components/shared/marquee";
 import { portfolio } from "@/data/portfolio";
 
 const { profile } = portfolio;
@@ -41,13 +40,6 @@ export default function KineticStatement() {
           </p>
         </div>
       </PageContainer>
-
-      <Marquee
-        items={profile.domains}
-        duration={56}
-        className="mt-[clamp(48px,7vw,96px)] border-y border-border py-[clamp(14px,1.8vw,22px)]"
-        itemClassName="font-display text-[clamp(22px,3vw,44px)] font-medium uppercase tracking-[-0.03em] text-foreground"
-      />
     </section>
     </MotionScope>
   );

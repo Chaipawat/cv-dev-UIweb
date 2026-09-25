@@ -105,7 +105,8 @@ function whileVisible(trigger: Element, tick: () => void, onIdle?: () => void) {
 const hero: Effect = (root, c) => {
   const [top, bottom] = $$(root, '[data-m="hero-line"]');
   const portrait = root.querySelector<HTMLElement>('[data-m="hero-portrait"]');
-  const img = portrait?.querySelector("img");
+  // Image + its WebGL layer scale together.
+  const img = portrait?.querySelector<HTMLElement>('[data-m="hero-media"]');
   const tl = gsap.timeline({
     defaults: { ease: "none" },
     scrollTrigger: { trigger: root, start: "top top", end: "bottom top", scrub: 0.6 },

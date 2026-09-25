@@ -16,7 +16,9 @@ export default function EditorialButton<T extends ElementType = "button">({
   as,
   ...rest
 }: EditorialButtonProps & { as?: T } & Omit<ComponentPropsWithoutRef<T>, keyof EditorialButtonProps | "as">) {
-  const Component = as || "button";
+  // Narrowed to what we pass so TS doesn't intersect the props of every
+  // intrinsic element (incl. the R3F ones), which collapses to `never`.
+  const Component = (as || "button") as ElementType<{ className?: string; children?: React.ReactNode }>;
   return (
     <Component
       className={cn(

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import PageContainer from "@/components/layout/page-container";
 import MotionScope from "@/components/motion/motion-scope";
-import Marquee from "@/components/shared/marquee";
 import { CONTACT_LINKS } from "@/data/contact";
 import { portfolio } from "@/data/portfolio";
 
@@ -69,14 +68,6 @@ export default function ContactCta() {
         </div>
       </PageContainer>
       </MotionScope>
-
-      <Marquee
-        items={["Available for", ...profile.availableFor]}
-        duration={40}
-        reverse
-        className="border-t border-border py-4"
-        itemClassName="font-mono text-[12px] uppercase tracking-[0.24em] text-foreground-secondary"
-      />
     </section>
   );
 }

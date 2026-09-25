@@ -2,13 +2,24 @@ import Link from "next/link";
 import PageContainer from "@/components/layout/page-container";
 import MotionScope from "@/components/motion/motion-scope";
 import SectionLabel from "@/components/shared/section-label";
-import { PROJECTS, formatProjectPeriod } from "@/data/projects";
+import ProjectHoverPreview, { type PreviewItem } from "@/components/home/project-hover-preview";
+import { PROJECTS, formatProjectPeriod, formatStack } from "@/data/projects";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+const previews: PreviewItem[] = PROJECTS.map((p, i) => ({
+  slug: p.slug,
+  number: pad(i + 1),
+  title: p.shortTitle ?? p.title,
+  type: p.shortType,
+  period: formatProjectPeriod(p.period),
+  stack: formatStack(p.stack, 4),
+  focus: p.focus ?? [],
+}));
+
 /**
  * Text-only archive of every project. Rows slide and pick up the accent on
- * hover/focus; the floating preview + WebGL tilt land in a later phase.
+ * hover/focus; on desktop a preview plate trails the cursor over them.
  */
 export default function ProjectIndex() {
   return (
@@ -31,9 +42,10 @@ export default function ProjectIndex() {
         </div>
 
         <MotionScope effect="index">
+        <ProjectHoverPreview items={previews}>
         <ol className="m-0 list-none border-t border-border p-0 md:border-t-0">
           {PROJECTS.map((p, i) => (
-            <li key={p.slug} data-m="index-row" data-reveal="fade" className="border-b border-border md:first:border-t">
+            <li key={p.slug} data-m="index-row" data-preview={p.slug} data-reveal="fade" className="border-b border-border md:first:border-t">
               <Link
                 href={`/work/${p.slug}`}
                 className="group grid grid-cols-[36px_1fr_auto] items-baseline gap-x-4 gap-y-1 py-[clamp(14px,1.8vw,22px)] md:grid-cols-[56px_1fr_180px_120px_32px] md:gap-6"
@@ -60,6 +72,7 @@ export default function ProjectIndex() {
             </li>
           ))}
         </ol>
+        </ProjectHoverPreview>
         </MotionScope>
       </PageContainer>
     </section>

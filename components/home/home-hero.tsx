@@ -2,12 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import PageContainer from "@/components/layout/page-container";
 import MotionScope from "@/components/motion/motion-scope";
+import WebGLImage from "@/components/webgl/webgl-image";
 import { portfolio } from "@/data/portfolio";
 import type { CSSProperties } from "react";
 
 const { profile } = portfolio;
 
-const TITLE = "font-display font-extrabold uppercase leading-[0.84] tracking-[-0.055em] text-[clamp(38px,13vw,200px)]";
+/** Monochrome grade shared by the static portrait and its WebGL layer. */
+const PORTRAIT_GRADE = "grayscale brightness-[0.62] contrast-[1.1]";
+
+const TITLE ="font-display font-extrabold uppercase leading-[0.84] tracking-[-0.055em] text-[clamp(38px,13vw,200px)]";
 
 /**
  * Asymmetric type-led hero: two giant lines stepping right, a monochrome
@@ -52,15 +56,18 @@ export default function HomeHero() {
         {/* Portrait: first on phones (tucked under the title), right column from md, pulled up so "Developer" overlaps it. */}
         <figure data-m="hero-portrait" className="relative z-0 order-first m-0 ml-auto mt-[-5vw] w-[62%] sm:w-[44%] md:order-none md:col-span-3 md:col-start-10 md:row-span-2 md:mt-[-15vw] md:w-full xl:mt-[-210px]">
           <div data-intro="wipe" className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
-            <Image
-              src={profile.portraits.primary.src}
-              alt={profile.portraits.primary.alt}
-              fill
-              priority
-              sizes="(min-width: 768px) 25vw, (min-width: 640px) 44vw, 62vw"
-              className="object-cover grayscale brightness-[0.62] contrast-[1.1]"
-              style={{ objectPosition: "52% 45%" }}
-            />
+            <div data-m="hero-media" className="absolute inset-0">
+              <Image
+                src={profile.portraits.primary.src}
+                alt={profile.portraits.primary.alt}
+                fill
+                priority
+                sizes="(min-width: 768px) 25vw, (min-width: 640px) 44vw, 62vw"
+                className={`object-cover ${PORTRAIT_GRADE}`}
+                style={{ objectPosition: "52% 45%" }}
+              />
+              <WebGLImage focus={[0.52, 0.45]} className={PORTRAIT_GRADE} />
+            </div>
             <span className="absolute inset-0 bg-accent/10 mix-blend-color" aria-hidden="true" />
           </div>
           <figcaption className="mt-2.5 flex justify-between gap-3 font-mono text-[10px] tracking-[0.2em] text-foreground-muted">
