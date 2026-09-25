@@ -1,4 +1,5 @@
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
+import { formatProjectPeriod, formatStack, getProjectsForExperience } from "@/data/projects";
 
 export interface TimelineRecord {
   tag: string;
@@ -16,43 +17,41 @@ export interface TimelineNode {
   records: TimelineRecord[];
 }
 
-const { education, experience, projects } = portfolioData;
-const [primaryEducation] = education;
-const internship = experience.find((e) => e.id === "internship")!;
-const developerRole = experience.find((e) => e.id === "bty-marketing")!;
+const { education, experience } = portfolio;
 
-const internshipProject = projects.find((p) => p.id === "purchasing-order-management")!;
+const educationNodes: TimelineNode[] = education.map((e) => ({
+  kind: "EDUCATION",
+  // No graduation year is confirmed in the source CV — do not display one.
+  time: e.graduationYear ? String(e.graduationYear) : "UNIVERSITY",
+  title: e.university,
+  org: e.degree,
+  note: e.faculty,
+  stage: "University",
+  records: [{ tag: "FOCUS", name: "Software Engineering foundations", tech: "Programming · Databases · Systems" }],
+}));
 
-export const TIMELINE: TimelineNode[] = [
-  {
-    kind: "EDUCATION",
-    // No graduation year is confirmed in the source CV — do not display one.
-    time: "UNIVERSITY",
-    title: primaryEducation.university,
-    org: primaryEducation.degree,
-    note: primaryEducation.faculty,
-    stage: "University",
-    records: [{ tag: "FOCUS", name: "Software Engineering foundations", tech: "Programming · Databases · Systems" }],
-  },
-  {
-    kind: "INTERNSHIP",
-    time: internship.periodLabel.toUpperCase(),
-    title: internship.role,
-    org: "Cooperative training",
-    stage: "Internship",
-    records: [{ tag: "PROJECT", name: internshipProject.name, tech: internshipProject.stack.join(" · ") }],
-  },
-  {
-    kind: "SOFTWARE DEVELOPER",
-    time: developerRole.periodLabel.toUpperCase(),
-    title: developerRole.role,
-    org: developerRole.company!,
-    stage: "Software Developer",
-    // Matches the approved design reference exactly (per product-owner decision).
-    records: [
-      { tag: "PROJECT RECORD", name: "Web & Mobile Applications", tech: "React · Next.js · React Native · TypeScript" },
-      { tag: "PROJECT RECORD", name: "Broadcast Web UI Extension", tech: "JavaScript · Socket · REST API" },
-      { tag: "PROJECT RECORD", name: "Trading Tools & Automation", tech: "TypeScript · API Integration · Automation" },
-    ],
-  },
-];
+// Experience is stored newest first; the timeline reads oldest first.
+const experienceNodes: TimelineNode[] = [...experience].reverse().map((e) => {
+  const projects = getProjectsForExperience(e.id);
+  const records: TimelineRecord[] = projects.length
+    ? projects.map((p) => ({
+        tag: `PROJECT — ${formatProjectPeriod(p.period)}`,
+        name: p.title,
+        tech: formatStack(p.stack, 4),
+      }))
+    : e.project
+      ? [{ tag: "PROJECT", name: e.project.name, tech: formatStack(e.project.stack) }]
+      : [];
+
+  const isInternship = e.id === "internship";
+  return {
+    kind: isInternship ? "INTERNSHIP" : e.role.toUpperCase(),
+    time: e.periodLabel.toUpperCase(),
+    title: e.role,
+    org: e.company ?? "Cooperative training",
+    stage: isInternship ? "Internship" : e.role,
+    records,
+  };
+});
+
+export const TIMELINE: TimelineNode[] = [...educationNodes, ...experienceNodes];

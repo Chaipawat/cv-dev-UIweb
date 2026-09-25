@@ -5,10 +5,10 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { NAV_ITEMS } from "@/data/nav";
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
-const { profile } = portfolioData;
+const { profile } = portfolio;
 
 export default function MobileNav({ pathname }: { pathname: string }) {
   const [open, setOpen] = useState(false);

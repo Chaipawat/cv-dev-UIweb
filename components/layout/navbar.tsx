@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import PageContainer from "@/components/layout/page-container";
 import MobileNav from "@/components/layout/mobile-nav";
 import { NAV_ITEMS } from "@/data/nav";
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
-const { profile } = portfolioData;
+const { profile } = portfolio;
 
 export default function Navbar() {
   const pathname = usePathname();

@@ -1,17 +1,18 @@
 import Image from "next/image";
+import Link from "next/link";
 import { MapPin, Clock, Smartphone } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
 import EditorialButton from "@/components/shared/editorial-button";
 import Reveal from "@/components/shared/reveal";
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 
-const { profile } = portfolioData;
+const { profile } = portfolio;
 
 export default function HomeHero() {
   return (
     <PageContainer className="pb-24 pt-[132px]">
       <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-muted">
-        <span>{profile.title.toUpperCase()}</span>
+        <span>{profile.positioning.toUpperCase()}</span>
         <span>
           AVAILABLE FOR GOOD WORK — {new Date().getFullYear()}
         </span>
@@ -23,7 +24,7 @@ export default function HomeHero() {
             SOFTWARE
           </span>
           <span className="mt-1 flex flex-wrap items-baseline gap-[clamp(16px,3vw,48px)]">
-            <span className="text-[clamp(52px,10.4vw,154px)] leading-[0.88] tracking-[-0.05em]">Engineer</span>
+            <span className="text-[clamp(52px,10.4vw,154px)] leading-[0.88] tracking-[-0.05em]">Developer</span>
             <span className="text-[clamp(30px,5.2vw,76px)] normal-case leading-none tracking-[-0.02em] text-accent">
              ( Ryu )
             </span>
@@ -53,10 +54,10 @@ export default function HomeHero() {
           </div>
 
           <div className="mt-10 flex flex-wrap gap-2.5">
-            <EditorialButton as="a" href="/work">
+            <EditorialButton as={Link} href="/work">
               View Work <span aria-hidden="true">→</span>
             </EditorialButton>
-            <EditorialButton as="a" href="/showcase" variant="secondary">
+            <EditorialButton as={Link} href="/showcase" variant="secondary">
               Explore Showcase
             </EditorialButton>
           </div>
@@ -71,8 +72,8 @@ export default function HomeHero() {
             </div>
             <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
               <Image
-                src="/src/images/profile_page1.jpg"
-                alt="Portrait of Chaipawat Jatuphattaranun"
+                src={profile.portraits.primary.src}
+                alt={profile.portraits.primary.alt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 420px, 90vw"

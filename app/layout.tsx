@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import MotionProvider from "@/components/shared/motion-provider";
+import { portfolio } from "@/data/portfolio";
 import "./globals.css";
 
 const geist = Geist({
@@ -30,10 +31,11 @@ const instrumentSerif = Instrument_Serif({
   weight: ["400"],
 });
 
+const { profile } = portfolio;
+
 export const metadata: Metadata = {
-  title: "Chaipawat Jatuphattaranun (Ryu) — Frontend Engineer",
-  description:
-    "Frontend Engineer / Software Developer based in Chonburi, Thailand. Building web and mobile interfaces, API-driven products, and thoughtful user experiences.",
+  title: `${profile.displayName} — ${profile.positioning}`,
+  description: `${profile.positioning} based in ${profile.location}. ${profile.statement}`,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

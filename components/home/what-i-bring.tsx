@@ -3,18 +3,25 @@ import { ArrowLeftRight, Smartphone, Cable, Wrench } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
 import Reveal from "@/components/shared/reveal";
 import SectionLabel from "@/components/shared/section-label";
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
+import { formatStack } from "@/data/projects";
+import type { SkillGroupKey } from "@/types/portfolio";
 
-// Curated 3-item previews per the approved design copy — illustrative, not
-// exhaustive; every term here is a real skill listed in data/portfolio.ts.
-const TECHNICAL = [
-  { icon: ArrowLeftRight, label: "Frontend", meta: "React · Next.js · TypeScript" },
-  { icon: Smartphone, label: "Mobile", meta: "React Native" },
-  { icon: Cable, label: "Integration", meta: "REST API · Payment · Socket" },
-  { icon: Wrench, label: "Tools", meta: "Git · Figma · Postman" },
+// 3-item previews of each capability group; full lists live in portfolio.skills.
+const TECHNICAL_GROUPS: { key: SkillGroupKey; icon: typeof ArrowLeftRight }[] = [
+  { key: "frontend", icon: ArrowLeftRight },
+  { key: "mobile", icon: Smartphone },
+  { key: "integration", icon: Cable },
+  { key: "workflow", icon: Wrench },
 ];
 
-const SOFT_SKILLS = portfolioData.softSkills.map((s, i) => ({
+const TECHNICAL = TECHNICAL_GROUPS.map(({ key, icon }) => ({
+  icon,
+  label: portfolio.skills[key].label,
+  meta: formatStack(portfolio.skills[key].items, 3),
+}));
+
+const SOFT_SKILLS = portfolio.softSkills.map((s, i) => ({
   n: String(i + 1).padStart(2, "0"),
   label: s.name,
   meta: s.shortDescription,

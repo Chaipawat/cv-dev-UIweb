@@ -1,6 +1,6 @@
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 
-const { contact } = portfolioData;
+const { contact } = portfolio;
 
 const formattedPhone = contact.phone ? contact.phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3") : null;
 const phoneValue =

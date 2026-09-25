@@ -1,4 +1,4 @@
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 
 export type EvidenceVariant = "panel" | "device" | "flow" | "abstract";
 
@@ -24,9 +24,9 @@ function evidence(
   return { title, badge, desc, variant, steps };
 }
 
-// Every technology below is a real skill listed in data/portfolio.ts
-// (skills.languages/frontend/mobile/integrations/tools/platforms). Evidence
-// items are generic technique descriptions, not specific project claims.
+// Every technology below is backed by portfolio.skills or a project stack in
+// data/portfolio.ts. Evidence items are generic technique descriptions, not
+// specific project claims. This page is retired into /work in a later phase.
 export const SHOWCASE_DATA: Record<ShowcaseCategory, Record<string, Evidence[]>> = {
   Frontend: {
     JavaScript: [
@@ -136,10 +136,6 @@ export const SHOWCASE_DATA: Record<ShowcaseCategory, Record<string, Evidence[]>>
       evidence("Realtime State", "Abstract representation", "Incoming events merged into local state without flicker."),
       evidence("Connection Status", "Interaction demo", "Connected, reconnecting and offline made visible."),
     ],
-    "AI API Integration": [
-      evidence("AI Result Interface", "Reconstructed UI", "Model output presented as a usable interface.", "panel"),
-      evidence("Streaming Output", "Interaction demo", "Partial responses rendered progressively."),
-    ],
   },
   Tools: {
     Git: [
@@ -191,4 +187,4 @@ export const BEYOND_ENGINEERING = [
   "AI-assisted Development",
 ];
 
-export const BEYOND_SOFT_SKILLS = portfolioData.softSkills.map((s) => s.name);
+export const BEYOND_SOFT_SKILLS = portfolio.softSkills.map((s) => s.name);

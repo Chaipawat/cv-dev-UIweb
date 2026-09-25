@@ -1,20 +1,13 @@
 import { Sparkles } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
 import SectionLabel from "@/components/shared/section-label";
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 
-const FLOW_COPY: Record<string, string> = {
-  Understand: "Clarify the problem, the constraints and what success looks like.",
-  Design: "Structure the interface and its states before writing components.",
-  Build: "Implement with reusable components and real data paths.",
-  Refine: "Test, debug, adjust motion and detail until it feels right.",
-};
-
-const FLOW = portfolioData.workflow.map((step, i) => ({
+const FLOW = portfolio.workflow.map((w, i) => ({
   n: String(i + 1).padStart(2, "0"),
-  arrow: i < portfolioData.workflow.length - 1 ? "→" : "",
-  k: step,
-  v: FLOW_COPY[step] ?? "",
+  arrow: i < portfolio.workflow.length - 1 ? "→" : "",
+  k: w.step,
+  v: w.description,
 }));
 
 export default function HowIWork() {
@@ -51,7 +44,7 @@ export default function HowIWork() {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          {portfolioData.skills.aiTools.map((tool) => (
+          {portfolio.skills.aiTools.map((tool) => (
             <span
               key={tool}
               className="rounded-md border border-border px-3.5 py-2.5 font-mono text-xs text-foreground"

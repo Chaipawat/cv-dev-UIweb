@@ -1,9 +1,9 @@
 import Image from "next/image";
 import PageContainer from "@/components/layout/page-container";
 import Reveal from "@/components/shared/reveal";
-import { portfolioData } from "@/data/portfolio";
+import { portfolio } from "@/data/portfolio";
 
-const { profile, education } = portfolioData;
+const { profile, education } = portfolio;
 const [primaryEducation] = education;
 
 const PROFILE = [
@@ -31,7 +31,7 @@ export default function ProfileSection() {
         <div className="mt-[60px] grid grid-cols-1 items-start gap-[clamp(32px,6vw,80px)] lg:grid-cols-[1fr_0.62fr]">
           <div>
             <p className="m-0 max-w-[520px] text-lg leading-[1.6] text-foreground-secondary">
-              Frontend Engineer / Software Developer building web and mobile products.
+              {profile.summary}
             </p>
             <div className="mt-11">
               {PROFILE.map((p) => (
@@ -54,8 +54,8 @@ export default function ProfileSection() {
             </div>
             <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
               <Image
-                src="/src/images/profile_page4.jpg"
-                alt="Portrait of Chaipawat Jatuphattaranun"
+                src={profile.portraits.secondary.src}
+                alt={profile.portraits.secondary.alt}
                 fill
                 sizes="(min-width: 1024px) 380px, 90vw"
                 className="object-cover"
