@@ -80,6 +80,8 @@ export interface Project {
   images: {
     cover?: string;
     gallery: ProjectImage[];
+    /** What the showcase card leads with when a project has both; defaults to the desktop screen. */
+    showcase?: "desktop" | "phones";
   };
 }
 

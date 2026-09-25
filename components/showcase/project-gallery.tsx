@@ -22,13 +22,14 @@ type Filter = ProjectCategory | "all";
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * Asymmetric two-column rhythm (wide / narrow, then narrow / wide), with the
- * narrow column dropped lower so rows never line up like a card grid.
+ * Asymmetric two-column rhythm (wide / narrow, then narrow / wide). Both
+ * cards in a row start level and share a cover height, so the widths vary
+ * while the row still reads as one balanced line.
  * Recomputed on the filtered list so the rhythm survives filtering.
  */
 function spanFor(i: number) {
   const wide = i % 4 === 0 || i % 4 === 3;
-  return cn(wide ? "md:col-span-7" : "md:col-span-5", !wide && "md:mt-[clamp(80px,10vw,160px)]");
+  return wide ? "md:col-span-7" : "md:col-span-5";
 }
 
 export default function ProjectGallery({ items, filters }: ProjectGalleryProps) {

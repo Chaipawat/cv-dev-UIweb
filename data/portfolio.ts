@@ -237,6 +237,8 @@ const projects: Project[] = [
       // Exact approved source files supplied for this project. Intrinsic
       // dimensions prevent layout shift when rendered through next/image.
       cover: "/projects/badminton-booking/badminton-admin-dashboard.png",
+      // The customer-facing LIFF flow is the product's face; admin leads the case study.
+      showcase: "phones",
       gallery: [
         {
           src: "/projects/badminton-booking/badminton-admin-dashboard.png",

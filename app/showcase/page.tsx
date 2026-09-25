@@ -5,6 +5,7 @@ import ProjectGallery, { type GalleryItem } from "@/components/showcase/project-
 import ShowcaseHero from "@/components/showcase/showcase-hero";
 import ShowcaseProject from "@/components/showcase/showcase-project";
 import { CATEGORY_LABELS, PROJECTS } from "@/data/projects";
+import { getAvailableImages } from "@/lib/project-media";
 import type { ProjectCategory } from "@/types/portfolio";
 
 export const metadata: Metadata = {
@@ -15,14 +16,18 @@ export const metadata: Metadata = {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-// Only categories that actually have projects become filters.
+// The showcase is visual: only projects with real screenshots appear here.
+// Projects without them keep their case study (reachable from Work and the
+// home project index) until screenshots are added.
+const SHOWN = PROJECTS.filter((p) => getAvailableImages(p).length > 0);
+
+// Only categories that actually have shown projects become filters.
 const FILTERS = (Object.keys(CATEGORY_LABELS) as ProjectCategory[])
-  .filter((id) => PROJECTS.some((p) => p.categories.includes(id)))
+  .filter((id) => SHOWN.some((p) => p.categories.includes(id)))
   .map((id) => ({ id, label: CATEGORY_LABELS[id] }));
 
 export default function ShowcasePage() {
-  // Numbering matches the home page project index.
-  const items: GalleryItem[] = PROJECTS.map((project, i) => ({
+  const items: GalleryItem[] = SHOWN.map((project, i) => ({
     slug: project.slug,
     categories: project.categories,
     node: <ShowcaseProject project={project} number={pad(i + 1)} />,
@@ -30,10 +35,10 @@ export default function ShowcasePage() {
 
   return (
     <main>
-      <ShowcaseHero />
+      <ShowcaseHero projects={SHOWN} />
       <section aria-label="Projects">
         <PageContainer className="pb-[clamp(96px,12vw,180px)] pt-[clamp(64px,8vw,112px)]">
-          <SectionLabel index="01" label="PROJECTS" trailing={`${pad(PROJECTS.length)} TOTAL`} className="mb-6" />
+          <SectionLabel index="01" label="PROJECTS" trailing={`${pad(SHOWN.length)} TOTAL`} className="mb-6" />
           <ProjectGallery items={items} filters={FILTERS} />
         </PageContainer>
       </section>

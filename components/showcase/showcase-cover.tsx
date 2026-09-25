@@ -2,77 +2,48 @@ import Image from "next/image";
 import BrowserFrame from "@/components/project/media/browser-frame";
 import type { ProjectMedia } from "@/lib/project-media";
 import type { ProjectImage } from "@/types/portfolio";
-import { cn } from "@/lib/utils";
-
-const DESKTOP_SIZES = "(min-width: 1340px) 620px, (min-width: 768px) 46vw, 90vw";
 
 /** Phone capture sized by height, so tall screens always fit the plate uncropped. */
-function PhoneShot({ image, className }: { image: ProjectImage; className?: string }) {
+function PhoneShot({ image }: { image: ProjectImage }) {
   return (
     <div
-      className={cn(
-        "project-ink relative overflow-hidden rounded-[clamp(6px,0.8vw,11px)] border border-border-strong bg-background shadow-[0_10px_28px_-18px_rgba(28,27,24,0.45)]",
-        className
-      )}
+      className="project-ink relative h-[82%] overflow-hidden rounded-[clamp(6px,0.8vw,11px)] border border-border-strong bg-background shadow-[0_10px_28px_-18px_rgba(28,27,24,0.45)]"
       style={{ aspectRatio: `${image.width} / ${image.height}` }}
     >
-      <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 14vw, 30vw" className="object-cover object-top" />
+      <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 12vw, 28vw" className="object-cover object-top" />
     </div>
   );
 }
 
 /**
- * Cover plate for a showcase card, composed to fit its fixed 16:11 frame:
- *   desktop + phone  → main screen with one phone overlapping its right edge
- *   desktop + detail → main screen with the detail card tucked under a corner
- *   several desktops → the main screen stacked over a second one
- *   phones only      → up to three height-fitted phones in a stepped row
+ * Cover plate for a showcase card: one clear subject, nothing overlapping.
+ * Projects with a desktop screen show that main screen alone, centred in a
+ * browser frame; mobile-only projects — or ones that prefer phones
+ * (`images.showcase`) — show up to three phones side by side.
+ * The full set of screens lives on the case study.
  * Callers render it only when the project has a desktop or phone screen.
  */
-export default function ShowcaseCover({ media }: { media: ProjectMedia }) {
-  const { desktops, phones, details } = media;
-  const [main, second] = desktops;
+export default function ShowcaseCover({ media, prefer }: { media: ProjectMedia; prefer?: "desktop" | "phones" }) {
+  const [main] = media.desktops;
 
-  if (main) {
-    const phone = phones[0];
-    const detail = !phone ? details.find((d) => d.width > d.height) : undefined;
-    const back = !phone && !detail ? second : undefined;
+  if (main && !(prefer === "phones" && media.phones.length)) {
     return (
-      <div className="absolute inset-0">
-        {back ? (
-          <BrowserFrame image={back} bare sizes={DESKTOP_SIZES} className="absolute right-[5%] top-[18%] w-[72%] opacity-70" />
-        ) : null}
+      <div className="absolute inset-0 flex items-center justify-center p-[7%]">
         <BrowserFrame
           image={main}
           bare
-          sizes={DESKTOP_SIZES}
-          className={cn(
-            "absolute left-[6%] shadow-[0_14px_36px_-24px_rgba(28,27,24,0.5)]",
-            phone ? "top-[10%] w-[74%]" : back ? "top-[9%] w-[76%]" : "top-[12%] w-[84%]"
-          )}
+          rounded
+          sizes="(min-width: 1340px) 640px, (min-width: 768px) 50vw, 88vw"
+          className="w-full max-w-[640px] shadow-[0_14px_36px_-24px_rgba(28,27,24,0.5)] transition-transform duration-[550ms] ease-[var(--ease-editorial)] group-hover:-translate-y-1"
         />
-        {phone ? <PhoneShot image={phone} className="absolute bottom-[8%] right-[7%] h-[76%]" /> : null}
-        {detail ? (
-          <div className="absolute bottom-[9%] right-[5%] w-[36%] overflow-hidden rounded-[2px] border border-border-strong bg-background p-[3px] shadow-[0_10px_28px_-18px_rgba(28,27,24,0.45)]">
-            <Image
-              src={detail.src}
-              alt={detail.alt}
-              width={detail.width}
-              height={detail.height}
-              sizes="(min-width: 768px) 16vw, 34vw"
-              className="block h-auto w-full"
-            />
-          </div>
-        ) : null}
       </div>
     );
   }
 
-  if (!phones.length) return null;
   return (
-    <div className="absolute inset-0 flex items-center justify-center gap-[4%] px-[6%]">
-      {phones.slice(0, 3).map((image, i) => (
-        <PhoneShot key={image.src} image={image} className={cn("h-[80%]", i % 2 === 1 && "translate-y-[7%]")} />
+    <div className="absolute inset-0 flex items-center justify-center gap-[5%] px-[7%] transition-transform duration-[550ms] ease-[var(--ease-editorial)] group-hover:-translate-y-1">
+      {media.phones.slice(0, 3).map((image) => (
+        <PhoneShot key={image.src} image={image} />
       ))}
     </div>
   );

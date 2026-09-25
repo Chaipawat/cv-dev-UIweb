@@ -1,18 +1,18 @@
 import PageContainer from "@/components/layout/page-container";
 import Reveal from "@/components/shared/reveal";
-import { PROJECTS } from "@/data/projects";
+import type { Project } from "@/types/portfolio";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const years = PROJECTS.flatMap((p) => [p.period.start, p.period.end ?? p.period.start]);
-const RANGE = `${Math.min(...years)}—${Math.max(...years)}`;
-const COMPANY = PROJECTS.filter((p) => p.experienceId).length;
-
-export default function ShowcaseHero() {
+/** Facts are computed from the projects actually shown, so the counts always match the grid. */
+export default function ShowcaseHero({ projects }: { projects: Project[] }) {
+  const years = projects.flatMap((p) => [p.period.start, p.period.end ?? p.period.start]);
+  const RANGE = `${Math.min(...years)}—${Math.max(...years)}`;
+  const company = projects.filter((p) => p.experienceId).length;
   const facts = [
-    { k: "PROJECTS", v: pad(PROJECTS.length) },
+    { k: "PROJECTS", v: pad(projects.length) },
     { k: "PERIOD", v: RANGE },
-    { k: "PRODUCT WORK", v: `${pad(COMPANY)} company · ${pad(PROJECTS.length - COMPANY)} personal` },
+    { k: "PRODUCT WORK", v: `${pad(company)} company · ${pad(projects.length - company)} personal` },
   ];
 
   return (

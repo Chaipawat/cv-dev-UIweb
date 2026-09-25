@@ -9,6 +9,8 @@ interface BrowserFrameProps {
   bare?: boolean;
   /** Preload as the page's LCP image. */
   preload?: boolean;
+  /** Softly rounded corners instead of the default hairline square. */
+  rounded?: boolean;
   sizes?: string;
   className?: string;
 }
@@ -22,12 +24,13 @@ export default function BrowserFrame({
   image,
   bare,
   preload,
+  rounded,
   sizes = "(min-width: 1340px) 1100px, (min-width: 768px) 85vw, 100vw",
   className,
 }: BrowserFrameProps) {
   return (
     <figure className={cn("m-0 min-w-0", className)}>
-      <div className="overflow-hidden border border-border-strong bg-surface">
+      <div className={cn("overflow-hidden border border-border-strong bg-surface", rounded && "rounded-[8px]")}>
         <div className="flex h-7 items-center gap-3 border-b border-border px-3" aria-hidden="true">
           <span className="flex gap-1">
             <span className="block h-[5px] w-[5px] bg-border-strong" />

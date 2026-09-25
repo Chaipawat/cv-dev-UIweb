@@ -61,8 +61,9 @@ export default function ShowcaseProject({ project, number }: ShowcaseProjectProp
   return (
     <article aria-labelledby={`sp-${project.slug}`}>
       <Link href={`/work/${project.slug}`} className="group block">
-        <div className="relative aspect-[16/11] overflow-hidden border border-border bg-surface transition-colors duration-[320ms] group-hover:border-accent-border">
-          {hasCover ? <ShowcaseCover media={media} /> : <TypeCover project={project} number={number} />}
+        {/* One fixed height from md up: wide and narrow cards in a row share it, so their text starts on the same line. */}
+        <div className="relative aspect-[16/11] overflow-hidden rounded-[12px] border border-border bg-surface transition-colors duration-[320ms] group-hover:border-accent-border md:aspect-auto md:h-[clamp(300px,31vw,430px)]">
+          {hasCover ? <ShowcaseCover media={media} prefer={project.images.showcase} /> : <TypeCover project={project} number={number} />}
         </div>
 
         <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-mono text-[10.5px] tracking-[0.2em] text-foreground-secondary">
