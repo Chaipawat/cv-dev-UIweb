@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BriefcaseBusiness, CodeXml, GraduationCap, PanelsTopLeft, type LucideIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import {
   motion,
@@ -11,16 +12,27 @@ import {
   useTransform,
 } from "framer-motion";
 import PageContainer from "@/components/layout/page-container";
-import { TIMELINE } from "@/data/timeline";
+import CertificateEvidence from "@/components/work/certificate-evidence";
+import ProjectTimelineEvidence from "@/components/work/project-timeline-evidence";
+import { TIMELINE, type TimelineNode } from "@/data/timeline";
 import { cn } from "@/lib/utils";
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+const STAGE_ICONS: Record<TimelineNode["id"], LucideIcon> = {
+  education: GraduationCap,
+  internship: BriefcaseBusiness,
+  professional: CodeXml,
+  project: PanelsTopLeft,
+};
 
 export default function CareerTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
   const prefersReducedMotion = useReducedMotion();
+  const activeNode = TIMELINE[Math.min(active, TIMELINE.length - 1)];
+  const ActiveIcon = STAGE_ICONS[activeNode.id];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -53,8 +65,16 @@ export default function CareerTimeline() {
         <div>
           <div className="sticky top-[112px]">
             <div className="mb-3.5 font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">STAGE</div>
+            <motion.div
+              key={activeNode.id}
+              initial={prefersReducedMotion ? false : { opacity: 0, rotate: -8, scale: 0.85 }}
+              animate={{ opacity: 1, rotate: 0, scale: 1 }}
+              className="mb-5 inline-flex h-11 w-11 items-center justify-center border border-accent-border bg-accent-soft text-accent-text"
+            >
+              <ActiveIcon size={20} strokeWidth={1.5} aria-hidden="true" />
+            </motion.div>
             <div className="font-body text-[clamp(18px,2vw,24px)] font-medium leading-[1.15] tracking-[-0.025em] text-foreground">
-              {TIMELINE[Math.min(active, TIMELINE.length - 1)].stage}
+              {activeNode.stage}
             </div>
             <div className="mt-5 h-px overflow-hidden bg-border">
               <motion.div className="h-px origin-left bg-accent" style={{ scaleX: railScale }} />
@@ -72,8 +92,10 @@ export default function CareerTimeline() {
             style={{ scaleY: railScale }}
           />
 
-          {TIMELINE.map((node, i) => (
-            <motion.div
+          {TIMELINE.map((node, i) => {
+            const StageIcon = STAGE_ICONS[node.id];
+            return (
+              <motion.div
               key={node.title}
               ref={(el) => {
                 nodeRefs.current[i] = el;
@@ -83,22 +105,30 @@ export default function CareerTimeline() {
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             >
               <span
+                aria-hidden="true"
                 className={cn(
-                  "absolute -left-[34px] top-1.5 h-[11px] w-[11px] rounded-full border transition-colors duration-[320ms]",
+                  "absolute -left-[45px] -top-1 inline-flex h-8 w-8 items-center justify-center border bg-background transition-colors duration-[320ms]",
                   i <= active ? "border-accent" : "border-border",
-                  i === active ? "bg-accent shadow-[0_0_0_4px_rgba(229,72,42,0.16)]" : "bg-background"
+                  i === active ? "text-accent-text shadow-[0_0_0_4px_rgba(229,72,42,0.12)]" : "text-foreground-secondary"
                 )}
-              />
-              <div className="flex flex-wrap items-center gap-3.5">
-                <span
-                  className={cn(
-                    "rounded-md border px-3 py-1.5 font-mono text-[11px] tracking-[0.18em] transition-colors duration-[320ms]",
-                    i === active ? "border-accent-border text-accent-text" : "border-border text-foreground-secondary"
-                  )}
-                >
-                  {node.time}
+              >
+                <StageIcon size={14} strokeWidth={1.6} />
+              </span>
+              <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
+                <div className="flex flex-wrap items-center gap-3.5">
+                  <span
+                    className={cn(
+                      "rounded-md border px-3 py-1.5 font-mono text-[11px] tracking-[0.18em] transition-colors duration-[320ms]",
+                      i === active ? "border-accent-border text-accent-text" : "border-border text-foreground-secondary"
+                    )}
+                  >
+                    {node.time}
+                  </span>
+                  <span className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">{node.kind}</span>
+                </div>
+                <span className="font-mono text-[9px] tracking-[0.2em] text-foreground-secondary">
+                  STEP {String(i + 1).padStart(2, "0")} / {String(TIMELINE.length).padStart(2, "0")}
                 </span>
-                <span className="font-mono text-[10px] tracking-[0.2em] text-foreground-secondary">{node.kind}</span>
               </div>
 
               <h2 className="m-0 mt-5 font-body text-[clamp(26px,4vw,54px)] font-medium leading-[1.02] tracking-[-0.04em] text-foreground">
@@ -109,8 +139,18 @@ export default function CareerTimeline() {
                 <div className="mt-1.5 font-mono text-xs text-foreground-secondary">{node.note}</div>
               ) : null}
 
-              <div className="mt-[34px] grid grid-cols-1 border-t border-border sm:grid-cols-2">
-                {node.records.map((r) => {
+              {node.evidence ? <CertificateEvidence evidence={node.evidence} /> : null}
+              {node.projectEvidence ? <ProjectTimelineEvidence evidence={node.projectEvidence} /> : null}
+
+              {node.records.length ? (
+                <div
+                  className={cn(
+                    "grid grid-cols-1 border-t border-border",
+                    node.records.length > 1 && "sm:grid-cols-2",
+                    node.evidence || node.projectEvidence ? "mt-8" : "mt-[34px]",
+                  )}
+                >
+                  {node.records.map((r) => {
                   const body = (
                     <>
                       <div className="mb-3 font-mono text-[10px] tracking-[0.18em] text-foreground-secondary">
@@ -141,10 +181,12 @@ export default function CareerTimeline() {
                       {body}
                     </div>
                   );
-                })}
-              </div>
-            </motion.div>
-          ))}
+                  })}
+                </div>
+              ) : null}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </PageContainer>

@@ -10,3 +10,9 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
+
+/** Keep a section active on its nested routes, while Home matches only `/`. */
+export function isNavItemActive(pathname: string, href: NavItem["href"]): boolean {
+  if (href === "/") return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}

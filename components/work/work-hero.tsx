@@ -1,4 +1,6 @@
+import { GitBranch } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
+import PageIcon from "@/components/shared/page-icon";
 import Reveal from "@/components/shared/reveal";
 
 export default function WorkHero() {
@@ -6,7 +8,10 @@ export default function WorkHero() {
     <PageContainer className="pb-[72px] pt-[132px]">
       <Reveal as="section">
         <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
-          <span>PAGE 03 — WORK</span>
+          <span className="inline-flex items-center gap-3">
+            <PageIcon icon={GitBranch} />
+            PAGE 03 — WORK
+          </span>
           <span>2020 — PRESENT</span>
         </div>
 

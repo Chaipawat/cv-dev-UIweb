@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Code2 } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
 import MotionScope from "@/components/motion/motion-scope";
+import PageIcon from "@/components/shared/page-icon";
 import WebGLImage from "@/components/webgl/webgl-image";
 import { portfolio } from "@/data/portfolio";
 import type { CSSProperties } from "react";
@@ -60,14 +62,17 @@ export default function HomeHero() {
 
       <PageContainer className="pb-[clamp(72px,10vw,140px)] pt-[112px]">
         <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-b border-border pb-[18px] font-mono text-[11px] tracking-[0.06em] text-foreground-secondary">
-          <span>
-            <span aria-hidden="true">
-              <span className="text-terminal">~/{profile.nickname.toLowerCase()}</span>
-              <span className="mx-[0.6em]">$</span>
-              <span className="text-foreground">whoami</span>
-              <span className="mx-[0.8em]">→</span>
+          <span className="inline-flex items-center gap-3">
+            <PageIcon icon={Code2} />
+            <span>
+              <span aria-hidden="true">
+                <span className="text-terminal">~/{profile.nickname.toLowerCase()}</span>
+                <span className="mx-[0.6em]">$</span>
+                <span className="text-foreground">whoami</span>
+                <span className="mx-[0.8em]">→</span>
+              </span>
+              {profile.positioning.toLowerCase()}
             </span>
-            {profile.positioning.toLowerCase()}
           </span>
           <span className="tracking-[0.2em]">{profile.location.toUpperCase()}</span>
         </div>

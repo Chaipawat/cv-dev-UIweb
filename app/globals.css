@@ -362,6 +362,22 @@ html.lenis {
   opacity: 1;
 }
 
+/* The contact vignette shares the page background; only the objects move. */
+@keyframes contact-desk-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.contact-desk-float {
+  animation: contact-desk-float 7s ease-in-out infinite;
+  will-change: transform;
+}
+
 :has(> [data-webgl-layer="on"]) > img {
   visibility: hidden;
   transition: visibility 0s linear 0.7s;

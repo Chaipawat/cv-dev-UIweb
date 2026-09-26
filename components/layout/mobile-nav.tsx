@@ -4,7 +4,7 @@ import Link from "next/link";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { NAV_ITEMS } from "@/data/nav";
+import { isNavItemActive, NAV_ITEMS } from "@/data/nav";
 import { portfolio } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -50,7 +50,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
 
           <nav className="flex flex-col" aria-label="Primary">
             {NAV_ITEMS.map((item, i) => {
-              const active = pathname === item.href;
+              const active = isNavItemActive(pathname, item.href);
               return (
                 <Dialog.Close asChild key={item.href}>
                   <Link
