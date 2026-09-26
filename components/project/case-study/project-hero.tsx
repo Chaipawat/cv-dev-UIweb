@@ -63,7 +63,7 @@ export default function ProjectHero({ project, media }: { project: Project; medi
           </h1>
         </MotionScope>
 
-        <Reveal delay={0.07}>
+        <Reveal hero delay={0.07}>
           <div className="mt-[clamp(32px,5vw,64px)] grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
             <p className="m-0 font-mono text-[12px] uppercase leading-[1.7] tracking-[0.18em] text-accent-text md:col-span-5">
               {project.type}

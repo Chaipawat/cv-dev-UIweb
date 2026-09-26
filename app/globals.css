@@ -378,7 +378,8 @@ html.lenis {
   will-change: transform;
 }
 
-:has(> [data-webgl-layer="on"]) > img {
+/* Anchored on img so the browser only evaluates :has() for images. */
+img:has(~ [data-webgl-layer="on"]) {
   visibility: hidden;
   transition: visibility 0s linear 0.7s;
 }

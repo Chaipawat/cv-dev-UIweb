@@ -72,6 +72,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `${profile.displayName} — ${profile.positioning}`,
   description: `${profile.positioning} based in ${profile.location}. ${profile.statement}`,
+  // No title/description here: pages inherit this object as-is, and share
+  // crawlers fall back to each page's own <title> and description.
+  openGraph: {
+    type: "website",
+    siteName: profile.fullName,
+  },
 };
 
 // Runs before first paint: opt into kinetic pre-states only when motion is

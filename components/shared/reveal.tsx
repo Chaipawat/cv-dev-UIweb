@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 const variants: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -13,9 +13,28 @@ interface RevealProps {
   className?: string;
   delay?: number;
   as?: "div" | "section";
+  /**
+   * Above-the-fold content: animate with the CSS `data-intro="rise"` intro
+   * (gated by `html.motion`) so it starts at first paint and stays visible
+   * if JavaScript never hydrates, instead of shipping at opacity 0.
+   */
+  hero?: boolean;
 }
 
-export default function Reveal({ children, className, delay = 0, as = "div" }: RevealProps) {
+export default function Reveal({ children, className, delay = 0, as = "div", hero = false }: RevealProps) {
+  if (hero) {
+    const Tag = as;
+    return (
+      <Tag
+        data-intro="rise"
+        className={className}
+        style={{ animationDelay: `${Math.round(delay * 1000) + 80}ms` } as CSSProperties}
+      >
+        {children}
+      </Tag>
+    );
+  }
+
   const Component = motion[as];
   return (
     <Component

@@ -6,7 +6,6 @@ import { useRef, useState } from "react";
 import {
   motion,
   useMotionValueEvent,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
@@ -16,6 +15,7 @@ import CertificateEvidence from "@/components/work/certificate-evidence";
 import ProjectTimelineEvidence from "@/components/work/project-timeline-evidence";
 import { TIMELINE, type TimelineNode } from "@/data/timeline";
 import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/lib/motion/use-media-query";
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
@@ -30,7 +30,7 @@ export default function CareerTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const activeNode = TIMELINE[Math.min(active, TIMELINE.length - 1)];
   const ActiveIcon = STAGE_ICONS[activeNode.id];
 

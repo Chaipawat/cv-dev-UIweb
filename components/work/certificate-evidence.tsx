@@ -48,8 +48,8 @@ export default function CertificateEvidence({ evidence }: { evidence: TimelineEv
       </figure>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[130] bg-foreground/55 backdrop-blur-[6px]" />
-        <Dialog.Content className="fixed inset-3 z-[140] flex flex-col border border-border-strong bg-background p-3 shadow-2xl outline-none sm:inset-6 lg:inset-10">
+        <Dialog.Overlay data-lenis-prevent className="fixed inset-0 z-[130] bg-foreground/55 backdrop-blur-[6px]" />
+        <Dialog.Content data-lenis-prevent className="fixed inset-3 z-[140] flex flex-col border border-border-strong bg-background p-3 shadow-2xl outline-none sm:inset-6 lg:inset-10">
           <div className="flex items-center justify-between gap-4 border-b border-border pb-3">
             <div className="min-w-0">
               <Dialog.Title className="truncate font-body text-[15px] font-medium text-foreground">

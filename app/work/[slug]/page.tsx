@@ -36,7 +36,10 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
       title,
       description,
       type: "article",
-      ...(project.images.cover ? { images: [{ url: project.images.cover }] } : {}),
+      siteName: portfolio.profile.fullName,
+      // This object replaces the root openGraph, so projects without
+      // screenshots point back at the site-wide card (app/opengraph-image).
+      images: [{ url: project.images.cover ?? "/opengraph-image" }],
     },
   };
 }

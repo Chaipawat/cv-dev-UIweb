@@ -25,8 +25,8 @@ export default function MobileNav({ pathname }: { pathname: string }) {
         </button>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[110] bg-foreground/20 backdrop-blur-[2px]" />
-        <Dialog.Content className="fixed inset-y-0 right-0 z-[120] flex w-[86%] max-w-sm flex-col gap-10 border-l border-border-strong bg-background px-8 py-8 outline-none">
+        <Dialog.Overlay data-lenis-prevent className="fixed inset-0 z-[110] bg-foreground/20 backdrop-blur-[2px]" />
+        <Dialog.Content data-lenis-prevent className="fixed inset-y-0 right-0 z-[120] flex w-[86%] max-w-sm flex-col gap-10 border-l border-border-strong bg-background px-8 py-8 outline-none">
           <Dialog.Description className="sr-only">Site navigation menu</Dialog.Description>
           <div className="flex items-center justify-between">
             <Dialog.Title className="font-mono text-[12px] tracking-[0.06em] text-foreground-secondary">

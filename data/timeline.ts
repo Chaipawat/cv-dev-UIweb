@@ -44,7 +44,6 @@ const { education, experience } = portfolio;
 const educationNodes: TimelineNode[] = education.map((e) => ({
   id: "education",
   kind: "EDUCATION",
-  // No graduation year is confirmed in the source CV — do not display one.
   time: e.graduationYear ? String(e.graduationYear) : "UNIVERSITY",
   title: e.university,
   org: e.degree,
@@ -52,7 +51,7 @@ const educationNodes: TimelineNode[] = education.map((e) => ({
   stage: "University",
   records: [{ tag: "FOCUS", name: "Software Engineering foundations", tech: "Programming · Databases · Systems" }],
   evidence: {
-    src: "/cetificate/burapha-certi.png",
+    src: "/certificate/burapha-certi.png",
     alt: "Burapha University bachelor degree certificate awarded to Chaipawat Jatuphattaranun",
     label: "DEGREE EVIDENCE",
     title: "Bachelor’s Degree Certificate",
@@ -78,7 +77,7 @@ const experienceNodes: TimelineNode[] = [...experience].reverse().map((e) => {
     ...(isInternship
       ? {
           evidence: {
-            src: "/cetificate/intern-certi.png",
+            src: "/certificate/intern-certi.png",
             alt: "Assistant Software Professional cooperative training certificate awarded to Chaipawat Jatuphattaranun",
             label: "TRAINING EVIDENCE",
             title: "Assistant Software Professional",

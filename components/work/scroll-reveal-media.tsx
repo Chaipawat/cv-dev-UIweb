@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/lib/motion/use-media-query";
 
 interface ScrollRevealMediaProps {
   children: ReactNode;
@@ -16,7 +17,7 @@ interface ScrollRevealMediaProps {
  */
 export default function ScrollRevealMedia({ children, className }: ScrollRevealMediaProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 92%", "start 54%"],

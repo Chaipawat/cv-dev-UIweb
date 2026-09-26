@@ -26,6 +26,8 @@ const COLORS = {
 
 interface ContactDeskSceneProps {
   compact: boolean;
+  /** Mouse drag is available (wide viewport with a fine, hovering pointer). */
+  draggable: boolean;
   reducedMotion: boolean;
   onReady: () => void;
   onFail: () => void;
@@ -324,10 +326,16 @@ function CameraController({ compact }: { compact: boolean }) {
   return null;
 }
 
-export default function ContactDeskScene({ compact, reducedMotion, onReady, onFail }: ContactDeskSceneProps) {
+export default function ContactDeskScene({ compact, draggable, reducedMotion, onReady, onFail }: ContactDeskSceneProps) {
+  // R3F force-loses the context after this component unmounts; drop the
+  // listener first so a normal teardown isn't reported as a failure.
+  const detachContextLost = useRef<(() => void) | null>(null);
+  useEffect(() => () => detachContextLost.current?.(), []);
+
   const handleCreated = useCallback(
     ({ gl, invalidate }: { gl: THREE.WebGLRenderer; invalidate: () => void }) => {
       gl.domElement.addEventListener("webglcontextlost", onFail, { once: true });
+      detachContextLost.current = () => gl.domElement.removeEventListener("webglcontextlost", onFail);
       gl.outputColorSpace = THREE.SRGBColorSpace;
       gl.setClearColor(0x000000, 0);
       requestAnimationFrame(() => {
@@ -349,8 +357,10 @@ export default function ContactDeskScene({ compact, reducedMotion, onReady, onFa
         position: "absolute",
         inset: 0,
         background: "transparent",
-        cursor: compact ? "default" : "grab",
-        touchAction: compact ? "pan-y" : "none",
+        // Drag only works with a mouse, so every other pointer keeps native
+        // vertical scrolling over the canvas (tablets wider than `compact`).
+        cursor: draggable ? "grab" : "default",
+        touchAction: draggable ? "none" : "pan-y",
       }}
       onCreated={handleCreated}
     >

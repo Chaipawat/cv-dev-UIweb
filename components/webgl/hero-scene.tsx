@@ -93,6 +93,10 @@ export default function HeroScene({ source, frame, focus, intensity, onReady, on
   // Same condition as the CSS `.ink-duotone`: without hover there is no way
   // to reveal colour, so touch devices get true colour at rest.
   const [restColor] = useState(() => (window.matchMedia("(hover: hover)").matches ? 0 : 1));
+  // R3F force-loses the context after this component unmounts; drop the
+  // listener first so a normal teardown isn't reported as a failure.
+  const detachContextLost = useRef<(() => void) | null>(null);
+  useEffect(() => () => detachContextLost.current?.(), []);
 
   return (
     <Canvas
@@ -105,6 +109,7 @@ export default function HeroScene({ source, frame, focus, intensity, onReady, on
       style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
       onCreated={({ gl }) => {
         gl.domElement.addEventListener("webglcontextlost", onFail, { once: true });
+        detachContextLost.current = () => gl.domElement.removeEventListener("webglcontextlost", onFail);
         // Wait one painted frame so the canvas never shows empty over the image.
         requestAnimationFrame(() => requestAnimationFrame(onReady));
       }}

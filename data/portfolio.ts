@@ -60,7 +60,7 @@ const education: Education[] = [
     university: "Burapha University",
     faculty: "Faculty of Informatics",
 
-    // Verified from the degree certificate in /public/cetificate/.
+    // Verified from the degree certificate in /public/certificate/.
     graduationYear: 2022,
   },
 ];
@@ -646,12 +646,12 @@ const progression: ProgressionStep[] = [
   { year: "2022", title: "Broadpang Extension", shift: "Legacy extension", projectSlugs: ["broadpang-extension"] },
   { year: "2023", title: "React Web", shift: "Component-based web", projectSlugs: ["broadpang-web"] },
   { year: "2024", title: "Zonepang", shift: "Next.js platform + admin", projectSlugs: ["zonepang-platform", "zonepang-admin"] },
-  { year: "2025", title: "React Native", shift: "Mobile apps + in-app purchase", projectSlugs: ["kumtone", "mini-game"] },
+  { year: "2025", title: "React Native", shift: "Mobile app + in-app purchase", projectSlugs: ["kumtone"] },
   {
     year: "2026",
     title: "LINE LIFF / Product Systems",
     shift: "Booking, membership, payment",
-    projectSlugs: ["badminton-booking"],
+    projectSlugs: ["badminton-booking", "mini-game"],
   },
 ];
 

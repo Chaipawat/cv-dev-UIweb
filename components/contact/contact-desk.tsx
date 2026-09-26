@@ -2,16 +2,21 @@
 
 import dynamic from "next/dynamic";
 import { Beer, Laptop } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useMediaQuery, usePrefersReducedMotion } from "@/lib/motion/use-media-query";
 
 const ContactDeskScene = dynamic(() => import("@/components/contact/contact-desk-scene"), { ssr: false });
 
 function supportsWebGL() {
   try {
     const canvas = document.createElement("canvas");
-    return Boolean(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+    const gl = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
+    // Release the probe context right away so it doesn't count against the
+    // browser's live-context limit.
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    return Boolean(gl);
   } catch {
     return false;
   }
@@ -19,23 +24,15 @@ function supportsWebGL() {
 
 /** A progressive, unboxed WebGL vignette that disappears into the page surface. */
 export default function ContactDesk({ className }: { className?: string }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
+  const compact = useMediaQuery("(max-width: 768px)");
+  const finePointer = useMediaQuery("(hover: hover) and (pointer: fine)");
   const [enabled, setEnabled] = useState(false);
   const [ready, setReady] = useState(false);
-  const [compact, setCompact] = useState(false);
 
   useEffect(() => {
-    const mobile = window.matchMedia("(max-width: 768px)");
-    const sync = () => setCompact(mobile.matches);
-    const frame = requestAnimationFrame(() => {
-      sync();
-      setEnabled(supportsWebGL());
-    });
-    mobile.addEventListener("change", sync);
-    return () => {
-      cancelAnimationFrame(frame);
-      mobile.removeEventListener("change", sync);
-    };
+    const frame = requestAnimationFrame(() => setEnabled(supportsWebGL()));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   return (
@@ -61,9 +58,13 @@ export default function ContactDesk({ className }: { className?: string }) {
         {enabled ? (
           <ContactDeskScene
             compact={compact}
-            reducedMotion={Boolean(reduceMotion)}
+            draggable={!compact && finePointer}
+            reducedMotion={reduceMotion}
             onReady={() => setReady(true)}
-            onFail={() => setEnabled(false)}
+            onFail={() => {
+              setEnabled(false);
+              setReady(false);
+            }}
           />
         ) : null}
       </div>

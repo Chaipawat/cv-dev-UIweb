@@ -10,7 +10,7 @@ const { profile } = portfolio;
 export default function LetsConnect() {
   return (
     <PageContainer className="pt-[132px]">
-      <Reveal as="section" className="flex flex-col">
+      <Reveal as="section" hero className="flex flex-col">
         <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
           <span className="inline-flex items-center gap-3">
             <PageIcon icon={Send} />

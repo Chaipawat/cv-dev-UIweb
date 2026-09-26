@@ -77,7 +77,7 @@ export default function ContactList({ keys, reveal, showIcons, compact, classNam
             {c.href ? (
               <a
                 href={c.href}
-                {...(c.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                {...(c.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className={cn("group", rowClass)}
               >
                 {row}

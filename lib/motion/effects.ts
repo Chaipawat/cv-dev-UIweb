@@ -184,6 +184,11 @@ const progression: Effect = (root, c) => {
   const rail = root.querySelector<HTMLElement>('[data-m="step-rail"]');
   const list = root.querySelector<HTMLElement>('[data-m="steps"]');
   const total = String(steps.length).padStart(2, "0");
+  // Built here, inside the effect's context, so matchMedia revert cleans it
+  // up; the ScrollTrigger callbacks below only restart it.
+  const yearIn = year
+    ? gsap.fromTo(year, { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.6, ease: EASE_EDITORIAL, paused: true, immediateRender: false })
+    : null;
 
   const activate = (i: number) => {
     steps.forEach((s, j) => s.toggleAttribute("data-active", j === i));
@@ -191,7 +196,7 @@ const progression: Effect = (root, c) => {
     if (!step) return;
     if (year && year.textContent !== step.dataset.year) {
       year.textContent = step.dataset.year ?? "";
-      gsap.fromTo(year, { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.6, ease: EASE_EDITORIAL });
+      yearIn?.restart();
     }
     if (count) count.textContent = `${String(i + 1).padStart(2, "0")} / ${total}`;
     if (shift) shift.textContent = step.dataset.shift ?? "";
