@@ -71,9 +71,24 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // Back/forward navigations fire popstate before the pathname changes; those
+  // keep the restored scroll position instead of jumping to the top.
+  const historyNavigation = useRef(false);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    const onPopState = () => {
+      historyNavigation.current = true;
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
   // New route: jump to top without smoothing and re-measure triggers once layout settles.
   useEffect(() => {
-    lenisRef.current?.scrollTo(0, { immediate: true, force: true });
+    const restoring = firstRender.current || historyNavigation.current;
+    firstRender.current = false;
+    historyNavigation.current = false;
+    if (!restoring) lenisRef.current?.scrollTo(0, { immediate: true, force: true });
     const id = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(id);
   }, [pathname]);

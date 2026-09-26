@@ -3,33 +3,13 @@
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState, useSyncExternalStore, type FocusEvent, type KeyboardEvent, type TouchEvent } from "react";
+import { useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent, type TouchEvent } from "react";
 import type { ProjectImage } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/lib/motion/use-media-query";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const SLIDE_DURATION = 4500;
-const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
-
-function subscribeReducedMotion(onChange: () => void) {
-  const query = window.matchMedia(REDUCED_MOTION);
-  query.addEventListener("change", onChange);
-  return () => query.removeEventListener("change", onChange);
-}
-
-/**
- * Hydration-safe reduced-motion flag: the server snapshot (false) is used
- * while hydrating, then React re-renders with the real preference. Framer's
- * useReducedMotion reads the media query on the first client render instead,
- * so markup that depends on it (the pause button) mismatched the server HTML.
- */
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    subscribeReducedMotion,
-    () => window.matchMedia(REDUCED_MOTION).matches,
-    () => false
-  );
-}
 
 export default function ZonepangSlider({ images }: { images: ProjectImage[] }) {
   const root = useRef<HTMLDivElement>(null);
@@ -102,8 +82,14 @@ export default function ZonepangSlider({ images }: { images: ProjectImage[] }) {
       aria-roledescription="carousel"
       aria-label="Zonepang product showcase"
       onKeyDown={onKeyDown}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      // A touch tap fires a compat mouseenter with no matching leave, which
+      // left autoplay stuck on "Paused"; only a real mouse hover pauses it.
+      onPointerEnter={(event: PointerEvent) => {
+        if (event.pointerType === "mouse") setHovered(true);
+      }}
+      onPointerLeave={(event: PointerEvent) => {
+        if (event.pointerType === "mouse") setHovered(false);
+      }}
       onFocusCapture={() => setFocused(true)}
       onBlurCapture={onBlur}
     >

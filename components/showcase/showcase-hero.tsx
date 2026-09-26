@@ -1,4 +1,6 @@
+import { GalleryVerticalEnd } from "lucide-react";
 import PageContainer from "@/components/layout/page-container";
+import PageIcon from "@/components/shared/page-icon";
 import Reveal from "@/components/shared/reveal";
 import type { Project } from "@/types/portfolio";
 
@@ -17,9 +19,12 @@ export default function ShowcaseHero({ projects }: { projects: Project[] }) {
 
   return (
     <PageContainer className="pt-[132px]">
-      <Reveal as="section">
+      <Reveal as="section" hero>
         <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-border pb-[26px] font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
-          <span>PAGE 02 — SHOWCASE</span>
+          <span className="inline-flex items-center gap-3">
+            <PageIcon icon={GalleryVerticalEnd} />
+            PAGE 02 — SHOWCASE
+          </span>
           <span>SELECTED PROJECTS {RANGE}</span>
         </div>
 

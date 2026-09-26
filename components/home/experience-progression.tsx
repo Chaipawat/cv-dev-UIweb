@@ -18,6 +18,8 @@ const current = experience[0];
 export default function ExperienceProgression() {
   const steps = progression.length;
   const first = progression[0];
+  const last = progression[steps - 1];
+  const projectCount = new Set(progression.flatMap((s) => s.projectSlugs)).size;
   return (
     <section aria-labelledby="progression-heading">
       <PageContainer className="pb-[clamp(96px,12vw,180px)]">
@@ -46,7 +48,7 @@ export default function ExperienceProgression() {
                     data-m="step"
                     data-year={step.year}
                     data-shift={step.shift}
-                    className="group/step border-t border-border py-[clamp(18px,2.4vw,32px)] first:border-t-0 first:pt-0 md:pl-[calc(var(--t)*30%)]"
+                    className="group/step border-t border-border py-[clamp(18px,2.4vw,32px)] first:border-t-0 first:pt-0 md:pl-[calc(var(--t)*24%)]"
                     style={{ "--t": t } as CSSProperties}
                   >
                     <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 font-mono text-[11px] tracking-[0.2em]">
@@ -59,8 +61,8 @@ export default function ExperienceProgression() {
                       ) : null}
                     </div>
                     <div
-                      className="mt-2 break-words font-display uppercase leading-[0.9] tracking-[-0.01em] text-foreground transition-colors duration-[550ms] group-data-[active]/step:text-accent"
-                      style={{ fontSize: `clamp(${30 + t * 10}px, ${4.6 + t * 3.4}vw, ${64 + t * 64}px)` }}
+                      className="mt-2 break-words text-balance font-display uppercase leading-[0.9] tracking-[-0.01em] text-foreground transition-colors duration-[550ms] group-data-[active]/step:text-accent"
+                      style={{ fontSize: `clamp(${30 + t * 10}px, ${4.6 + t * 2.4}vw, ${64 + t * 36}px)` }}
                     >
                       {titleProject ? (
                         <Link href={`/work/${titleProject.slug}`} className="transition-colors duration-[320ms] hover:text-accent">
@@ -88,8 +90,21 @@ export default function ExperienceProgression() {
               })}
             </ol>
 
+            {/* Closing row: the staircase lands on a summary instead of trailing off into blank space. */}
+            <div className="mt-[clamp(8px,1.5vw,20px)] flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-t-2 border-foreground pt-4 font-mono text-[11px] tracking-[0.2em] lg:col-span-12 lg:row-start-2">
+              <span className="text-foreground">
+                {first.year} <span className="text-accent-text">→</span> {last.year}
+              </span>
+              <span className="text-foreground-secondary">
+                {String(steps).padStart(2, "0")} STEPS · {String(projectCount).padStart(2, "0")} PROJECTS
+              </span>
+              <Link href="/showcase" className="text-foreground-secondary transition-colors duration-[180ms] hover:text-accent-text">
+                SEE ALL WORK →
+              </Link>
+            </div>
+
             {/* Sticky reading counter — an enhancement, so only shown once motion is running. */}
-            <aside aria-hidden="true" className="hidden lg:col-span-3 lg:[.motion_&]:block">
+            <aside aria-hidden="true" className="hidden lg:col-span-3 lg:col-start-10 lg:row-start-1 lg:[.motion_&]:block">
               <div className="sticky top-[120px] flex gap-5">
                 <div className="relative w-px self-stretch bg-border">
                   <span data-m="step-rail" className="absolute inset-0 block bg-accent" />

@@ -10,23 +10,24 @@ import {
   FullWidthComposition,
   MobileComposition,
   PersonalComposition,
+  ProjectChapter,
   type CompositionProps,
 } from "@/components/home/work-compositions";
 import { FEATURED_PROJECTS } from "@/data/projects";
 
-// Layout rhythm follows featured order: hero → asymmetric → mobile →
-// extension → compact → personal. Each project reads differently while the
-// kicker / title / meta vocabulary stays constant.
-const RHYTHM: ComponentType<CompositionProps>[] = [
-  FullWidthComposition,
-  AsymmetricComposition,
-  MobileComposition,
-  ExtensionComposition,
-  CompactComposition,
-  PersonalComposition,
-];
+type Layout = { Composition: ComponentType<CompositionProps>; variant: string };
 
-const pad = (n: number) => String(n).padStart(2, "0");
+// Projects appear in timeline order; each keeps the composition that suits
+// its media, so the layout is tied to the project rather than its position.
+const LAYOUTS: Record<string, Layout> = {
+  "broadpang-extension": { Composition: ExtensionComposition, variant: "extension" },
+  "zonepang-platform": { Composition: AsymmetricComposition, variant: "asymmetric" },
+  kumtone: { Composition: MobileComposition, variant: "mobile" },
+  "mini-game": { Composition: CompactComposition, variant: "compact" },
+  "badminton-booking": { Composition: FullWidthComposition, variant: "full" },
+  devpath: { Composition: PersonalComposition, variant: "personal" },
+};
+const FALLBACK: Layout = { Composition: AsymmetricComposition, variant: "asymmetric" };
 
 export default function SelectedWork() {
   return (
@@ -48,13 +49,12 @@ export default function SelectedWork() {
         <MotionScope effect="work">
         <div className="mt-[clamp(40px,6vw,80px)] flex flex-col gap-[clamp(96px,13vw,200px)]">
           {FEATURED_PROJECTS.map((project, i) => {
-            const Composition = RHYTHM[i % RHYTHM.length];
+            const { Composition, variant } = LAYOUTS[project.slug] ?? FALLBACK;
             return (
-              <Composition
-                key={project.slug}
-                project={project}
-                position={`${pad(i + 1)} / ${pad(FEATURED_PROJECTS.length)}`}
-              />
+              <div key={project.slug} data-m="project" data-variant={variant}>
+                <ProjectChapter project={project} index={i + 1} total={FEATURED_PROJECTS.length} />
+                <Composition project={project} />
+              </div>
             );
           })}
         </div>

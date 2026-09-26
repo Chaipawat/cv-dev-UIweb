@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import PageContainer from "@/components/layout/page-container";
 import MobileNav from "@/components/layout/mobile-nav";
-import { NAV_ITEMS } from "@/data/nav";
+import { isNavItemActive, NAV_ITEMS } from "@/data/nav";
 import { portfolio } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -27,7 +27,7 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-0.5 md:flex" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
-            const active = pathname === item.href;
+            const active = isNavItemActive(pathname, item.href);
             return (
               <Link
                 key={item.href}

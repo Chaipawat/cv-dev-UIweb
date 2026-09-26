@@ -13,7 +13,7 @@ export default function CaseStudySection({ index, label, children }: CaseStudySe
   return (
     <PageContainer className="pb-[clamp(88px,11vw,160px)]">
       <section aria-label={label}>
-        <SectionLabel index={index} label={label} />
+        <SectionLabel index={index} label={label} heading />
         <Reveal className="mt-[clamp(28px,4vw,56px)]">{children}</Reveal>
       </section>
     </PageContainer>

@@ -13,8 +13,6 @@ import { cn } from "@/lib/utils";
 
 export interface CompositionProps {
   project: Project;
-  /** "01 / 06" position within the selected set. */
-  position: string;
 }
 
 const href = (p: Project) => `/work/${p.slug}` as const;
@@ -25,34 +23,52 @@ function focusOf(p: Project) {
 
 /* ---------- shared pieces ---------- */
 
-function Kicker({
-  project,
-  position,
-  className,
-  rule,
-}: CompositionProps & { className?: string; rule?: boolean }) {
+/** Full project type; number and period live in the chapter header above. */
+function Kicker({ project, className }: CompositionProps & { className?: string }) {
   return (
-    <div
+    <p
       className={cn(
-        "relative flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 font-mono text-[11px] tracking-[0.2em] text-foreground-secondary",
+        "m-0 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-text",
         className,
       )}
     >
-      <span>
-        {position}{" "}
-        <span className="text-accent-text">
-          — {project.shortType.toUpperCase()}
+      {project.type}
+    </p>
+  );
+}
+
+/**
+ * Chapter header that opens every selected project: a heavy rule, the
+ * timeline number and the period, so each project reads as its own section.
+ */
+export function ProjectChapter({
+  project,
+  index,
+  total,
+}: CompositionProps & { index: number; total: number }) {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    <header className="relative mb-[clamp(32px,5vw,72px)] flex items-end justify-between gap-6 pb-4">
+      <div className="flex items-end gap-[clamp(14px,2vw,28px)]">
+        <span className="font-display text-[clamp(64px,9vw,136px)] leading-[0.78] text-foreground">
+          {pad(index)}
         </span>
+        <span className="flex flex-col gap-1.5 pb-1 font-mono text-[11px] tracking-[0.2em] text-foreground-secondary">
+          <span>/ {pad(total)}</span>
+          <span className="text-accent-text">
+            {(project.shortTitle ?? project.title).toUpperCase()}
+          </span>
+        </span>
+      </div>
+      <span className="pb-1 font-mono text-[clamp(13px,1.4vw,18px)] tracking-[0.16em] text-foreground">
+        {formatProjectPeriod(project.period)}
       </span>
-      <span>{formatProjectPeriod(project.period)}</span>
-      {rule ? (
-        <span
-          data-m="rule"
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-px bg-border"
-        />
-      ) : null}
-    </div>
+      <span
+        data-m="rule"
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-[2px] bg-foreground"
+      />
+    </header>
   );
 }
 
@@ -158,11 +174,11 @@ function CoverLink({
 
 /* ---------- 01: full-width hero composition ---------- */
 
-export function FullWidthComposition({ project, position }: CompositionProps) {
+export function FullWidthComposition({ project }: CompositionProps) {
   const [first, ...rest] = project.title.split(" ");
   return (
-    <article data-m="project" data-variant="full">
-      <Kicker project={project} position={position} rule className="pb-4" />
+    <article>
+      <Kicker project={project} />
       <h3 className="m-0 mt-[clamp(20px,3vw,40px)] font-display text-[clamp(38px,11.5vw,176px)] uppercase leading-[0.84] tracking-[-0.01em] text-foreground">
         <Link
           href={href(project)}
@@ -205,12 +221,10 @@ export function FullWidthComposition({ project, position }: CompositionProps) {
 
 /* ---------- 02: large asymmetric composition ---------- */
 
-export function AsymmetricComposition({ project, position }: CompositionProps) {
+export function AsymmetricComposition({ project }: CompositionProps) {
   const cover = hasProjectCover(project);
   return (
     <article
-      data-m="project"
-      data-variant="asymmetric"
       className="grid grid-cols-1 gap-[clamp(28px,4vw,56px)] lg:grid-cols-12 lg:gap-8"
     >
       {cover ? (
@@ -242,7 +256,7 @@ export function AsymmetricComposition({ project, position }: CompositionProps) {
           cover ? "lg:col-span-4" : "lg:col-span-9 lg:col-start-4",
         )}
       >
-        <Kicker project={project} position={position} />
+        <Kicker project={project} />
         <Title
           project={project}
           className={cn(
@@ -270,17 +284,15 @@ export function AsymmetricComposition({ project, position }: CompositionProps) {
 
 /* ---------- 03: mobile-focused composition ---------- */
 
-export function MobileComposition({ project, position }: CompositionProps) {
+export function MobileComposition({ project }: CompositionProps) {
   const cover = hasProjectCover(project);
   const features = (project.features ?? []).slice(0, 5);
   return (
     <article
-      data-m="project"
-      data-variant="mobile"
       className="grid grid-cols-1 gap-[clamp(28px,4vw,56px)] md:grid-cols-12 md:gap-8"
     >
       <div className="md:col-span-5">
-        <Kicker project={project} position={position} />
+        <Kicker project={project} />
         <Title
           project={project}
           className="mt-5 text-[clamp(44px,6.4vw,96px)] leading-[0.86]"
@@ -326,13 +338,13 @@ export function MobileComposition({ project, position }: CompositionProps) {
 
 /* ---------- 04: browser / extension composition ---------- */
 
-export function ExtensionComposition({ project, position }: CompositionProps) {
+export function ExtensionComposition({ project }: CompositionProps) {
   const cover = hasProjectCover(project);
   return (
-    <article data-m="project" data-variant="extension">
+    <article>
       <div className="grid grid-cols-1 gap-[clamp(28px,4vw,56px)] lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-6">
-          <Kicker project={project} position={position} />
+          <Kicker project={project} />
           <Title
             project={project}
             className="mt-5 text-[clamp(40px,7vw,104px)] leading-[0.86]"
@@ -384,21 +396,15 @@ export function ExtensionComposition({ project, position }: CompositionProps) {
 
 /* ---------- 05: small visual composition ---------- */
 
-export function CompactComposition({ project, position }: CompositionProps) {
+export function CompactComposition({ project }: CompositionProps) {
   const cover = hasProjectCover(project);
   const isMiniGame = project.slug === "mini-game";
   return (
     <article
-      data-m="project"
-      data-variant="compact"
       className="grid grid-cols-1 gap-8 border-y border-border py-[clamp(28px,4vw,48px)] md:grid-cols-12"
     >
       <div className="md:col-span-2">
-        <Kicker
-          project={project}
-          position={position}
-          className="md:flex-col md:gap-2"
-        />
+        <Kicker project={project} />
       </div>
       <div className="md:col-span-5">
         <Title
@@ -428,16 +434,14 @@ export function CompactComposition({ project, position }: CompositionProps) {
 
 /* ---------- 06: personal project composition ---------- */
 
-export function PersonalComposition({ project, position }: CompositionProps) {
+export function PersonalComposition({ project }: CompositionProps) {
   const cover = hasProjectCover(project);
   return (
     <article
-      data-m="project"
-      data-variant="personal"
       className="grid grid-cols-1 gap-[clamp(28px,4vw,56px)] lg:grid-cols-12 lg:gap-8"
     >
       <div className="lg:col-span-4">
-        <Kicker project={project} position={position} />
+        <Kicker project={project} />
         <p className="m-0 mt-5 font-mono text-[11px] tracking-[0.2em] text-accent-2">
           PERSONAL PROJECT{project.period.end === null ? " — ONGOING" : ""}
         </p>

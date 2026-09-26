@@ -362,9 +362,103 @@ html.lenis {
   opacity: 1;
 }
 
-:has(> [data-webgl-layer="on"]) > img {
+/* The contact vignette shares the page background; only the objects move. */
+@keyframes contact-desk-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.contact-desk-float {
+  animation: contact-desk-float 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Anchored on img so the browser only evaluates :has() for images. */
+img:has(~ [data-webgl-layer="on"]) {
   visibility: hidden;
   transition: visibility 0s linear 0.7s;
+}
+
+/* ---------- 404 cola glass (the "0") ----------
+   Static and full without `html.motion`; with it, a stream pours in, the
+   glass fills, then bubbles keep rising. SVG user units double as px here. */
+.cola-zero {
+  display: inline-block;
+  height: 0.74em;
+  width: 0.5em;
+  margin: 0 0.04em;
+  color: var(--color-foreground);
+  transform-origin: 50% 100%;
+  transition: transform 0.6s var(--ease-editorial);
+}
+
+.cola-zero:hover {
+  transform: rotate(-8deg);
+}
+
+.cola-zero-stream {
+  opacity: 0;
+}
+
+.cola-zero-bubble {
+  fill: #f3d5b3;
+  opacity: 0;
+  animation: cola-zero-bubble 2.2s ease-in infinite;
+}
+
+.motion .cola-zero-fill {
+  animation: cola-zero-pour 2.4s cubic-bezier(0.3, 0.7, 0.3, 1) 0.7s both;
+}
+
+.motion .cola-zero-stream {
+  animation: cola-zero-stream 2.6s linear 0.55s both;
+}
+
+@keyframes cola-zero-pour {
+  from {
+    transform: translateY(116px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes cola-zero-stream {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  8%,
+  78% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+}
+
+@keyframes cola-zero-bubble {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  15% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-86px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

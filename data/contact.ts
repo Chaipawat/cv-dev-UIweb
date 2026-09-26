@@ -5,7 +5,9 @@ const { contact } = portfolio;
 const formattedPhone = contact.phone ? contact.phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3") : null;
 const phoneValue =
   contact.phoneMode === "available-on-cv" || !contact.phone ? "Available on CV" : formattedPhone!;
-const phoneHref = contact.phone && contact.phoneMode !== "available-on-cv" ? `tel:${contact.phone}` : undefined;
+// International format so the link also dials from outside Thailand.
+const phoneHref =
+  contact.phone && contact.phoneMode !== "available-on-cv" ? `tel:+66${contact.phone.replace(/^0/, "")}` : undefined;
 
 // Strip the protocol/www for display; the full URL is still used as the href.
 function shortenUrl(url: string) {
