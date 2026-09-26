@@ -3,6 +3,8 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import * as THREE from "three";
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
+import BeerMug from "@/components/contact/beer-mug";
 
 const CLOCK_DEPRECATION = "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.";
 if (typeof window !== "undefined") {
@@ -16,12 +18,10 @@ if (typeof window !== "undefined") {
 
 const COLORS = {
   ivory: "#f2ede3",
-  warmWhite: "#fff8eb",
   charcoal: "#1c1b18",
   silver: "#aaa394",
   darkSilver: "#625f58",
   orange: "#f04a2a",
-  amber: "#c97916",
 } as const;
 
 interface ContactDeskSceneProps {
@@ -203,85 +203,10 @@ function MechanicalKeyboard() {
 
 function Mouse() {
   return (
-    <mesh position={[1.05, 0.34, 1.13]} rotation={[-0.08, -0.2, 0]} scale={[0.38, 0.22, 0.56]} castShadow>
+    <mesh position={[0.85, 0.34, 1.13]} rotation={[-0.08, -0.2, 0]} scale={[0.38, 0.22, 0.56]} castShadow>
       <sphereGeometry args={[1, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
       <meshStandardMaterial color={COLORS.charcoal} metalness={0.18} roughness={0.48} />
     </mesh>
-  );
-}
-
-function BeerGlass({ compact, reducedMotion }: { compact: boolean; reducedMotion: boolean }) {
-  const group = useRef<THREE.Group>(null);
-  const highlight = useRef<THREE.MeshStandardMaterial>(null);
-  const [hovered, setHovered] = useState(false);
-  const { invalidate } = useThree();
-  const bubbles = useMemo(
-    () => [
-      [-0.12, 0.2, 0.19, 0.025],
-      [0.12, 0.36, 0.17, 0.022],
-      [-0.03, 0.55, 0.2, 0.027],
-      [0.14, 0.7, 0.1, 0.018],
-      [-0.14, 0.82, 0.08, 0.02],
-    ] as const,
-    [],
-  );
-
-  useFrame((_state, delta) => {
-    const current = group.current;
-    if (!current) return;
-    const active = hovered && !reducedMotion;
-    const ease = 1 - Math.exp(-delta * 7);
-    current.position.y += ((active ? 0.17 : 0) - current.position.y) * ease;
-    current.rotation.z += ((active ? THREE.MathUtils.degToRad(4) : 0) - current.rotation.z) * ease;
-    if (highlight.current) highlight.current.emissiveIntensity += ((active ? 0.65 : 0.2) - highlight.current.emissiveIntensity) * ease;
-    if (Math.abs((active ? 0.17 : 0) - current.position.y) > 0.002) invalidate();
-  });
-
-  return (
-    <group position={compact ? [1.45, 0.17, 0.34] : [2.05, 0.17, 0.42]}>
-      <mesh position={[0, -0.02, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <cylinderGeometry args={[0.59, 0.59, 0.055, 40]} />
-        <meshStandardMaterial color={COLORS.orange} roughness={0.72} />
-      </mesh>
-      <group
-        ref={group}
-        onPointerEnter={() => {
-          setHovered(true);
-          invalidate();
-        }}
-        onPointerLeave={() => {
-          setHovered(false);
-          invalidate();
-        }}
-      >
-        <mesh castShadow position={[0, 0.77, 0]}>
-          <cylinderGeometry args={[0.39, 0.31, 1.52, 40, 1, true]} />
-          <meshPhysicalMaterial color={COLORS.warmWhite} transparent opacity={0.28} roughness={0.08} metalness={0.03} transmission={0.72} thickness={0.12} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh position={[0, 0.67, 0]}>
-          <cylinderGeometry args={[0.345, 0.285, 1.2, 40]} />
-          <meshPhysicalMaterial color={COLORS.amber} transparent opacity={0.88} roughness={0.25} transmission={0.08} />
-        </mesh>
-        <mesh position={[0, 1.31, 0]}>
-          <cylinderGeometry args={[0.35, 0.34, 0.18, 40]} />
-          <meshStandardMaterial color={COLORS.ivory} roughness={0.88} />
-        </mesh>
-        <mesh position={[0.33, 0.72, 0]} rotation={[0, Math.PI / 2, 0]}>
-          <torusGeometry args={[0.3, 0.045, 12, 32]} />
-          <meshPhysicalMaterial color={COLORS.warmWhite} transparent opacity={0.38} roughness={0.1} transmission={0.64} />
-        </mesh>
-        <mesh position={[-0.245, 0.72, 0.29]} rotation={[0, 0, 0.03]}>
-          <planeGeometry args={[0.055, 1.02]} />
-          <meshStandardMaterial ref={highlight} color={COLORS.orange} emissive={COLORS.orange} emissiveIntensity={0.2} transparent opacity={0.4} />
-        </mesh>
-        {bubbles.map(([x, y, z, radius], index) => (
-          <mesh key={index} position={[x, y, z]}>
-            <sphereGeometry args={[radius, 8, 8]} />
-            <meshBasicMaterial color={COLORS.warmWhite} transparent opacity={0.72} />
-          </mesh>
-        ))}
-      </group>
-    </group>
   );
 }
 
@@ -304,7 +229,11 @@ function DeskVignette({ compact, reducedMotion }: { compact: boolean; reducedMot
           </>
         ) : null}
         <Laptop compact={compact} reducedMotion={reducedMotion} />
-        <BeerGlass compact={compact} reducedMotion={reducedMotion} />
+        <BeerMug
+          position={compact ? [1.6, 0.08, 0.3] : [1.85, 0.08, 0.15]}
+          scale={compact ? 0.8 : 1.1}
+          reducedMotion={reducedMotion}
+        />
       </group>
       <mesh position={[0, compact ? -0.72 : -0.68, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[8, 5]} />
@@ -312,6 +241,27 @@ function DeskVignette({ compact, reducedMotion }: { compact: boolean; reducedMot
       </mesh>
     </PointerRig>
   );
+}
+
+/** Soft studio reflections for the laptop metal and the condensation beads. */
+function StudioEnvironment() {
+  const get = useThree((s) => s.get);
+  useEffect(() => {
+    const { gl, scene, invalidate } = get();
+    const pmrem = new THREE.PMREMGenerator(gl);
+    const room = new RoomEnvironment();
+    const target = pmrem.fromScene(room, 0.04);
+    scene.environment = target.texture;
+    scene.environmentIntensity = 0.55;
+    invalidate();
+    return () => {
+      scene.environment = null;
+      target.dispose();
+      room.dispose();
+      pmrem.dispose();
+    };
+  }, [get]);
+  return null;
 }
 
 function CameraController({ compact }: { compact: boolean }) {
@@ -348,7 +298,7 @@ export default function ContactDeskScene({ compact, draggable, reducedMotion, on
 
   return (
     <Canvas
-      shadows
+      shadows="percentage"
       frameloop="demand"
       dpr={[1, 1.5]}
       camera={{ fov: compact ? 35 : 32, position: [5.4, 3.7, 7.5], near: 0.1, far: 40 }}
@@ -365,6 +315,7 @@ export default function ContactDeskScene({ compact, draggable, reducedMotion, on
       onCreated={handleCreated}
     >
       <CameraController compact={compact} />
+      <StudioEnvironment />
       <ambientLight intensity={1.25} color="#fff8ee" />
       <hemisphereLight args={["#fff4e3", "#746f66", 1.15]} />
       <directionalLight

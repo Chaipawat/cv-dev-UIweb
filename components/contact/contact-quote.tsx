@@ -22,7 +22,7 @@ export default function ContactQuote() {
       </div>
       <ContactDesk className="mt-8 h-[380px] w-full md:absolute md:-bottom-[5%] md:right-[3%] md:mt-0 md:h-[620px] md:w-[min(52vw,720px)]" />
       <span className="absolute -bottom-[1%] right-[3%] hidden font-mono text-[10px] tracking-[0.2em] text-foreground-secondary md:block">
-        ↗ DRAG / MOVE THE SCENE
+        ↗ DRAG THE SCENE · CLICK THE GLASS FOR A REFILL
       </span>
     </figure>
   );
