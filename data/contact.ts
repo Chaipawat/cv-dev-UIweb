@@ -37,3 +37,6 @@ export const CONTACT_LINKS = [
     href: contact.github ?? undefined,
   },
 ];
+
+/** Display labels for CONTACT_LINKS keys. */
+export const CONTACT_LABELS: Record<string, string> = { EMAIL: "Email", PHONE: "Phone", LINKEDIN: "LinkedIn", GITHUB: "GitHub" };
