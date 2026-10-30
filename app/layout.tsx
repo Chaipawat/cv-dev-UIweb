@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import {
   Anton,
+  Caveat,
   Geist,
   IBM_Plex_Sans_Thai,
   Instrument_Serif,
   JetBrains_Mono,
   Shippori_Mincho,
 } from "next/font/google";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
-import MotionProvider from "@/components/shared/motion-provider";
-import SmoothScroll from "@/components/motion/smooth-scroll";
+import Footer from "@/components/site/footer";
+import Nav from "@/components/site/nav";
+import SiteMotion from "@/components/site/site-motion";
 import { portfolio } from "@/data/portfolio";
 import "./globals.css";
 
@@ -58,6 +58,14 @@ const instrumentSerif = Instrument_Serif({
   weight: ["400"],
 });
 
+// Handwritten annotations ("shipped to real users!").
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: "600",
+  preload: false,
+});
+
 const { profile } = portfolio;
 
 // Absolute base for Open Graph image URLs. Set NEXT_PUBLIC_SITE_URL for a
@@ -80,30 +88,31 @@ export const metadata: Metadata = {
   },
 };
 
-// Runs before first paint: opt into kinetic pre-states only when motion is
-// allowed, and back out if the motion runtime never reports ready (JS error,
-// blocked bundle) so content can never stay hidden.
-const MOTION_BOOT = `(function(){try{if(!matchMedia('(prefers-reduced-motion: no-preference)').matches)return;var d=document.documentElement;d.classList.add('motion');setTimeout(function(){if(!window.__motionReady)d.classList.remove('motion')},4000)}catch(e){}})();`;
+// Runs before first paint: opt into reveal pre-states (`js`), and back out
+// if the client runtime never reports ready (JS error, blocked bundle) so
+// content can never stay hidden.
+const REVEAL_BOOT = `(function(){var d=document.documentElement;d.classList.add('js');setTimeout(function(){if(!window.__revealReady)d.classList.remove('js')},4000)})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      // The boot script adds `motion` / Lenis adds `lenis` before hydration.
+      // The boot script adds `js` before hydration.
       suppressHydrationWarning
-      className={`${anton.variable} ${geist.variable} ${plexThai.variable} ${instrumentSerif.variable} ${shippori.variable} ${jetbrainsMono.variable}`}
+      className={`${anton.variable} ${geist.variable} ${plexThai.variable} ${instrumentSerif.variable} ${shippori.variable} ${jetbrainsMono.variable} ${caveat.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: MOTION_BOOT }} />
+        <meta name="theme-color" content="#f4f0e8" />
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_BOOT }} />
       </head>
-      <body className="flex min-h-screen flex-col overflow-x-hidden bg-background font-body text-foreground antialiased">
-        <MotionProvider>
-          <SmoothScroll>
-            <Navbar />
-            <div className="relative z-10 flex-1">{children}</div>
-            <Footer />
-          </SmoothScroll>
-        </MotionProvider>
+      <body>
+        <a className="sr-only" href="#main">
+          Skip to content
+        </a>
+        <Nav />
+        <main id="main">{children}</main>
+        <Footer />
+        <SiteMotion />
       </body>
     </html>
   );

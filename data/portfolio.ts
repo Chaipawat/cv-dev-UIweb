@@ -51,7 +51,15 @@ const profile = {
   portraits: {
     primary: { src: "/src/images/profile_page1.jpg", alt: "Portrait of Chaipawat Jatuphattaranun" },
     secondary: { src: "/src/images/profile_page4.jpg", alt: "Portrait of Chaipawat Jatuphattaranun" },
+    university: {
+      src: "/src/images/profile_burapha.jpg",
+      alt: "Chaipawat in the Burapha University Software Engineering blazer",
+    },
   },
+
+  /** From the CV. */
+  spokenLanguages: "Thai (Native) · English (Intermediate)",
+  relocation: "Open to relocate to Bangkok",
 };
 
 const education: Education[] = [
@@ -156,7 +164,7 @@ const workflow = [
 /**
  * Array order is the real timeline and the featured display order
  * (Broadpang Extension → Zonepang → Kumtone → Mini Game → Badminton →
- * DevPath); non-featured projects sit between them without affecting that
+ * Kumcal → DevPath); non-featured projects sit between them without affecting that
  * sequence.
  *
  * Company screenshots are listed only once an approved asset exists under
@@ -585,6 +593,68 @@ const projects: Project[] = [
     },
   },
   {
+    slug: "kumcal",
+    title: "Kumcal",
+    period: { start: 2026, end: null },
+    type: "LINE LIFF / Landing Page",
+    shortType: "LINE LIFF",
+    categories: ["liff", "web"],
+    platforms: ["LINE LIFF", "Web"],
+    description:
+      "Calorie-tracking product that lives inside LINE — send a food photo in the chat and Kumcal counts the calories and nutrients. I built the whole front end: the kumcal.com landing page and the LINE LIFF app, plus some backend work.",
+    context: "Latest project at BTY Marketing — front end owned end-to-end, with some backend work.",
+    role: "Frontend Developer",
+    experienceId: "bty-marketing",
+    focus: ["Landing page", "LINE LIFF app"],
+    contribution: ["All front-end", "Some backend"],
+    responsibilities: [
+      "kumcal.com landing page",
+      "LINE LIFF front-end",
+      "Daily calorie & nutrient dashboard",
+      "Meal logging screens",
+      "Water and exercise tracking screens",
+      "Responsive mobile-first UI",
+      "API integration",
+      "Some backend work",
+    ],
+    features: [
+      "Send a food photo in LINE chat",
+      "AI calorie & nutrient analysis",
+      "Daily summary",
+      "Water tracking",
+      "Exercise logging",
+      "LINE rich menu shortcuts",
+      "No app download — runs in LINE",
+    ],
+    stack: ["React", "Next.js", "JavaScript", "TypeScript", "REST API", "LINE LIFF", "Node.js"],
+    featured: true,
+    // Public marketing pages, so no sanitizing note.
+    confidentiality: { publicDetails: true },
+    images: {
+      cover: "/projects/kumcal/kumcal-landing-hero.webp",
+      gallery: [
+        {
+          src: "/projects/kumcal/kumcal-landing-hero.webp",
+          alt: "Kumcal landing page hero: send a food photo in LINE chat and Kumcal counts the calories, with a phone mockup of the LINE chat analysis and rich menu",
+          width: 1894,
+          height: 909,
+          category: "web",
+          caption: "Landing page — hero",
+          urlLabel: "kumcal.com",
+        },
+        {
+          src: "/projects/kumcal/kumcal-cta.webp",
+          alt: "Kumcal call-to-action section with the LINE LIFF daily dashboard showing calories, macros and meals",
+          width: 1168,
+          height: 641,
+          category: "web",
+          caption: "Landing page — LINE LIFF dashboard",
+          urlLabel: "kumcal.com",
+        },
+      ],
+    },
+  },
+  {
     slug: "devpath",
     title: "DevPath",
     period: { start: 2026, end: null },
@@ -651,7 +721,7 @@ const progression: ProgressionStep[] = [
     year: "2026",
     title: "LINE LIFF / Product Systems",
     shift: "Booking, membership, payment",
-    projectSlugs: ["badminton-booking", "mini-game"],
+    projectSlugs: ["badminton-booking", "mini-game", "kumcal"],
   },
 ];
 
@@ -661,7 +731,7 @@ const contact = {
   phoneMode: "show-number" as "show-number" | "available-on-cv",
   linkedin: "https://www.linkedin.com/in/chaipawat-jatuphattaranun-151429434",
   github: "https://github.com/Chaipawat",
-  cvUrl: null as string | null,
+  cvUrl: "/Chaipawat_CV.pdf" as string | null,
 };
 
 export const portfolio = {
